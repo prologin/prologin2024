@@ -35,7 +35,7 @@ constant:
     cst_val: -100
     cst_comment: "Points minimum qu'apporte une ile"
   -
-    cst_name: POINTS_ACTION
+    cst_name: TOUR_POINTS_ACTION
     cst_val: 2
     cst_comment: "Points d'action au début d'un tour"
   -
@@ -47,9 +47,9 @@ constant:
     cst_val: 1
     cst_comment: "Coût de rotation d'une case qui n'est pas en lien avec une île ennemi"
   -
-    cst_name: K
+    cst_name: LA_CONSTANTE_K
     cst_val: -41
-    cst_comment: k est une constante (relou)
+    cst_comment: "k est une constante (relou)"
 # je pleure
 
 enum:
@@ -61,12 +61,12 @@ enum:
       - [hors_tour, "Vous ne pouvez pas faire d'action en dehors de votre tour"]
       - [position_invalide, "La position fournie est invalide"]
       - [plus_de_pa, "Vous n'avez plus de points d'action"]
-      - [dragon_invalide, "L'identifiant du dragon est invalide"]
+      - [aigle_invalide, "L'identifiant de l'aigle est invalide"]
   -
     enum_name: type_case
     enum_summary: "Contenu topographique d'une case"
     enum_field:
-      - [base, "Base"]
+      - [village, "Village"]
       - [nord_ouest, "Case dont le coin manquant est au nord ouest"]
       - [nord_est, "Case dont le coin manquant est au nord est"]
       - [sud_ouest, "Case dont le coin manquant est au sud ouest"]
@@ -84,15 +84,15 @@ enum:
     enum_summary: "Types d'actions"
     enum_field:
       - [action_tourner_case, "Tourne une case, action ``tourner_case``"]
-      - [action_activer_dragon, "Active l'effet d'un dragon, action ``activer_dragon``"]
-      - [action_deplacer_dragon, "Déplace un dragon appartenant à l'utilisateur, action ``deplacer_dragon``"]
+      - [action_activer_aigle, "Active l'effet d'un aigle, action ``activer_aigle``"]
+      - [action_deplacer_aigle, "Déplace un aigle appartenant à l'utilisateur, action ``deplacer_aigle``"]
   -
-    enum_name: effet_dragon
-    enum_summary: "Effet du dragon"
+    enum_name: effet_aigle
+    enum_summary: "Effet de l'aigle"
     enum_field:
       - [effet_raz_de_maree, "Déclanche un raz de marée"]
       - [effet_actions, "Donne des points actions"]
-      - [effet_effrayer, "Effraye les dragons d'une case"]
+      - [effet_effrayer, "Effraye les aigles d'une case"]
       - [effet_multiplicatif, "Multiplie les point d'une île"]
       - [effet_bloqueur, "Bloque les mouvements de cases"]
 
@@ -112,17 +112,17 @@ struct:
       - [hauteur, int, "Hauteur de la carte"]
       - [largeur, int, "Largeur de la carte"]
   -
-    str_name: dragon
-    str_summary: Dragon
+    str_name: aigle
+    str_summary: Aigle
     str_tuple: no
     str_field:
-    - [identifiant, int, "Identifiant du dragon"]
-    - [joueur, int, "Identifiant du joueur auquel appartient le dragon, -1 si n'appartient à aucun des joueurs"]
-    - [position, position, "Position du dragon"]
-    - [effet, effet_dragon, "Effet du dragon"]
-    - [puissance, int, "Valeur de la puissance du dragon"]
-    - [tour_eclosion, int, "Tour d'éclosion de l'oeuf"]
-    - [existant, bool, "Si le dragon existe toujours"]
+      - [identifiant, int, "Identifiant de l'aigle"]
+      - [joueur, int, "Identifiant du joueur auquel appartient l'aigle, -1 si n'appartient à aucun des joueurs"]
+      - [pos, position, "Position de l'aigle"]
+      - [effet, effet_aigle, "Effet de l'aigle"]
+      - [puissance, int, "Valeur de la puissance de l'aigle"]
+      - [tour_eclosion, int, "Tour d'éclosion de l'oeuf"]
+      - [existant, bool, "Si l'aigle existe toujours"]
   -
     str_name: etat_case
     str_summary: "Description complète d'une case"
@@ -139,56 +139,57 @@ struct:
       - [action_type, type_action, "Type de l'action"]
       - [debut, position, "Position de début de déplacement ou position de la case tournée"]
       - [fin, position, "Position de fin"]
-      - [identifiant_dragon, "Identifiant du dragon utilisé"]
+      - [identifiant_aigle, int, "Identifiant de l'aigle utilisé"]
 
 function:
 # Actions
--
+  -
     fct_name: tourner_case
     fct_summary: "Rotation d'un quart de tour d'une case dans le sens trigonométrique (anti-horraire)"
     fct_ret_type: erreur
     fct_action: yes
     fct_arg:
-    - [pos, position, "Position de la case"]
--
-    fct_name: activer_dragon
-    fct_summary: "Activer l'effet d'un dragon"
+      - [pos, position, "Position de la case"]
+  -
+    fct_name: activer_aigle
+    fct_summary: "Activer l'effet d'un aigle"
     fct_ret_type: erreur
     fct_action: yes
     fct_arg:
-    - [id, int, "Identifiant du dragon"]
--
-    fct_name: deplacer_dragon
-    fct_summary: "Déplace un dragon"
+      - [id, int, "Identifiant de l'aigle"]
+  -
+    fct_name: deplacer_aigle
+    fct_summary: "Déplace un aigle"
     fct_ret_type: erreur
     fct_action: yes
-    - [pos, position, "Position où le dragon sera déplacé"]
+    fct_arg:
+      - [pos, position, "Position où l'aigle sera déplacé"]
 
 # Fonctions de requête de l'état du jeu
--
+  -
     fct_name: dimensions_carte
     fct_summary: Renvoie les dimensions hauteur largeur de la carte
     fct_ret_type: dimension
-    fct_arg:
--
+    fct_arg: []
+  -
     fct_name: info_case
     fct_summary: Renvoie les informations concernant une case
     fct_ret_type: etat_case
     fct_arg:
       - [pos, position, "Position de la case"]
--
-    fct_name: info_dragons
-    fct_summary: Renvoie la liste de dragons
-    fct_ret_type: dragon array
-    fct_arg:
--
+  -
+    fct_name: info_aigles
+    fct_summary: Renvoie la liste d'aigles
+    fct_ret_type: aigle array
+    fct_arg: []
+  -
     fct_name: points_action
     fct_summary: Renvoie le nombre de points d'action restant
                  Renvoie -1 si le joueur est invalide.
     fct_ret_type: int
     fct_arg:
-    - [joueur, int, "Identifiant du joueur"]
- -
+      - [joueur, int, "Identifiant du joueur"]
+  -
     fct_name: score
     fct_summary: Renvoie le score d'un joueur.
                  Renvoie -1 si le joueur est invalide.
@@ -197,7 +198,7 @@ function:
       - [joueur, int, "Identifiant du joueur"]
 
 # Debug
--
+  -
     fct_name: debug_poser_drakkar
     fct_summary: Pose un drakkar de debug sur la case indiquée
     fct_ret_type: erreur
