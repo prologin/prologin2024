@@ -1,0 +1,259 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (c) 2024 Association Prologin <association@prologin.org>
+
+name: prologin2024
+rules_type: turnbased
+player_count: 2
+
+constant:
+  -
+    cst_name: LARGEUR_MAX
+    cst_val: 100
+    cst_comment: Largeur maximale de la carte
+  -
+    cst_name: HAUTEUR_MAX
+    cst_val: 100
+    cst_comment: Hauteur maximale de la carte
+  -
+    cst_name: LARGEUR_MIN
+    cst_val: 10
+    cst_comment: Largeur minimale de la carte
+  -
+    cst_name: HAUTEUR_MIN
+    cst_val: 10
+    cst_comment: Hauteur minimale de la carte
+  -
+    cst_name: NB_TOURS
+    cst_val: 400
+    cst_comment: Nombre de tours à jouer avant la fin de la partie
+  -
+    cst_name: POINTS_MAX
+    cst_val: 100
+    cst_comment: "Points maximum qu'apporte une ile"
+  -
+    cst_name: POINTS_MIN
+    cst_val: -100
+    cst_comment: "Points minimum qu'apporte une ile"
+  -
+    cst_name: POINTS_ACTION
+    cst_val: 2
+    cst_comment: "Points d'action au début d'un tour"
+  -
+    cst_name: COUT_ROTATION_ENNEMI
+    cst_val: 2
+    cst_comment: "Coût de rotation d'une case en lien avec une île ennemi"
+  -
+    cst_name: COUT_ROTATION_STANDARD
+    cst_val: 1
+    cst_comment: "Coût de rotation d'une case qui n'est pas en lien avec une île ennemi"
+  -
+    cst_name: K
+    cst_val: -41
+    cst_comment: k est une constante (relou)
+# je pleure
+
+enum:
+  -
+    enum_name: erreur
+    enum_summary: "Erreurs possibles après avoir effectué une action"
+    enum_field:
+      - [ok, "L'action a été effectuée avec succès"]
+      - [hors_tour, "Vous ne pouvez pas faire d'action en dehors de votre tour"]
+      - [position_invalide, "La position fournie est invalide"]
+      - [plus_de_pa, "Vous n'avez plus de points d'action"]
+      - [dragon_invalide, "L'identifiant du dragon est invalide"]
+  -
+    enum_name: type_case
+    enum_summary: "Contenu topographique d'une case"
+    enum_field:
+      - [base, "Base"]
+      - [nord_ouest, "Case dont le coin manquant est au nord ouest"]
+      - [nord_est, "Case dont le coin manquant est au nord est"]
+      - [sud_ouest, "Case dont le coin manquant est au sud ouest"]
+      - [sud_est, "Case dont le coin manquant est au sud est"]
+  -
+    enum_name: drakkar_debug
+    enum_summary: "Type de drakkar de debug"
+    enum_field:
+      - [pas_de_drakkar, "Aucun drakkar, enlève le drakkar présent"]
+      - [drakkar_bleu, "Drakkar bleue"]
+      - [drakkar_jaune, "Drakkar jaune"]
+      - [drakkar_rouge, "Drakkar rouge"]
+  -
+    enum_name: type_action # Pour l'historique
+    enum_summary: "Types d'actions"
+    enum_field:
+      - [action_tourner_case, "Tourne une case, action ``tourner_case``"]
+      - [action_activer_dragon, "Active l'effet d'un dragon, action ``activer_dragon``"]
+      - [action_deplacer_dragon, "Déplace un dragon appartenant à l'utilisateur, action ``deplacer_dragon``"]
+  -
+    enum_name: effet_dragon
+    enum_summary: "Effet du dragon"
+    enum_field:
+      - [effet_raz_de_maree, "Déclanche un raz de marée"]
+      - [effet_actions, "Donne des points actions"]
+      - [effet_effrayer, "Effraye les dragons d'une case"]
+      - [effet_multiplicatif, "Multiplie les point d'une île"]
+      - [effet_bloqueur, "Bloque les mouvements de cases"]
+
+struct:
+  -
+    str_name: position
+    str_summary: Position dans la carte, donnée par deux coordonnées
+    str_tuple: yes
+    str_field:
+      - [colonne, int, "Abscisse"]
+      - [ligne, int, "Ordonnée"]
+  -
+    str_name: dimension
+    str_summary: Dimensions de la carte
+    str_tuple: yes
+    str_field:
+      - [hauteur, int, "Hauteur de la carte"]
+      - [largeur, int, "Largeur de la carte"]
+  -
+    str_name: dragon
+    str_summary: Dragon
+    str_tuple: no
+    str_field:
+    - [identifiant, int, "Identifiant du dragon"]
+    - [joueur, int, "Identifiant du joueur auquel appartient le dragon, -1 si n'appartient à aucun des joueurs"]
+    - [position, position, "Position du dragon"]
+    - [effet, effet_dragon, "Effet du dragon"]
+    - [puissance, int, "Valeur de la puissance du dragon"]
+    - [tour_eclosion, int, "Tour d'éclosion de l'oeuf"]
+    - [existant, bool, "Si le dragon existe toujours"]
+  -
+    str_name: etat_case
+    str_summary: "Description complète d'une case"
+    str_tuple: no
+    str_field:
+      - [contenu, type_case, "Contenu topographique de la case"]
+      - [points, int, "Points dans le coin sud-est de la case"]
+      - [pos_case, position, "Position de la case"]
+  -
+    str_name: action_hist
+    str_summary: "Action représentée dans l'historique"
+    str_tuple: no
+    str_field:
+      - [action_type, type_action, "Type de l'action"]
+      - [debut, position, "Position de début de déplacement ou position de la case tournée"]
+      - [fin, position, "Position de fin"]
+      - [identifiant_dragon, "Identifiant du dragon utilisé"]
+
+function:
+# Actions
+-
+    fct_name: tourner_case
+    fct_summary: "Rotation d'un quart de tour d'une case dans le sens trigonométrique (anti-horraire)"
+    fct_ret_type: erreur
+    fct_action: yes
+    fct_arg:
+    - [pos, position, "Position de la case"]
+-
+    fct_name: activer_dragon
+    fct_summary: "Activer l'effet d'un dragon"
+    fct_ret_type: erreur
+    fct_action: yes
+    fct_arg:
+    - [id, int, "Identifiant du dragon"]
+-
+    fct_name: deplacer_dragon
+    fct_summary: "Déplace un dragon"
+    fct_ret_type: erreur
+    fct_action: yes
+    - [pos, position, "Position où le dragon sera déplacé"]
+
+# Fonctions de requête de l'état du jeu
+-
+    fct_name: dimensions_carte
+    fct_summary: Renvoie les dimensions hauteur largeur de la carte
+    fct_ret_type: dimension
+    fct_arg:
+-
+    fct_name: info_case
+    fct_summary: Renvoie les informations concernant une case
+    fct_ret_type: etat_case
+    fct_arg:
+      - [pos, position, "Position de la case"]
+-
+    fct_name: info_dragons
+    fct_summary: Renvoie la liste de dragons
+    fct_ret_type: dragon array
+    fct_arg:
+-
+    fct_name: points_action
+    fct_summary: Renvoie le nombre de points d'action restant
+                 Renvoie -1 si le joueur est invalide.
+    fct_ret_type: int
+    fct_arg:
+    - [joueur, int, "Identifiant du joueur"]
+ -
+    fct_name: score
+    fct_summary: Renvoie le score d'un joueur.
+                 Renvoie -1 si le joueur est invalide.
+    fct_ret_type: int
+    fct_arg:
+      - [joueur, int, "Identifiant du joueur"]
+
+# Debug
+-
+    fct_name: debug_poser_drakkar
+    fct_summary: Pose un drakkar de debug sur la case indiquée
+    fct_ret_type: erreur
+    fct_action: yes
+    fct_arg:
+      - [pos, position, "Case où poser le drakkar"]
+      - [drakkar, drakkar_debug, "Type du drakkar"]
+
+# Historique
+  -
+    fct_name: historique
+    fct_summary: "Renvoie la liste des actions effectuées par l'adversaire
+                 durant son tour, dans l'ordre chronologique. Les actions de
+                 débug n'apparaissent pas dans cette liste."
+    fct_ret_type: action_hist array
+    fct_arg: []
+
+# Utilitaire
+
+
+# Autres
+  -
+    fct_name: moi
+    fct_summary: Renvoie votre numéro de joueur.
+    fct_ret_type: int
+    fct_arg: []
+  -
+    fct_name: adversaire
+    fct_summary: Renvoie le numéro du joueur adverse.
+    fct_ret_type: int
+    fct_arg: []
+  -
+    fct_name: annuler
+    fct_summary: Annule la dernière action.
+                 Renvoie faux quand il n'y a pas d'action à annuler ce tour-ci.
+    fct_ret_type: bool
+    fct_arg: []
+  -
+    fct_name: tour_actuel
+    fct_summary: Retourne le numéro du tour actuel.
+    fct_ret_type: int
+    fct_arg: []
+
+user_function:
+  -
+    fct_name: partie_init
+    fct_summary: Fonction appelée au début de la partie.
+    fct_ret_type: void
+    fct_arg: []
+  -
+    fct_name: jouer_tour
+    fct_summary: Fonction appelée à chaque tour.
+    fct_ret_type: void
+    fct_arg: []
+  -
+    fct_name: partie_fin
+    fct_summary: Fonction appelée à la fin de la partie.
+    fct_ret_type: void
+    fct_arg: []
