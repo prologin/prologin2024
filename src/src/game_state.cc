@@ -3,14 +3,8 @@
 
 #include "game_state.hh"
 
-GameState::GameState(const rules::Players& players)
+GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     : rules::GameState(players)
-{
-    // FIXME
-}
-
-GameState::GameState(const GameState& st)
-    : rules::GameState(st)
 {
     // FIXME
 }
@@ -23,4 +17,9 @@ GameState::~GameState()
 GameState* GameState::copy() const
 {
     return new GameState(*this);
+}
+
+bool GameState::est_termine() const
+{
+    return tour >= NB_TOURS;
 }
