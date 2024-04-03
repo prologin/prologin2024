@@ -6,13 +6,34 @@
 #include <rules/game-state.hh>
 #include <rules/player.hh>
 
+#include "constant.hh"
+#include "carte.hh" // YAKA  (le français de TODO)
+
+struct Aigle
+{
+    position pos;
+    enum effet_aigle;
+    int puissance;
+    int tour_eclosion; // 0 si déjà éclot
+};
+
+struct PlayerInfo
+{
+    // YAKA
+};
+
 class GameState final : public rules::GameState
 {
 public:
+    int tour = -1;
+    int round = 0;
+    Carte carte;
+    std::vector<PlayerInfo> playerinfos; // Le joueur à la position i est le joueur i
+
     // FIXME
     // additional parameters? for instance map
-    GameState(const rules::Players& players);
-    GameState(const GameState& st);
+    GameState(const rules::Players& players, std::ifstream& json_file);
+    GameState(const GameState& st) = default;
     ~GameState();
 
     GameState* copy() const override;
