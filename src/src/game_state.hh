@@ -17,7 +17,7 @@ struct Aigle
     int tour_eclosion; // 0 si déjà éclot
 };
 
-struct PlayerInfo
+struct Joueur
 {
     // YAKA
 };
@@ -28,7 +28,7 @@ public:
     int tour = -1;
     int round = 0;
     Carte carte;
-    std::vector<PlayerInfo> playerinfos; // Le joueur à la position i est le joueur i
+    std::vector<Joueur> joueurs; // Le joueur à la position i est le joueur i
 
     // FIXME
     // additional parameters? for instance map
