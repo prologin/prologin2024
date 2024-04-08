@@ -19,7 +19,13 @@ struct Aigle
 
 struct Joueur
 {
-    int pm;
+    Joueur(int id) : id_joueur(id)
+
+    int score;
+    int points_action;
+    std::vector<Aigle> aigles;
+    std::vector<position> villages;
+
     // YAKA
 };
 
@@ -32,6 +38,7 @@ public:
     std::vector<Joueur> joueurs; // Le joueur à la position i est le joueur i
     std::vector<Aigle> aigles_sauvages; // Les aigles qui n'appartiennent pas
                                       // encore à un joueur
+    std::vector<position> villages_libres;
 
     // FIXME
     // additional parameters? for instance map
