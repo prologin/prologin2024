@@ -12,7 +12,7 @@
 struct Aigle
 {
     position pos;
-    enum effet_aigle;
+    effet_aigle effet;
     int puissance;
     int tour_eclosion; // 0 si déjà éclot
 };
