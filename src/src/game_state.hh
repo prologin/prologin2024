@@ -19,6 +19,7 @@ struct Aigle
 
 struct Joueur
 {
+    int pm;
     // YAKA
 };
 
