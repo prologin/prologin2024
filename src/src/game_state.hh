@@ -29,6 +29,8 @@ public:
     int round = 0;
     Carte carte;
     std::vector<Joueur> joueurs; // Le joueur à la position i est le joueur i
+    std::vector<Aigle> aigles_sauvages; // Les aigles qui n'appartiennent pas
+                                      // encore à un joueur
 
     // FIXME
     // additional parameters? for instance map
