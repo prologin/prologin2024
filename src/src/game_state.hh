@@ -40,4 +40,11 @@ public:
     ~GameState();
 
     GameState* copy() const override;
+
+    void tour_suivant();
+    int joueur_actuel() const;
+    void debute_tour(int joueur);
+    bool emplacement_dans_territoire(int joueur, position pos);
+
+    json dump() const;
 };

@@ -23,3 +23,34 @@ bool GameState::est_termine() const
 {
     return tour >= NB_TOURS;
 }
+
+void GameState::tour_suivant()
+{
+    tour++;
+    // FIXME
+    // FIXME ajouter les scores des joueurs
+}
+
+int GameState::joueur_actuel() const
+{
+    return tour % (int)joueurs.size();
+}
+
+void GameState::debute_tour(int joueur)
+{
+    joueurs[joueur].pm = 2;
+    // FIXME
+}
+
+bool emplacement_dans_territoire(int joueur, position pos)
+{
+    // FIXME
+    return false;
+}
+
+/* GESTIONNAIRE D'HISTORIQUE */
+
+json GameState::dump() const
+{
+    // FIXME
+}
