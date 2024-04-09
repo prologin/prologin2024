@@ -1,7 +1,8 @@
 #pragma once
 
-#include <src/case.hh>
 #include <vector>
+
+#include "case.hh"
 
 class Carte
 {
