@@ -78,7 +78,7 @@ typedef enum type_action
 /// Effet de l'aigle
 typedef enum effet_aigle
 {
-    EFFET_RAZ_DE_MAREE, ///< Déclanche un raz de marée
+    EFFET_RAZ_DE_MAREE, ///< Déclenche un raz de marée
     EFFET_ACTIONS, ///< Donne des points actions
     EFFET_EFFRAYER, ///< Effraye les aigles d'une case
     EFFET_MULTIPLICATIF, ///< Multiplie les point d'une île
