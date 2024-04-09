@@ -90,7 +90,7 @@ enum:
     enum_name: effet_aigle
     enum_summary: "Effet de l'aigle"
     enum_field:
-      - [effet_raz_de_maree, "Déclanche un raz de marée"]
+      - [effet_raz_de_maree, "Déclenche un raz de marée"]
       - [effet_actions, "Donne des points actions"]
       - [effet_effrayer, "Effraye les aigles d'une case"]
       - [effet_multiplicatif, "Multiplie les point d'une île"]
