@@ -7,7 +7,7 @@
 #include <rules/player.hh>
 
 #include "constant.hh"
-#include "carte.hh" // YAKA  (le français de TODO)
+#include "carte.hh"
 
 struct Aigle
 {
@@ -26,8 +26,6 @@ struct Joueur
     int points_action;
     std::vector<Aigle> aigles;
     std::vector<position> villages;
-
-    // YAKA
 };
 
 class GameState final : public rules::GameState
