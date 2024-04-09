@@ -11,6 +11,7 @@
 
 struct Aigle
 {
+    int identifiant;
     position pos;
     effet_aigle effet;
     int puissance;
@@ -35,7 +36,7 @@ public:
     int tour = -1;
     int round = 0;
     Carte carte;
-    std::vector<Joueur> joueurs; // Le joueur à la position i est le joueur i
+    std::vector<Joueur> joueurs; // Le joueur à la position i - 1 est le joueur i
     std::vector<Aigle> aigles_sauvages; // Les aigles qui n'appartiennent pas
                                       // encore à un joueur
     std::vector<position> villages_libres;
