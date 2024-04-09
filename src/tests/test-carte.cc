@@ -2,6 +2,8 @@
 #include <gtest/gtest.h>
 #include <rules/player.hh>
 
+#include "../carte.hh"
+
 TEST(CarteTest, txt_test)
 {
     std::ifstream is("exemple.json");
