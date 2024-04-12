@@ -9,6 +9,11 @@
 #include "constant.hh"
 #include "carte.hh"
 
+#include "json.hpp"
+
+using json = nlohmann::json;
+
+
 struct Aigle
 {
     int identifiant;
@@ -20,8 +25,6 @@ struct Aigle
 
 struct Joueur
 {
-    Joueur(int id) : id_joueur(id)
-
     int score;
     int points_action;
     std::vector<Aigle> aigles;
