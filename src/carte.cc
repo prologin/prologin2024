@@ -36,7 +36,7 @@ std::Pair<int, int> Carte::get_dimension()
     return {this->largeur_, this->hauteur_};
 }
 
-Case Carte::get_case(int x, int y)
+type_case Carte::get_case(int x, int y)
 {
     if (!case_valide(x, y))
         return CASE_INVALIDE;
