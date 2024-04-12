@@ -9,7 +9,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     tour = 0;
 
     json donnees;
-    json_file >> donnes;
+    json_file >> donnees;
 
     int id_joueur = 0;
     for (const auto& player : donnes["joueurs"])
