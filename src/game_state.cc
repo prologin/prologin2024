@@ -18,6 +18,10 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         // FIXME
     }
 
+
+
+    carte = Carte::parse(donnees["carte"], donnees["gain"]);
+
     // FIXME
 }
 
