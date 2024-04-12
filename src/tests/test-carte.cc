@@ -3,6 +3,7 @@
 #include <rules/player.hh>
 
 #include "../carte.hh"
+#include "../game_state.hh"
 
 TEST(CarteTest, txt_test)
 {
