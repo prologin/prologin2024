@@ -12,7 +12,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     json_file >> donnees;
 
     int id_joueur = 0;
-    for (const auto& player : donnes["joueurs"])
+    for (const auto& player : donnees["joueurs"])
     {
         joueurs.emplace_back(id_joueur);
         // FIXME
@@ -20,7 +20,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
 
 
 
-    carte = Carte::parse(donnees["carte"], std::transform(donnees["gain"].begin(), donnees["gain"].end(), std::back_inserter(Data),
+    carte = Carte::Carte(donnees["carte"], std::transform(donnees["gain"].begin(), donnees["gain"].end(), std::back_inserter(Data),
                                                           [](const std::string& str) { return std::stoi(str); }));
 
     // FIXME

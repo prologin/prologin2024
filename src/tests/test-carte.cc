@@ -11,5 +11,4 @@ TEST(CarteTest, txt_test)
     rules::Players players;
     GameState st(players, is);
     Carte carte = st.carte;
-    
 }
