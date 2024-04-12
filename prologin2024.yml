@@ -66,11 +66,13 @@ enum:
     enum_name: type_case
     enum_summary: "Contenu topographique d'une case"
     enum_field:
-      - [village, "Village"]
+      - [village_neutre, "Village n'appartenant à aucun joueur"]
+      - [village_acquis, "Village appartenant à un joueur"]
       - [nord_ouest, "Case dont le coin manquant est au nord ouest"]
       - [nord_est, "Case dont le coin manquant est au nord est"]
       - [sud_ouest, "Case dont le coin manquant est au sud ouest"]
       - [sud_est, "Case dont le coin manquant est au sud est"]
+      - [case_invalide, "Case invalide"]
   -
     enum_name: drakkar_debug
     enum_summary: "Type de drakkar de debug"

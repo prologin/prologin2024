@@ -51,11 +51,13 @@ typedef enum erreur
 /// Contenu topographique d'une case
 typedef enum type_case
 {
-    VILLAGE, ///< Village
+    VILLAGE_NEUTRE, ///< Village n'appartenant à aucun joueur
+    VILLAGE_ACQUIS, ///< Village appartenant à un joueur
     NORD_OUEST, ///< Case dont le coin manquant est au nord ouest
     NORD_EST, ///< Case dont le coin manquant est au nord est
     SUD_OUEST, ///< Case dont le coin manquant est au sud ouest
     SUD_EST, ///< Case dont le coin manquant est au sud est
+    CASE_INVALIDE, ///< Case invalide
 } type_case;
 
 /// Type de drakkar de debug

@@ -177,8 +177,11 @@ std::ostream& operator<<(std::ostream& os, type_case v)
 {
     switch (v)
     {
-    case VILLAGE:
-        os << "VILLAGE";
+    case VILLAGE_NEUTRE:
+        os << "VILLAGE_NEUTRE";
+        break;
+    case VILLAGE_ACQUIS:
+        os << "VILLAGE_ACQUIS";
         break;
     case NORD_OUEST:
         os << "NORD_OUEST";
@@ -191,6 +194,9 @@ std::ostream& operator<<(std::ostream& os, type_case v)
         break;
     case SUD_EST:
         os << "SUD_EST";
+        break;
+    case CASE_INVALIDE:
+        os << "CASE_INVALIDE";
         break;
     }
     return os;
