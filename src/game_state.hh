@@ -9,7 +9,7 @@
 #include "constant.hh"
 #include "carte.hh"
 
-#include "json.hpp"
+#include "../lib/json.hpp" //FIXME j'ai pas trouve mieux
 
 using json = nlohmann::json;
 
