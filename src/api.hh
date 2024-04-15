@@ -18,7 +18,7 @@
  * The methods of this class are exported through 'interface.cc'
  * to be called by the clients
  */
-class Api final : public rules::Api<GameState, error>
+class Api final : public rules::Api<GameState, erreur>
 {
 public:
     Api(std::unique_ptr<GameState> game_state,

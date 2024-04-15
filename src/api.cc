@@ -11,7 +11,7 @@ Api* api;
 
 Api::Api(std::unique_ptr<GameState> game_state,
          std::shared_ptr<rules::Player> player)
-    : rules::Api<GameState, error>(std::move(game_state), player)
+    : rules::Api<GameState, erreur>(std::move(game_state), player)
 {
     api = this;
 }
