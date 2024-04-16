@@ -3,17 +3,34 @@
 # Copyright (c) 2012-2020 Association Prologin <association@prologin.org>
 
 import glob
+import os
 import os.path
+import shutil
 
 from wafgenerator import generator_player_install
 
 
+
 def options(opt):
-    pass
+    ...
 
 
 def configure(cfg):
-    pass
+    cfg.load('compiler_cxx')
+    cfg.env.append_value('INCLUDES', ['lib', 'src'])
+
+
+def _copy_assets(source_dir, build_dir):
+    assets = [
+        'maps/colibri.json',
+    ]
+    for asset in assets:
+        src_path = os.path.join(source_dir, asset)
+        dst_path = os.path.join(build_dir, os.path.basename(asset))
+        try:
+            shutil.copyfile(src_path, dst_path)
+        except IOError as exception:
+            print(exception)
 
 
 def build(bld):
