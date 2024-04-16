@@ -3,6 +3,14 @@
 
 #include "game_state.hh"
 
+namespace
+{
+    position vec_to_pos(const std::vector<int>& vec)
+    {
+        return { vec[0], vec[1] };
+    }
+} // namespace
+
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     : rules::GameState(players)
 {
@@ -14,8 +22,10 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     int id_joueur = 0;
     for (const auto& player : donnees["joueurs"])
     {
-        joueurs.emplace_back(id_joueur);
-        // FIXME
+        std::vector<Aigle> aigles;
+        std::vector<position> villages;
+        villages.pushback(vec_to_pos(player));
+        joueurs.emplace_back(id_joueur++, -1, aigles, villages);
     }
 
     std::vector<std::vector<int>> gains;

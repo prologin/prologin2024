@@ -28,6 +28,9 @@ struct Aigle
 
 struct Joueur
 {
+    Joueur(int score, int points_actions, std::vector<Aigle> aigles, std::vector<position> villages)
+            : score(score), points_action(points_actions), aigles(aigles), villages(villages)
+    {}
     int score;
     int points_action;
     std::vector<Aigle> aigles;
