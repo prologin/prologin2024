@@ -13,6 +13,7 @@ public:
     Carte(const std::vector<std::string>& texte, const std::vector<std::vector<int>>& gain);
     std::pair<int, int> get_dimension();
     type_case get_case(int x, int y);
+    void set_case(int x, int y, type_case nouvelle_case);
     int get_gain(int x, int y);
     bool case_valide(int x, int y);
     bool emplacement_valide(int x, int y);

@@ -44,6 +44,13 @@ type_case Carte::get_case(int x, int y)
         return this->grille_[y][x];
 }
 
+void Carte::set_case(int x, int y, type_case nouvelle_case)
+{
+    if (!case_valide(x, y))
+        return;
+    this->grille_[y][x] = nouvelle_case;
+}
+
 int get_gain(int x, int y)
 {
     if (!emplacement_valide(x, y))
