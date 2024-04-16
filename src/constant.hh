@@ -34,6 +34,9 @@
 /// Coût de rotation d'une case qui n'est pas en lien avec une île ennemi
 #define COUT_ROTATION_STANDARD 1
 
+/// Multiplicateur de score du dernier tour
+#define MULTIPLICATEUR_DERNIER_TOUR 42
+
 /// k est une constante (relou)
 #define LA_CONSTANTE_K -41
 

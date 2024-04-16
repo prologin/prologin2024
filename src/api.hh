@@ -26,7 +26,7 @@ public:
     ~Api() {}
 
     /// Rotation d'un quart de tour d'une case dans le sens trigonométrique
-    /// (anti-horraire)
+    /// (anti-horaire)
     ApiActionFunc<ActionTournerCase> tourner_case{this};
 
     /// Activer l'effet d'un aigle
