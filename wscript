@@ -47,6 +47,8 @@ def build(bld):
             src/interface.cc
             src/rules.cc
             src/carte.cc
+            src/joueur.cc
+            src/aigle.cc
         ''',
         defines=['MODULE_COLOR=ANSI_COL_BROWN', 'MODULE_NAME="rules"'],
         target='prologin2024',

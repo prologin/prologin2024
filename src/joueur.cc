@@ -1,5 +1,13 @@
 #include "joueur.hh"
 
+Joueur::Joueur(int sc , int pa, std::vector<Aigle> aigles_vec,
+    std::vector<position> villages_vec)
+    : score{sc},
+    points_action{pa},
+    aigles{aigles_vec},
+    villages{villages_vec}
+{}
+
 std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
 {
     int largeur, hauteur;
@@ -32,7 +40,7 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
         }
     }
 
-    while (!pile.empty)
+    while (!pile.empty())
     {
         // DFS à pile.
         // les iles de notre territoire sont ajoutées une unique fois
