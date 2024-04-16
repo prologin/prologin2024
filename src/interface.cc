@@ -169,10 +169,6 @@ std::ostream& operator<<(std::ostream& os, erreur v)
     return os;
 }
 
-extern "C" void api_afficher_erreur(erreur v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, type_case v)
 {
     switch (v)
@@ -202,10 +198,6 @@ std::ostream& operator<<(std::ostream& os, type_case v)
     return os;
 }
 
-extern "C" void api_afficher_type_case(type_case v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, drakkar_debug v)
 {
     switch (v)
@@ -226,10 +218,6 @@ std::ostream& operator<<(std::ostream& os, drakkar_debug v)
     return os;
 }
 
-extern "C" void api_afficher_drakkar_debug(drakkar_debug v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, type_action v)
 {
     switch (v)
@@ -247,10 +235,6 @@ std::ostream& operator<<(std::ostream& os, type_action v)
     return os;
 }
 
-extern "C" void api_afficher_type_action(type_action v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, effet_aigle v)
 {
     switch (v)
@@ -274,10 +258,6 @@ std::ostream& operator<<(std::ostream& os, effet_aigle v)
     return os;
 }
 
-extern "C" void api_afficher_effet_aigle(effet_aigle v)
-{
-    std::cerr << v << std::endl;
-}
 
 std::ostream& operator<<(std::ostream& os, position v)
 {
@@ -291,10 +271,6 @@ std::ostream& operator<<(std::ostream& os, position v)
     return os;
 }
 
-extern "C" void api_afficher_position(position v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, dimension v)
 {
     os << "{ ";
@@ -307,10 +283,6 @@ std::ostream& operator<<(std::ostream& os, dimension v)
     return os;
 }
 
-extern "C" void api_afficher_dimension(dimension v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, aigle v)
 {
     os << "{ ";
@@ -338,10 +310,6 @@ std::ostream& operator<<(std::ostream& os, aigle v)
     return os;
 }
 
-extern "C" void api_afficher_aigle(aigle v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, etat_case v)
 {
     os << "{ ";
@@ -357,10 +325,6 @@ std::ostream& operator<<(std::ostream& os, etat_case v)
     return os;
 }
 
-extern "C" void api_afficher_etat_case(etat_case v)
-{
-    std::cerr << v << std::endl;
-}
 std::ostream& operator<<(std::ostream& os, action_hist v)
 {
     os << "{ ";
@@ -377,9 +341,4 @@ std::ostream& operator<<(std::ostream& os, action_hist v)
        << "=" << v.identifiant_aigle;
     os << " }";
     return os;
-}
-
-extern "C" void api_afficher_action_hist(action_hist v)
-{
-    std::cerr << v << std::endl;
 }
