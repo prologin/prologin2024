@@ -24,7 +24,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     {
         std::vector<Aigle> aigles;
         std::vector<position> villages;
-        villages.pushback(vec_to_pos(player));
+        villages.push_back(vec_to_pos(player));
         joueurs.emplace_back(id_joueur++, -1, aigles, villages);
     }
 
