@@ -12,6 +12,7 @@
 #include "constant.hh"
 #include "carte.hh"
 
+#include "joueur.hh"
 #include "../lib/json.hpp" //FIXME j'ai pas trouve mieux
 
 using json = nlohmann::json;
@@ -24,14 +25,6 @@ struct Aigle
     effet_aigle effet;
     int puissance;
     int tour_eclosion; // 0 si déjà éclot
-};
-
-struct Joueur
-{
-    int score;
-    int points_action;
-    std::vector<Aigle> aigles;
-    std::vector<position> villages;
 };
 
 class GameState final : public rules::GameState
