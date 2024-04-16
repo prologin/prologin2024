@@ -28,6 +28,7 @@ def build(bld):
             src/game_state.cc
             src/interface.cc
             src/rules.cc
+            src/carte.cc
         ''',
         defines=['MODULE_COLOR=ANSI_COL_BROWN', 'MODULE_NAME="rules"'],
         target='prologin2024',
