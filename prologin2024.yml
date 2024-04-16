@@ -47,6 +47,10 @@ constant:
     cst_val: 1
     cst_comment: "Coût de rotation d'une case qui n'est pas en lien avec une île ennemi"
   -
+    cst_name: MULTIPLICATEUR_DERNIER_TOUR
+    cst_val: 42
+    cst_comment: "Multiplicateur de score du dernier tour"
+  -
     cst_name: LA_CONSTANTE_K
     cst_val: -41
     cst_comment: "k est une constante (relou)"
