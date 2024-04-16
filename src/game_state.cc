@@ -70,9 +70,21 @@ bool GameState::est_termine() const
 
 void GameState::tour_suivant()
 {
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = carte.get_dimension();
+
+    Joueur& joueur_actuel = joueurs[joueur_actuel()];
+    std::vector<std::vector<bool>> territoire = joueur_actuel.territoire(carte);
+    for (int y = 0; y < hauteur - 1; y++)
+    {
+        for (int x = 0; x < largeur - 1; x++)
+        {
+            if (territoire[y][x])
+                joueur_actuel.score += carte.get_gain(x, y);
+        }
+    }
+
     tour++;
-    // FIXME
-    // FIXME ajouter les scores des joueurs
 }
 
 int GameState::joueur_actuel() const

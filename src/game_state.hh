@@ -12,36 +12,20 @@
 #include "constant.hh"
 #include "carte.hh"
 
+#include "aigle.hh"
+#include "joueur.hh"
 #include "../lib/json.hpp" //FIXME j'ai pas trouve mieux
 
 using json = nlohmann::json;
 
 
-struct Aigle
-{
-    int identifiant;
-    position pos;
-    effet_aigle effet;
-    int puissance;
-    int tour_eclosion; // 0 si déjà éclot
-};
-
-struct Joueur
-{
-    Joueur(int score, int points_actions, std::vector<Aigle> aigles, std::vector<position> villages)
-            : score(score), points_action(points_actions), aigles(aigles), villages(villages)
-    {}
-    int score;
-    int points_action;
-    std::vector<Aigle> aigles;
-    std::vector<position> villages;
-};
 
 class GameState final : public rules::GameState
 {
 public:
     int tour = -1;
     int round = 0;
+    bool init;
     Carte carte;
     std::vector<Joueur> joueurs; // Le joueur à la position i - 1 est le joueur i
     std::vector<Aigle> aigles_sauvages; // Les aigles qui n'appartiennent pas
