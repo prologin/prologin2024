@@ -18,10 +18,17 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         // FIXME
     }
 
+    std::vector<std::vector<int>> gains;
+    for (const auto& ligne : donnees["gains"])
+    {
+        std::vector<int> ligne_vec;
+        for (const auto& elt : ligne)
+            ligne_vec.push_back(elt);
+        gains.push_back(gains);
+    }
 
 
-    carte = Carte::Carte(donnees["carte"], std::transform(donnees["gain"].begin(), donnees["gain"].end(), std::back_inserter(Data),
-                                                          [](const std::string& str) { return std::stoi(str); }));
+    carte = Carte::Carte(donnees["carte"], gains);
 
     // FIXME
 }
