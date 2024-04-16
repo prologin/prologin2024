@@ -9,5 +9,5 @@ struct Joueur
     std::vector<Aigle> aigles;
     std::vector<position> villages;
 
-    int territoire(const Carte& carte) const;
+    std::vector<std::vector<bool>> territoire(const Carte& carte) const;
 };

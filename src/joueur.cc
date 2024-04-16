@@ -1,13 +1,12 @@
 #include "joueur.hh"
 
-int Joueur::territoire(const Carte& carte) const
+std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
 {
     int largeur, hauteur;
     std::tie(largeur, hauteur) = carte.get_dimension();
 
-    std::vector<std::vector<bool>> marques(hauteur, std::vector<bool>(largeur));
+    std::vector<std::vector<bool>> territoire(hauteur - 1, std::vector<bool>(largeur - 1));
     std::vector<std::pair<int, int>> pile;
-    int territoire = 0;
 
     // On rajoute les îles autour des bases du joueur
     for (const position& base: villages)
@@ -21,12 +20,12 @@ int Joueur::territoire(const Carte& carte) const
             {
                 int rx = x + dx;
                 int ry = y + dy;
-                if (marques[ry][rx])
+                if (territoire[ry][rx])
                     continue;
 
                 if (carte.ile_presente(rx, ry))
                 {
-                    marques[ry][rx] = true;
+                    territoire[ry][rx] = true;
                     pile.push_back({rx, ry});
                 }
             }
@@ -38,7 +37,6 @@ int Joueur::territoire(const Carte& carte) const
         // DFS à pile.
         // les iles de notre territoire sont ajoutées une unique fois
         // dans la pile grâce au tableau de marques.
-        territoire++;
         int x, y;
         std::tie(x, y) = pile.back();
         pile.pop_back();
@@ -54,12 +52,12 @@ int Joueur::territoire(const Carte& carte) const
         {
             int rx, ry;
             std::tie(rx, ry) = voisin;
-            if (marques[ry][rx])
+            if (territoire[ry][rx])
                 continue;
 
             if (carte.ile_presente(rx, ry))
             {
-                marques[ry][rx] = true;
+                territoire[ry][rx] = true;
                 pile.push_back({rx, ry});
             }
         }
