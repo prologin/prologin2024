@@ -25,6 +25,7 @@ def _copy_assets(source_dir, build_dir):
         'maps/colibri.json',
     ]
     for asset in assets:
+        print(os.path)
         src_path = os.path.join(source_dir, asset)
         dst_path = os.path.join(build_dir, os.path.basename(asset))
         try:
@@ -51,6 +52,12 @@ def build(bld):
         target='prologin2024',
         use=['stechec2'],
     )
+    if not os.environ.get("WSCRIPT_SKIP_TESTS"):
+        source_dir = bld.path.abspath()
+        build_dir = os.path.join(bld.out_dir, os.path.relpath(source_dir, bld.top_dir))
+        os.makedirs(build_dir, exist_ok=True)
+        _copy_assets(source_dir, build_dir)
+
 
     abs_pattern = os.path.join(bld.path.abspath(), 'src/tests/test-*.cc')
     for test_src in glob.glob(abs_pattern):
