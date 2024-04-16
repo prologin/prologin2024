@@ -50,9 +50,9 @@ bool GameState::est_termine() const
 
 void GameState::tour_suivant()
 {
+    Joueur& joueur_actuel = joueurs[joueur_actuel()];
+    joueur_actuel.score += joueur_actuel.territoire(carte);
     tour++;
-    // FIXME
-    // FIXME ajouter les scores des joueurs
 }
 
 int GameState::joueur_actuel() const
