@@ -147,7 +147,7 @@ function:
 # Actions
   -
     fct_name: tourner_case
-    fct_summary: "Rotation d'un quart de tour d'une case dans le sens trigonométrique (anti-horraire)"
+    fct_summary: "Rotation d'un quart de tour d'une case dans le sens trigonométrique (anti-horaire)"
     fct_ret_type: erreur
     fct_action: yes
     fct_arg:
