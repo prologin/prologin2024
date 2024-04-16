@@ -15,7 +15,7 @@ namespace
 GameState::GameState(const rules::Players& players)
         : rules::GameState(players)
 {
-
+    // should not come here
 }
 
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)
