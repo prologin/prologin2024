@@ -50,12 +50,15 @@ public:
 
     // FIXME
     // additional parameters? for instance map
+    GameState(const rules::Players& players);
     GameState(const rules::Players& players, std::ifstream& json_file);
     GameState(const GameState& st) = default;
     ~GameState();
 
     GameState* copy() const override;
 
+
+    bool est_termine() const;
     void tour_suivant();
     int joueur_actuel() const;
     void debute_tour(int joueur);

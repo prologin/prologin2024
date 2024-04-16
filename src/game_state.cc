@@ -11,6 +11,13 @@ namespace
     }
 } // namespace
 
+
+GameState::GameState(const rules::Players& players)
+        : rules::GameState(players)
+{
+
+}
+
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     : rules::GameState(players)
 {
