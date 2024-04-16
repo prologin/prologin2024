@@ -1,3 +1,4 @@
+#include <tuple>
 #include "joueur.hh"
 
 Joueur::Joueur(int sc , int pa, std::vector<Aigle> aigles_vec,

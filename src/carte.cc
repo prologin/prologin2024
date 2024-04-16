@@ -31,12 +31,13 @@ Carte::Carte(const std::vector<std::string>& texte, const std::vector<std::vecto
         }
     }
 }
-std::pair<int, int> Carte::get_dimension()
+
+std::pair<int, int> Carte::get_dimension() const
 {
-    return {this->largeur_, this->hauteur_};
+    return {largeur_, hauteur_};
 }
 
-type_case Carte::get_case(int x, int y)
+type_case Carte::get_case(int x, int y) const
 {
     if (!case_valide(x, y))
         return CASE_INVALIDE;
@@ -51,7 +52,7 @@ void Carte::set_case(int x, int y, type_case nouvelle_case)
     grille_[y][x] = nouvelle_case;
 }
 
-int Carte::get_gain(int x, int y)
+int Carte::get_gain(int x, int y) const
 {
     if (!emplacement_valide(x, y))
         return 0;
@@ -59,15 +60,17 @@ int Carte::get_gain(int x, int y)
         return gain_[y][x];
 }
 
-bool Carte::case_valide(int x, int y)
+bool Carte::case_valide(int x, int y) const
 {
     return x >= 0 && x < largeur_ && y >= 0 && y < hauteur_;
 }
-bool Carte::emplacement_valide(int x, int y)
+
+bool Carte::emplacement_valide(int x, int y) const
 {
     return x >= 0 && x < largeur_ - 1 && y >= 0 && y < hauteur_ - 1;
 }
-bool Carte::ile_presente(int x, int y)
+
+bool Carte::ile_presente(int x, int y) const
 {
     if (!emplacement_valide(x, y))
         return false;

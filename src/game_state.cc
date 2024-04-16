@@ -109,4 +109,5 @@ bool emplacement_dans_territoire(int joueur, position pos)
 json GameState::dump() const
 {
     // FIXME
+    return NULL;
 }
