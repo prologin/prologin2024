@@ -7,6 +7,9 @@
 class Carte
 {
 public:
+    Carte() = default;
+    Carte(const Carte& carte) = default;
+    ~Carte() = default;
     Carte(const std::vector<std::string>& texte, const std::vector<std::vector<int>>& gain);
     std::pair<int, int> get_dimension();
     type_case get_case(int x, int y);

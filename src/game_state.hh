@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include <fstream>
+#include <vector>
+
 #include <rules/game-state.hh>
 #include <rules/player.hh>
 
