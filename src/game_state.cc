@@ -114,7 +114,7 @@ void GameState::ajoute_historique(action_hist action)
 void GameState::pose_drakkar(position pos, drakkar_debug couleur)
 {
     action_hist vide;
-    vide.dest = pos;
+    vide.fin = pos;
     historiques[joueur_actuel()].push_back({ true, vide, couleur });
 }
 
