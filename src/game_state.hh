@@ -17,6 +17,11 @@
 
 using json = nlohmann::json;
 
+struct ActionInterne {
+    bool est_drakkar;
+    action_hist action;
+    drakkar_debug couleur;
+};
 
 struct Aigle
 {
@@ -37,6 +42,7 @@ public:
     std::vector<Aigle> aigles_sauvages; // Les aigles qui n'appartiennent pas
                                       // encore à un joueur
     std::vector<position> villages_libres;
+    std::vector<std::vector<ActionInterne>> historiques;
 
     // FIXME
     // additional parameters? for instance map
@@ -53,6 +59,10 @@ public:
     int joueur_actuel() const;
     void debute_tour(int joueur);
     bool emplacement_dans_territoire(int joueur, position pos);
+
+    void ajoute_historique(action_hist action);
+    void pose_drakkar(position pos, drakkar_debug couleur);
+    bool annuler();
 
     json dump() const;
 };
