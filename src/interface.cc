@@ -36,9 +36,9 @@ extern "C" erreur api_activer_aigle(int id)
     return api->activer_aigle(id);
 }
 
-extern "C" erreur api_deplacer_aigle(position pos)
+extern "C" erreur api_deplacer_aigle(position pos, position destination)
 {
-    return api->deplacer_aigle(pos);
+    return api->deplacer_aigle(pos, destination);
 }
 
 extern "C" dimension api_dimensions_carte()
@@ -159,8 +159,8 @@ std::ostream& operator<<(std::ostream& os, erreur v)
     case POSITION_INVALIDE:
         os << "POSITION_INVALIDE";
         break;
-    case CIBLE_INVALIDE:
-        os << "CIBLE_INVALIDE";
+    case DESTINATION_INVALIDE:
+        os << "DESTINATION_INVALIDE";
         break;
     case PLUS_DE_PA:
         os << "PLUS_DE_PA";

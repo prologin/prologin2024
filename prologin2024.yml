@@ -64,7 +64,7 @@ enum:
       - [ok, "L'action a été effectuée avec succès"]
       - [hors_tour, "Vous ne pouvez pas faire d'action en dehors de votre tour"]
       - [position_invalide, "La position fournie est invalide"]
-      - [cible_invalide, "L'entité demandée est invalide"]
+      - [destination_invalide, "La position d'arrivé est invalide"]
       - [plus_de_pa, "Vous n'avez plus de points d'action"]
       - [aigle_invalide, "L'identifiant de l'aigle est invalide"]
   -
@@ -170,7 +170,8 @@ function:
     fct_ret_type: erreur
     fct_action: yes
     fct_arg:
-      - [pos, position, "Position où l'aigle sera déplacé"]
+      - [pos, position, "Position initiale de l'aigle"]
+      - [destination, position, "Position où l'aigle sera déplacé"]
 
 # Fonctions de requête de l'état du jeu
   -
