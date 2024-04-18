@@ -47,6 +47,7 @@ typedef enum erreur
     OK, ///< L'action a été effectuée avec succès
     HORS_TOUR, ///< Vous ne pouvez pas faire d'action en dehors de votre tour
     POSITION_INVALIDE, ///< La position fournie est invalide
+    CIBLE_INVALIDE, ///< L'entité demandée est invalide
     PLUS_DE_PA, ///< Vous n'avez plus de points d'action
     AIGLE_INVALIDE, ///< L'identifiant de l'aigle est invalide
 } erreur;

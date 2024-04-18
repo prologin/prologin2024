@@ -159,6 +159,9 @@ std::ostream& operator<<(std::ostream& os, erreur v)
     case POSITION_INVALIDE:
         os << "POSITION_INVALIDE";
         break;
+    case CIBLE_INVALIDE:
+        os << "CIBLE_INVALIDE";
+        break;
     case PLUS_DE_PA:
         os << "PLUS_DE_PA";
         break;
