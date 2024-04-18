@@ -106,6 +106,28 @@ bool emplacement_dans_territoire(int joueur, position pos)
 
 /* GESTIONNAIRE D'HISTORIQUE */
 
+void GameState::ajoute_historique(action_hist action)
+{
+    historiques[joueur_actuel()].push_back({ false, action, PAS_DE_DRAKKAR });
+}
+
+void GameState::pose_drakkar(position pos, drakkar_debug couleur)
+{
+    action_hist vide;
+    vide.dest = pos;
+    historiques[joueur_actuel()].push_back({ true, vide, couleur });
+}
+
+bool GameState::annuler()
+{
+    if (historiques[joueur_actuel()].empty())
+        return false;
+    historiques[joueur_actuel()].pop_back();
+    return true;
+}
+
+/* DUMPER FOR GAME STATE */
+
 json GameState::dump() const
 {
     // FIXME
