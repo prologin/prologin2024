@@ -122,7 +122,7 @@ TEST(CarteTest, json_test_get_gain)
     ASSERT_EQ(carte.get_gain(5, 0), 0);
 }
 
-TEST(CarteTest, json_test_valide)
+TEST(CarteTest, json_test_case_valide)
 {
     std::ifstream is("colibri.json");
     rules::Players players;
@@ -145,4 +145,60 @@ TEST(CarteTest, json_test_valide)
     ASSERT_EQ(carte.case_valide(5, 4), false);
     ASSERT_EQ(carte.case_valide(5, 0), false);
     ASSERT_EQ(carte.case_valide(0, 4), false);
+}
+
+TEST(CarteTest, json_test_emplacement_valide)
+{
+    std::ifstream is("colibri.json");
+    rules::Players players;
+    GameState st(players, is);
+    Carte carte = st.carte;
+    
+    // Valide
+    for (int x = 0; x < 4; x++)
+    {
+        for (int y = 0; y < 3; y++)
+        {
+        ASSERT_EQ(carte.emplacement_valide(x, y), true);
+        }
+    }
+    
+    // Invalide
+    ASSERT_EQ(carte.emplacement_valide(-1, 0), false);
+    ASSERT_EQ(carte.emplacement_valide(-1, -1), false);
+    ASSERT_EQ(carte.emplacement_valide(0, -1), false);
+    ASSERT_EQ(carte.emplacement_valide(4, 3), false);
+    ASSERT_EQ(carte.emplacement_valide(4, 0), false);
+    ASSERT_EQ(carte.emplacement_valide(0, 3), false);
+}
+
+TEST(CarteTest, json_test_ile_presente)
+{
+    std::ifstream is("colibri.json");
+    rules::Players players;
+    GameState st(players, is);
+    Carte carte = st.carte;
+    
+    // Valide
+    ASSERT_EQ(carte.ile_presente(2, 0), true);
+    ASSERT_EQ(carte.ile_presente(3, 0), true);
+    ASSERT_EQ(carte.ile_presente(0, 2), true);
+    ASSERT_EQ(carte.ile_presente(1, 2), true);
+    ASSERT_EQ(carte.ile_presente(2, 2), true);
+    
+    // Ivalide (pas ile)
+    ASSERT_EQ(carte.ile_presente(0, 0), false);
+    ASSERT_EQ(carte.ile_presente(1, 0), false);
+    ASSERT_EQ(carte.ile_presente(2, 1), false);
+    ASSERT_EQ(carte.ile_presente(3, 1), false);
+    ASSERT_EQ(carte.ile_presente(0, 1), false);
+    ASSERT_EQ(carte.ile_presente(1, 1), false);
+    ASSERT_EQ(carte.ile_presente(2, 1), false);
+    ASSERT_EQ(carte.ile_presente(3, 2), false);
+    
+    // Invalide (hors carte)
+    ASSERT_EQ(carte.ile_presente(-1, 0), false);
+    ASSERT_EQ(carte.ile_presente(1, -1), false);
+    ASSERT_EQ(carte.ile_presente(4, 1), false);
+    ASSERT_EQ(carte.ile_presente(3, 3), false);
 }
