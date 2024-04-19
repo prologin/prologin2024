@@ -46,3 +46,55 @@ TEST(CarteTest, json_test_cases)
     ASSERT_EQ(carte.get_case(5, 0), CASE_INVALIDE);
     ASSERT_EQ(carte.get_case(5, 4), CASE_INVALIDE);
 }
+
+TEST(CarteTest, json_test_set_case)
+{
+    std::ifstream is("colibri.json");
+    rules::Players players;
+    GameState st(players, is);
+    Carte carte = st.carte;
+
+    // Valide
+    carte.set_case(0, 0, NORD_OUEST);
+    ASSERT_EQ(carte.get_case(0, 0), NORD_OUEST);
+    carte.set_case(1, 1, NORD_OUEST);
+    ASSERT_EQ(carte.get_case(1, 1), NORD_OUEST);
+    carte.set_case(2, 2, SUD_EST);
+    ASSERT_EQ(carte.get_case(2, 2), SUD_EST);
+    for (int x = 0; x < 5; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            carte.set_case(x, y, NORD_EST);
+        }
+    }
+    for (int x = 0; x < 5; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            ASSERT_EQ(carte.get_case(x, y), NORD_EST);
+        }
+    }
+
+    // Invalide
+    carte.set_case(-1, 0, NORD_OUEST);
+    carte.set_case(-1, -2, NORD_OUEST);
+    carte.set_case(0, -2, NORD_OUEST);
+    carte.set_case(0, 4, NORD_OUEST);
+    carte.set_case(5, 4, NORD_OUEST);
+    carte.set_case(5, 4, NORD_OUEST);
+    for (int x = 0; x < 5; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            carte.set_case(x, y, NORD_EST);
+        }
+    }
+    for (int x = 0; x < 5; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+        ASSERT_EQ(carte.get_case(x, y), NORD_EST);
+        }
+    }
+}
