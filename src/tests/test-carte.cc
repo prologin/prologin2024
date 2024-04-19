@@ -98,3 +98,51 @@ TEST(CarteTest, json_test_set_case)
         }
     }
 }
+
+TEST(CarteTest, json_test_get_gain)
+{
+    std::ifstream is("colibri.json");
+    rules::Players players;
+    GameState st(players, is);
+    Carte carte = st.carte;
+    
+    // Valide
+    ASSERT_EQ(carte.get_gain(0, 0), 3);
+    ASSERT_EQ(carte.get_gain(0, 1), 0);
+    ASSERT_EQ(carte.get_gain(0, 2), 10);
+    ASSERT_EQ(carte.get_gain(2, 0), 4);
+    ASSERT_EQ(carte.get_gain(2, 1), -4);
+    ASSERT_EQ(carte.get_gain(2, 2), 2);
+    
+    // Invalide
+    ASSERT_EQ(carte.get_gain(0, -1), 0);
+    ASSERT_EQ(carte.get_gain(-1, -1), 0);
+    ASSERT_EQ(carte.get_gain(-1, 0), 0);
+    ASSERT_EQ(carte.get_gain(0, 3), 0);
+    ASSERT_EQ(carte.get_gain(5, 0), 0);
+}
+
+TEST(CarteTest, json_test_valide)
+{
+    std::ifstream is("colibri.json");
+    rules::Players players;
+    GameState st(players, is);
+    Carte carte = st.carte;
+    
+    // Valide
+    for (int x = 0; x < 5; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+        ASSERT_EQ(carte.case_valide(x, y), true);
+        }
+    }
+    
+    // Invalide
+    ASSERT_EQ(carte.case_valide(-1, 0), false);
+    ASSERT_EQ(carte.case_valide(-1, -1), false);
+    ASSERT_EQ(carte.case_valide(0, -1), false);
+    ASSERT_EQ(carte.case_valide(5, 4), false);
+    ASSERT_EQ(carte.case_valide(5, 0), false);
+    ASSERT_EQ(carte.case_valide(0, 4), false);
+}
