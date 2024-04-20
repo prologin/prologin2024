@@ -36,3 +36,4 @@ private:
     int player_id_;
 };
 
+enum type_case rotation_case(enum type_case actuel);

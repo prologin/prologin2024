@@ -2,6 +2,7 @@
 // Copyright (c) 2012-2020 Association Prologin <association@prologin.org>
 
 #include "actions.hh"
+#include "action_tourner_case.hh"
 
 int ActionActiverAigle::check(const GameState& st) const
 {
@@ -47,30 +48,6 @@ bool envoler_aigle_pos(std::vector<Aigle> aigles, position pos)
     return envole;
 }
 
-void tourner_case(Carte carte, int x, int y)
-{
-    type_case tcase = carte.get_case(x, y);
-    switch (tcase) {
-        case VILLAGE:
-            return;
-        break;
-        case NORD_OUEST:
-            carte.set_case(x, y, SUD_OUEST);
-        break;
-        case SUD_OUEST:
-            carte.set_case(x, y, SUD_EST);
-        break;
-        case SUD_EST:
-            carte.set_case(x, y, NORD_EST);
-        break;
-        case NORD_EST:
-            carte.set_case(x, y, NORD_OUEST);
-        break;
-        default:
-            return;
-    }
-}
-
 void tourner_cases(Carte carte, Aigle aigle)
 {
     for (int x = aigle.pos.colonne - aigle.puissance; x < aigle.pos.colonne + aigle.puissance; x++)
@@ -79,8 +56,8 @@ void tourner_cases(Carte carte, Aigle aigle)
         {
             if (carte.case_valide(x, y))
             {
-                tourner_case(carte, x, y);
-                tourner_case(carte, x, y);
+                carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
+                carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
             }
         }
     }
@@ -97,7 +74,7 @@ void ActionActiverAigle::apply_on(GameState* st) const
     {
         case EFFET_RAZ_DE_MAREE:
         {
-            tourner_case(st->carte, aiglantine.pos.colonne, aiglantine.pos.ligne);
+            tourner_cases(st->carte, aiglantine);
             break;
         }
         case EFFET_ACTIONS:
