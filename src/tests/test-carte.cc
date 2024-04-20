@@ -199,3 +199,14 @@ TEST(CarteTest, json_test_ile_presente)
     ASSERT_EQ(carte.ile_presente(4, 1), false);
     ASSERT_EQ(carte.ile_presente(3, 3), false);
 }
+
+TEST(CarteTest, json_test_aigle)
+{
+    std::ifstream is("colibri.json");
+    rules::Players players;
+    GameState st(players, is);
+
+    ASSERT_EQ(st.aigles_sauvages[0].pos.colonne, 2);
+    ASSERT_EQ(st.aigles_sauvages[0].pos.ligne, 1);
+    ASSERT_EQ(st.aigles_sauvages[0].effet, EFFET_BLOQUEUR);
+}

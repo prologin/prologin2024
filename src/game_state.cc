@@ -25,13 +25,16 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
 
     json donnees;
     json_file >> donnees;
+
     int id_joueur = 0;
+
     int x1 = donnees["joueur1"]["x"];
     int y1 = donnees["joueur1"]["y"];
     std::vector<Aigle> aigles1;
     std::vector<position> villages1;
     villages1.push_back(vec_to_pos({x1, y1}));
     joueurs.emplace_back(id_joueur++, -1, aigles1, villages1);
+
     int x2 = donnees["joueur2"]["x"];
     int y2 = donnees["joueur2"]["y"];
     std::vector<Aigle> aigles2;
@@ -53,15 +56,15 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     {
         effet_aigle effet;
         std::string effet_string = aigle["effet"];
-        if (effet_string.compare("METEORE"))
+        if (!effet_string.compare("METEORE"))
             effet = EFFET_RAZ_DE_MAREE;
-        else if (effet_string.compare("VIE"))
+        else if (!effet_string.compare("VIE"))
             effet = EFFET_ACTIONS;
-        else if (effet_string.compare("FEU"))
+        else if (!effet_string.compare("FEU"))
             effet = EFFET_EFFRAYER;
-        else if (effet_string.compare("ABONDANCE"))
+        else if (!effet_string.compare("ABONDANCE"))
             effet = EFFET_MULTIPLICATIF;
-        else if (effet_string.compare("GEL"))
+        else if (!effet_string.compare("GEL"))
             effet = EFFET_BLOQUEUR;
         else
             effet = EFFET_BLOQUEUR;
