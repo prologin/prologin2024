@@ -3,6 +3,8 @@
 
 #include "game_state.hh"
 
+#include <iostream>
+
 namespace
 {
     position vec_to_pos(const std::vector<int>& vec)
@@ -26,15 +28,17 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     json donnees;
     json_file >> donnees;
     int id_joueur = 0;
-    auto& player1 = donnees["joueur1"];
+    int x1 = donnees["joueur1"]["x"];
+    int y1 = donnees["joueur1"]["y"];
     std::vector<Aigle> aigles1;
     std::vector<position> villages1;
-    villages1.push_back(vec_to_pos(player1));
+    villages1.push_back(vec_to_pos({x1, y1}));
     joueurs.emplace_back(id_joueur++, -1, aigles1, villages1);
-    auto& player2 = donnees["joueur2"];
+    int x2 = donnees["joueur2"]["x"];
+    int y2 = donnees["joueur2"]["y"];
     std::vector<Aigle> aigles2;
     std::vector<position> villages2;
-    villages2.push_back(vec_to_pos(player2));
+    villages2.push_back(vec_to_pos({x2, y2}));
     joueurs.emplace_back(id_joueur++, -1, aigles2, villages2);
 
     std::vector<std::vector<int>> gains;
@@ -51,6 +55,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     {
         effet_aigle effet;
         std::string effet_string = aigle["effet"];
+        std::cout << aigle << std::endl;
         if (effet_string.compare("METEORE"))
             effet = EFFET_RAZ_DE_MAREE;
         else if (effet_string.compare("VIE"))
@@ -63,7 +68,9 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
             effet = EFFET_BLOQUEUR;
         else
             effet = EFFET_BLOQUEUR;
-        aigles_sauvages.emplace_back(id, vec_to_pos(aigle["pos"]), effet, aigle["puissance"], aigle["tour_eclosion"]);
+        std::cout << "AAAAAAAAAAAAAAAA" << std::endl;
+        Aigle a(id, {aigle["pos"]["x"], aigle["pos"]["y"]}, effet, aigle["puissance"], aigle["tour_eclosion"]);
+        aigles_sauvages.push_back(a);
     }
 
     std::vector<std::string> carte_texte;
