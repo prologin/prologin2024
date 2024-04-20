@@ -20,13 +20,15 @@
     "x": 4,
     "y": 0
   },
-  "aigles": {
-    "pos": {
-      "x": 2,
-      "y": 1
-    },
-    "effet": "GEL",
-    "puissance": 4,
-    "tour_eclosion": 42
-  }
+  "aigles": [
+    {
+      "pos": {
+        "x": 2,
+        "y": 1
+      },
+      "effet": "GEL",
+      "puissance": 4,
+      "tour_eclosion": 42
+    }
+  ]
 }
