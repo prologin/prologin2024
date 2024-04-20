@@ -126,12 +126,6 @@ void GameState::debute_tour(int joueur)
     // FIXME
 }
 
-bool emplacement_dans_territoire(int joueur, position pos)
-{
-    // FIXME
-    return false;
-}
-
 /* GESTIONNAIRE D'HISTORIQUE */
 
 void GameState::ajoute_historique(action_hist action)

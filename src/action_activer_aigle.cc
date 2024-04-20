@@ -56,8 +56,10 @@ void tourner_cases(Carte carte, Aigle aigle)
         {
             if (carte.case_valide(x, y))
             {
-                carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
-                carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
+                for (int i = 0; i < 2; i++)
+                {
+                    carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
+                }
             }
         }
     }

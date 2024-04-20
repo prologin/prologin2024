@@ -16,10 +16,10 @@ Carte::Carte(const std::vector<std::string>& texte, const std::vector<std::vecto
                     grille_[y][x] = VILLAGE;
                     break;
                 case '1':
-                    grille_[y][x] = NORD_OUEST;
+                    grille_[y][x] = NORD_EST;
                     break;
                 case '2':
-                    grille_[y][x] = NORD_EST;
+                    grille_[y][x] = NORD_OUEST;
                     break;
                 case '3':
                     grille_[y][x] = SUD_OUEST;
