@@ -3,8 +3,6 @@
 
 #include "game_state.hh"
 
-#include <iostream>
-
 namespace
 {
     position vec_to_pos(const std::vector<int>& vec)
@@ -55,7 +53,6 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     {
         effet_aigle effet;
         std::string effet_string = aigle["effet"];
-        std::cout << aigle << std::endl;
         if (effet_string.compare("METEORE"))
             effet = EFFET_RAZ_DE_MAREE;
         else if (effet_string.compare("VIE"))
@@ -68,7 +65,6 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
             effet = EFFET_BLOQUEUR;
         else
             effet = EFFET_BLOQUEUR;
-        std::cout << "AAAAAAAAAAAAAAAA" << std::endl;
         Aigle a(id, {aigle["pos"]["x"], aigle["pos"]["y"]}, effet, aigle["puissance"], aigle["tour_eclosion"]);
         aigles_sauvages.push_back(a);
     }
