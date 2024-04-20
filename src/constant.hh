@@ -47,7 +47,7 @@ typedef enum erreur
     OK, ///< L'action a été effectuée avec succès
     HORS_TOUR, ///< Vous ne pouvez pas faire d'action en dehors de votre tour
     POSITION_INVALIDE, ///< La position fournie est invalide
-    DESTINATION_INVALIDE, ///< La position d'arrivé est invalide
+    DESTINATION_INVALIDE, ///< La position d'arrivée est invalide
     PLUS_DE_PA, ///< Vous n'avez plus de points d'action
     AIGLE_INVALIDE, ///< L'identifiant de l'aigle est invalide
 } erreur;
@@ -55,8 +55,7 @@ typedef enum erreur
 /// Contenu topographique d'une case
 typedef enum type_case
 {
-    VILLAGE_NEUTRE, ///< Village n'appartenant à aucun joueur
-    VILLAGE_ACQUIS, ///< Village appartenant à un joueur
+    VILLAGE, ///< Village
     NORD_OUEST, ///< Case dont le coin manquant est au nord ouest
     NORD_EST, ///< Case dont le coin manquant est au nord est
     SUD_OUEST, ///< Case dont le coin manquant est au sud ouest

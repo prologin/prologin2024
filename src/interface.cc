@@ -36,9 +36,9 @@ extern "C" erreur api_activer_aigle(int id)
     return api->activer_aigle(id);
 }
 
-extern "C" erreur api_deplacer_aigle(position pos, position destination)
+extern "C" erreur api_deplacer_aigle(int id, position destination)
 {
-    return api->deplacer_aigle(pos, destination);
+    return api->deplacer_aigle(id, destination);
 }
 
 extern "C" dimension api_dimensions_carte()
@@ -176,11 +176,8 @@ std::ostream& operator<<(std::ostream& os, type_case v)
 {
     switch (v)
     {
-    case VILLAGE_NEUTRE:
-        os << "VILLAGE_NEUTRE";
-        break;
-    case VILLAGE_ACQUIS:
-        os << "VILLAGE_ACQUIS";
+    case VILLAGE:
+        os << "VILLAGE";
         break;
     case NORD_OUEST:
         os << "NORD_OUEST";

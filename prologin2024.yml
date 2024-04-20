@@ -64,15 +64,14 @@ enum:
       - [ok, "L'action a été effectuée avec succès"]
       - [hors_tour, "Vous ne pouvez pas faire d'action en dehors de votre tour"]
       - [position_invalide, "La position fournie est invalide"]
-      - [destination_invalide, "La position d'arrivé est invalide"]
+      - [destination_invalide, "La position d'arrivée est invalide"]
       - [plus_de_pa, "Vous n'avez plus de points d'action"]
       - [aigle_invalide, "L'identifiant de l'aigle est invalide"]
   -
     enum_name: type_case
     enum_summary: "Contenu topographique d'une case"
     enum_field:
-      - [village_neutre, "Village n'appartenant à aucun joueur"]
-      - [village_acquis, "Village appartenant à un joueur"]
+      - [village, "Village"]
       - [nord_ouest, "Case dont le coin manquant est au nord ouest"]
       - [nord_est, "Case dont le coin manquant est au nord est"]
       - [sud_ouest, "Case dont le coin manquant est au sud ouest"]
@@ -170,7 +169,7 @@ function:
     fct_ret_type: erreur
     fct_action: yes
     fct_arg:
-      - [pos, position, "Position initiale de l'aigle"]
+      - [id, int, "Identifiant de l'aigle"]
       - [destination, position, "Position où l'aigle sera déplacé"]
 
 # Fonctions de requête de l'état du jeu

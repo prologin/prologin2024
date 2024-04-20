@@ -13,7 +13,7 @@ Carte::Carte(const std::vector<std::string>& texte, const std::vector<std::vecto
             switch (texte[y][x])
             {
                 case 'X':
-                    grille_[y][x] = VILLAGE_NEUTRE;
+                    grille_[y][x] = VILLAGE;
                     break;
                 case '1':
                     grille_[y][x] = NORD_OUEST;

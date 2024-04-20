@@ -12,8 +12,8 @@
 class ActionDeplacerAigle : public rules::Action<GameState>
 {
 public:
-    ActionDeplacerAigle(position pos, position destination, int player_id)
-        : pos_(pos)
+    ActionDeplacerAigle(int id, position destination, int player_id)
+        : id_(id)
         , destination_(destination)
         , player_id_(player_id)
     {
@@ -25,7 +25,7 @@ public:
 
     void handle_buffer(utils::Buffer& buf) override
     {
-        buf.handle(pos_);
+        buf.handle(id_);
         buf.handle(destination_);
         buf.handle(player_id_);
     }
@@ -34,7 +34,7 @@ public:
     uint32_t id() const override { return ID_ACTION_DEPLACER_AIGLE; }
 
 private:
-    position pos_;
+    int id_;
     position destination_;
     int player_id_;
 };

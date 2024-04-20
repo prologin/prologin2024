@@ -29,7 +29,7 @@ TEST(CarteTest, json_test_cases)
     ASSERT_EQ(carte.get_case(0, 0), SUD_EST);
     ASSERT_EQ(carte.get_case(1, 0), SUD_OUEST);
     ASSERT_EQ(carte.get_case(3, 0), NORD_OUEST);
-    ASSERT_EQ(carte.get_case(4, 0), VILLAGE_NEUTRE); //TODO modifier apres le changement dans le yaml
+    ASSERT_EQ(carte.get_case(4, 0), VILLAGE);
     ASSERT_EQ(carte.get_case(1, 2), NORD_EST);
 
     // Case bord
