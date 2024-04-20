@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Scenes/Viewer.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/Viewer/BackgroundTileMap.gd" type="Script" id=3]
+
+[node name="Viewer" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="BackgroundTileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 96, 96 )
+cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
+format = 1
+script = ExtResource( 3 )
+
+[connection signal="leftclick" from="BackgroundTileMap" to="." method="_on_BackgroundTileMap_leftclick"]
