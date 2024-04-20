@@ -15,4 +15,5 @@ struct Joueur
     std::vector<position> villages;
 
     std::vector<std::vector<bool>> territoire(const Carte& carte) const;
+    Aigle* trouve_aigle(int aigle_id);
 };

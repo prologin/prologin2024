@@ -74,3 +74,16 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
 
     return territoire;
 }
+
+Aigle* Joueur::trouve_aigle(int aigle_id)
+{
+    for (int i = 0 ; i < aigles.size(); i++)
+    {
+        Aigle aiglantine = aigles[i];
+        if (aiglantine.identifiant == aigle_id)
+        {
+            return &aiglantine;
+        }
+    }
+    return NULL;
+}
