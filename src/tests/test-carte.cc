@@ -4,9 +4,6 @@
 
 #include "../game_state.hh"
 
-#include <sstream>
-#include <filesystem>
-
 TEST(CarteTest, json_test_dimensions)
 {
     std::ifstream is("colibri.json");
