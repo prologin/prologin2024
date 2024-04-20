@@ -23,6 +23,8 @@ namespace
 
 class ApiTest : public ::testing::Test
 {
+public:
+protected:
     constexpr static int PLAYER_ID_1 = 0;
     constexpr static int PLAYER_ID_2 = 1;
 
