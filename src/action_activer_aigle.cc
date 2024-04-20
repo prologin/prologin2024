@@ -109,6 +109,7 @@ void ActionActiverAigle::apply_on(GameState* st) const
         {
             envoler_aigle_pos(joueurs[0].aigles, aiglantine.pos); //TODO YAKA pas sur
             envoler_aigle_pos(joueurs[1].aigles, aiglantine.pos);
+            envoler_aigle_pos(st->aigles_sauvages, aiglantine.pos);
             break;
         }
         default:
