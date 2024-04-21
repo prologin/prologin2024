@@ -49,7 +49,7 @@ class Map:
 			for _j in range(width):
 				row.append(Constants.TypeCase.NORD_OUEST)
 				if _j < width - 1:
-					points_row.append(1)
+					points_row.append((_j + _i) % 2)
 			self.carte.append(row)
 			if _i < height - 1:
 				self.points.append(points_row)
