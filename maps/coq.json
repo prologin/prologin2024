@@ -51,7 +51,7 @@
         "y": 5
       },
       "effet": "FEU",
-      "puissance": 10,
+      "puissance": 3,
       "tour_eclosion": 10
     },
     {
@@ -78,7 +78,7 @@
         "y": 5
       },
       "effet": "FEU",
-      "puissance": 10,
+      "puissance": 3,
       "tour_eclosion": 10
     },
     {
@@ -87,7 +87,7 @@
         "y": 9
       },
       "effet": "FEU",
-      "puissance": 10,
+      "puissance": 3,
       "tour_eclosion": 10
     },
     {
@@ -114,7 +114,7 @@
         "y": 9
       },
       "effet": "FEU",
-      "puissance": 10,
+      "puissance": 3,
       "tour_eclosion": 10
     },
     {
@@ -123,7 +123,7 @@
         "y": 7
       },
       "effet": "MORT",
-      "puissance": 10,
+      "puissance": 42,
       "tour_eclosion": 10
     },
     {
@@ -132,7 +132,7 @@
         "y": 7
       },
       "effet": "METEORE",
-      "puissance": 10,
+      "puissance": 3,
       "tour_eclosion": 10
     },
     {
@@ -141,7 +141,7 @@
         "y": 7
       },
       "effet": "METEORE",
-      "puissance": 10,
+      "puissance": 3,
       "tour_eclosion": 10
     },
     {
@@ -150,7 +150,7 @@
         "y": 7
       },
       "effet": "MORT",
-      "puissance": 10,
+      "puissance": 42,
       "tour_eclosion": 10
     }
   ]
