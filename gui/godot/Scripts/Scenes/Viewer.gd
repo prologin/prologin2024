@@ -5,6 +5,7 @@ extends Node2D
 signal bg_left_click(pos)
 
 onready var background : TileMap = $BackgroundTileMap
+onready var grid : TileMap = $Grid
 
 var map : Models.Map
 
@@ -31,8 +32,16 @@ func _ready():
 func update_all(new_map):
 	map = new_map
 
+	update_grid()
 	update_background()
 
+
+func update_grid():
+	grid.clear()
+
+	for i in range(map.height):
+		for j in range(map.width):
+			grid.set_cell(j, i, 0)
 
 func update_background():
 	background.clear()
