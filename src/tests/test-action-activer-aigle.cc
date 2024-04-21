@@ -1,6 +1,6 @@
 #include "test-helpers.hh"
 
-TEST_F(ApiTest, ActionActiverAiglePasAigle)
+TEST_F(ApiTestColibri, ActionActiverAiglePasAigle)
 {
     const auto& st = api->game_state();
     ASSERT_EQ(api->activer_aigle(0), AIGLE_INVALIDE);

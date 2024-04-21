@@ -2,7 +2,7 @@
 
 #include "../game_state.hh"
 
-TEST_F(ApiTest, ActionDeplacerAiglePasAigle)
+TEST_F(ApiTestColibri, ActionDeplacerAiglePasAigle)
 {
     const auto& st = api->game_state();
     ASSERT_EQ(api->deplacer_aigle(0, position{0, 0}), AIGLE_INVALIDE);
