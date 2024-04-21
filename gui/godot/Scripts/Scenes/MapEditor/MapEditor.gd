@@ -3,9 +3,10 @@ extends Node2D
 onready var viewer : Viewer = $HBoxContainer/ViewportContainer/Viewport/Viewer
 onready var editor_mode_toggle : Button = $HBoxContainer/Selector/VBoxContainer/EditorModeToggle
 onready var points_selector = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelector
-onready var points_selector_sample = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelectorSample
+onready var points_selector_sample : Button = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelectorSample
 
 var bg_selection = null
+var points_selection = 0
 var is_points_editor_mode = false
 
 
@@ -26,6 +27,11 @@ func update_editor_mode():
 		viewer.set_alpha(1, alpha_disabled)
 
 
+func on_point_selected(i):
+	points_selection = i
+	print('points_selection: ', i)
+
+
 func update_selector():
 	for i in range(10):
 		var node = points_selector_sample.duplicate()
@@ -33,6 +39,7 @@ func update_selector():
 		node.visible = true
 		node.rect_min_size = Vector2(40, 50)
 		points_selector.add_child(node)
+		node.connect("pressed", self, "on_point_selected", [i])
 
 
 # --- Click ---
@@ -52,7 +59,7 @@ func _on_ClearMap_pressed():
 
 func _on_EditorModeToggle_pressed():
 	is_points_editor_mode = not is_points_editor_mode
-	print(is_points_editor_mode)
+	print('points_edition_mode: ', is_points_editor_mode)
 	update_editor_mode()
 
 
