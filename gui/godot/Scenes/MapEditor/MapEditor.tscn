@@ -87,15 +87,14 @@ margin_right = 52.0
 margin_bottom = 319.0
 columns = 3
 
-[node name="PointsSelectorSample" type="Label" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport"]
+[node name="PointsSelectorSample" type="Button" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport"]
 visible = false
-modulate = Color( 0, 0.172549, 0.631373, 1 )
+modulate = Color( 0.835294, 0.882353, 1, 1 )
 margin_top = 200.0
 margin_right = 8.0
 margin_bottom = 231.0
 custom_fonts/font = ExtResource( 5 )
-text = "0
-"
+text = "0"
 
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
