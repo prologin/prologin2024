@@ -33,6 +33,12 @@ func _ready():
 		tile2case[i] = tiles[i]
 
 
+func set_alpha(alpha_carte, alpha_points):
+	background.modulate.a = alpha_carte
+	points.modulate.a = alpha_points
+
+
+# --- Update ---
 func update_all(new_map):
 	map = new_map
 
@@ -84,7 +90,7 @@ func update_points():
 
 func update_background():
 	background.clear()
-	
+
 	for i in range(map.height):
 		for j in range(map.width):
 			var tile = case2tile[map.carte[i][j]]
