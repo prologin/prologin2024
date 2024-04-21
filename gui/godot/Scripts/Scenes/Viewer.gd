@@ -32,8 +32,21 @@ func _ready():
 func update_all(new_map):
 	map = new_map
 
+	update_zoom()
 	update_grid()
 	update_background()
+
+
+func update_zoom():
+	var target_height = self.get_viewport_rect().size[1]
+	var target_width = self.get_viewport_rect().size[0]
+	var h_target_tile_size = target_height / map.height
+	var h_target_scale = h_target_tile_size / Constants.TILE_SIZE
+	var w_target_tile_size = target_width / map.width
+	var w_target_scale = w_target_tile_size / Constants.TILE_SIZE
+	var target_scale = min(h_target_scale, w_target_scale)
+
+	self.scale = Vector2(target_scale, target_scale)
 
 
 func update_grid():
