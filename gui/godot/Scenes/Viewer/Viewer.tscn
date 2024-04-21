@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Scenes/Viewer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Scripts/Scenes/MapEditor/InteractiveTileMap.gd" type="Script" id=3]
 [ext_resource path="res://Assets/tilemap.png" type="Texture" id=4]
-[ext_resource path="res://Assets/roboto.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Assets/Font.tres" type="DynamicFont" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -21,10 +21,6 @@
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
-
-[sub_resource type="DynamicFont" id=2]
-size = 42
-font_data = ExtResource( 5 )
 
 [node name="Viewer" type="Node2D"]
 script = ExtResource( 1 )
@@ -58,7 +54,7 @@ margin_left = 53.0
 margin_top = 68.0
 margin_right = 138.0
 margin_bottom = 127.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 5 )
 text = "42"
 align = 1
 valign = 1

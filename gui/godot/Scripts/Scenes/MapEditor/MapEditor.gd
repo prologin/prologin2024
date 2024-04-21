@@ -2,6 +2,8 @@ extends Node2D
 
 onready var viewer : Viewer = $HBoxContainer/ViewportContainer/Viewport/Viewer
 onready var editor_mode_toggle : Button = $HBoxContainer/Selector/VBoxContainer/EditorModeToggle
+onready var points_selector = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelector
+onready var points_selector_sample = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelectorSample
 
 var bg_selection = null
 var is_points_editor_mode = false
@@ -10,6 +12,7 @@ var is_points_editor_mode = false
 func _ready():
 	_on_ClearMap_pressed()
 	update_editor_mode()
+	update_selector()
 
 
 # --- UI ---
@@ -23,14 +26,24 @@ func update_editor_mode():
 		viewer.set_alpha(1, alpha_disabled)
 
 
+func update_selector():
+	for i in range(10):
+		var node = points_selector_sample.duplicate()
+		node.text = str(i)
+		node.visible = true
+		node.rect_min_size = Vector2(40, 50)
+		points_selector.add_child(node)
+
+
 # --- Click ---
 func _on_Viewer_bg_drag(pos):
-	if bg_selection != null and viewer.map.carte[pos[1]][pos[0]] != bg_selection:
+	# Edit map
+	if not is_points_editor_mode and bg_selection != null and viewer.map.carte[pos[1]][pos[0]] != bg_selection:
 		viewer.map.carte[pos[1]][pos[0]] = bg_selection
 		viewer.update_all(viewer.map)
 
 
-# --- Selector ---
+# --- Signals ---
 func _on_ClearMap_pressed():
 	var map = Models.Map.new()
 	map.init(20, 10)

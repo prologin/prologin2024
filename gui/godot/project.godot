@@ -36,6 +36,10 @@ config/name="Prologin-2024"
 run/main_scene="res://Scenes/MapEditor/MapEditor.tscn"
 config/icon="res://icon.png"
 
+[global]
+
+theme=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
