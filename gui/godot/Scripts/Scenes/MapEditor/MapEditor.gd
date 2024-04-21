@@ -45,6 +45,44 @@ func update_selector():
 		node.connect("pressed", self, "on_point_selected", [i])
 
 
+# --- Keyboard ---
+func _input(event):
+	var matching = {
+		KEY_0: 0,
+		KEY_1: 1,
+		KEY_2: 2,
+		KEY_3: 3,
+		KEY_4: 4,
+		KEY_5: 5,
+		KEY_6: 6,
+		KEY_7: 7,
+		KEY_8: 8,
+		KEY_9: 9
+	}
+	if event is InputEventKey and event.pressed and event.scancode in matching:
+		var n = matching[event.scancode]
+		if is_points_editor_mode:
+			# TODO : Highlight selected
+			# Inverse sign
+			if points_selection in [n, -n]:
+				points_selection = -n
+			else:
+				points_selection = n
+		else:
+			# Edit map
+			var bg_selection_options = [
+				Constants.TypeCase.VILLAGE,
+				Constants.TypeCase.NORD_OUEST,
+				Constants.TypeCase.SUD_OUEST,
+				Constants.TypeCase.SUD_EST,
+				Constants.TypeCase.NORD_EST,
+				# TODO : Constants.TypeCase.VILLAGE_J1,
+				# TODO : Constants.TypeCase.VILLAGE_J2,
+			]
+			if n < len(bg_selection_options):
+				bg_selection = bg_selection_options[n]
+
+
 # --- Click ---
 func _on_click(pos):
 	var x = pos[0]
