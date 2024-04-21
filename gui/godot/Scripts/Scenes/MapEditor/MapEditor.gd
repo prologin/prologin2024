@@ -10,11 +10,10 @@ func _ready():
 
 
 # --- Click ---
-func _on_Viewer_bg_left_click(pos):
-	# TODO : Verif inside viewport
-	if bg_selection != null:
+func _on_Viewer_bg_drag(pos):
+	if bg_selection != null and viewer.map.carte[pos[1]][pos[0]] != bg_selection:
 		viewer.map.carte[pos[1]][pos[0]] = bg_selection
-	viewer.update_all(viewer.map)
+		viewer.update_all(viewer.map)
 
 
 # --- Selector ---

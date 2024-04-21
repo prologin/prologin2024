@@ -3,6 +3,8 @@ class_name Viewer
 extends Node2D
 
 signal bg_left_click(pos)
+signal bg_right_click(pos)
+signal bg_drag(pos)
 
 onready var background : TileMap = $BackgroundTileMap
 onready var grid : TileMap = $Grid
@@ -65,8 +67,20 @@ func update_background():
 			background.set_cell(j, i, tile)
 
 
-func _on_BackgroundTileMap_leftclick(pos):
+# --- Signals ---
+func _on_BackgroundTileMap_drag(pos):
 	var j = pos[0]
 	var i = pos[1]
 	if map != null and j >= 0 and j < map.width and i >= 0 and i < map.height:
-		emit_signal("bg_left_click", pos)
+		emit_signal("bg_drag", pos)
+
+
+func _on_BackgroundTileMap_click(pos, button):
+	var j = pos[0]
+	var i = pos[1]
+	if map != null and j >= 0 and j < map.width and i >= 0 and i < map.height:
+		if button == 1:
+			emit_signal("bg_left_click", pos)
+		else:
+			emit_signal("bg_right_click", pos)
+		
