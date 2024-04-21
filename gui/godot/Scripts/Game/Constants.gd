@@ -7,6 +7,8 @@ class_name Constants
 
 extends Node
 
+const TILE_SIZE = 96
+
 # Largeur maximale de la carte
 const LARGEUR_MAX = 100
 
