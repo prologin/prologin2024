@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Game/Constants.gd"
 }, {
+"base": "TileMap",
+"class": "InteractiveTileMap",
+"language": "GDScript",
+"path": "res://Scripts/Scenes/MapEditor/InteractiveTileMap.gd"
+}, {
 "base": "Node",
 "class": "Models",
 "language": "GDScript",
@@ -26,6 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Constants": "",
+"InteractiveTileMap": "",
 "Models": "",
 "Viewer": ""
 }
@@ -35,6 +41,11 @@ _global_script_class_icons={
 config/name="Prologin-2024"
 run/main_scene="res://Scenes/MapEditor/MapEditor.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/ios/hide_home_indicator=false
+window/stretch/aspect="keep"
 
 [global]
 
