@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Scenes/MapEditor/MapEditor.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Viewer/Viewer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://Scripts/Scenes/MapEditor/BGSelector.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Font.tres" type="DynamicFont" id=5]
 
 [node name="MapEditor" type="Node2D"]
 script = ExtResource( 1 )
@@ -78,6 +79,23 @@ cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 2, 1, 0, 4, 2, 0, 131072, 3, 0, 131074, 4, 0 )
 script = ExtResource( 4 )
+
+[node name="PointsSelector" type="GridContainer" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport"]
+margin_left = 20.0
+margin_top = 200.0
+margin_right = 52.0
+margin_bottom = 319.0
+columns = 3
+
+[node name="PointsSelectorSample" type="Label" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport"]
+visible = false
+modulate = Color( 0, 0.172549, 0.631373, 1 )
+margin_top = 200.0
+margin_right = 8.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 5 )
+text = "0
+"
 
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
