@@ -212,3 +212,10 @@ TEST(CarteTest, json_test_aigle)
     ASSERT_EQ(st.aigles_sauvages[0].puissance, 4);
     ASSERT_EQ(st.aigles_sauvages[0].tour_eclosion, 42);
 }
+
+TEST(CarteTest, json_test_coq)
+{
+std::ifstream is("coq.json");
+rules::Players players;
+GameState st(players, is);
+}

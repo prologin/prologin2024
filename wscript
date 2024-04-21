@@ -23,6 +23,7 @@ def configure(cfg):
 def _copy_assets(source_dir, build_dir):
     assets = [
         'maps/colibri.json',
+        'maps/coq.json',
     ]
     for asset in assets:
         print(os.path)
