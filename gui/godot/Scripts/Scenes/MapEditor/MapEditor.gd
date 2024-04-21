@@ -5,6 +5,9 @@ onready var editor_mode_toggle : Button = $HBoxContainer/Selector/VBoxContainer/
 onready var tiles_selector = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector
 onready var points_selector = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelector
 onready var points_selector_sample : Button = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelectorSample
+onready var export_dialog : FileDialog = $Popups/ExportDialog
+onready var import_dialog : FileDialog = $Popups/ImportDialog
+onready var container_interactive = $HBoxContainer
 
 var bg_selection = null
 var points_selection = null
@@ -47,6 +50,9 @@ func update_selector():
 
 # --- Keyboard ---
 func _input(event):
+	if Inputs.state != Inputs.State.MAP:
+		return
+
 	var matching = {
 		KEY_0: 0,
 		KEY_1: 1,
@@ -120,3 +126,25 @@ func _on_EditorModeToggle_pressed():
 func _on_BGSelector_on_selection(tile):
 	bg_selection = viewer.tile2case[tile]
 	print('bg_selection: ', bg_selection)
+
+
+func _on_export(file):
+	Inputs.state = Inputs.State.MAP
+	print('Saved to ', file)
+
+
+func _on_Export_pressed():
+	Inputs.state = Inputs.State.UI
+	export_dialog.popup_centered()
+
+
+func _on_Import_pressed():
+	pass # Replace with function body.
+
+
+func _on_ExportDialog_file_selected(path):
+	pass # Replace with function body.
+
+
+func _on_ImportDialog_file_selected(path):
+	pass # Replace with function body.
