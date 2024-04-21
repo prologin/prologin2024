@@ -43,23 +43,35 @@ margin_bottom = 600.0
 margin_right = 220.0
 margin_bottom = 600.0
 
-[node name="ClearMap" type="Button" parent="HBoxContainer/Selector/VBoxContainer"]
+[node name="Export" type="Button" parent="HBoxContainer/Selector/VBoxContainer"]
 margin_right = 220.0
 margin_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Clear Map"
+text = "Exporter"
 
-[node name="EditorModeToggle" type="Button" parent="HBoxContainer/Selector/VBoxContainer"]
+[node name="Import" type="Button" parent="HBoxContainer/Selector/VBoxContainer"]
 margin_top = 24.0
 margin_right = 220.0
 margin_bottom = 44.0
+text = "Importer"
+
+[node name="ClearMap" type="Button" parent="HBoxContainer/Selector/VBoxContainer"]
+margin_top = 48.0
+margin_right = 220.0
+margin_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Tout Effacer"
+
+[node name="EditorModeToggle" type="Button" parent="HBoxContainer/Selector/VBoxContainer"]
+margin_top = 72.0
+margin_right = 220.0
+margin_bottom = 92.0
 text = "Editor Mode"
 
 [node name="ViewportContainer" type="ViewportContainer" parent="HBoxContainer/Selector/VBoxContainer"]
-margin_top = 48.0
+margin_top = 96.0
 margin_right = 220.0
-margin_bottom = 648.0
+margin_bottom = 696.0
 
 [node name="Viewport" type="Viewport" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer"]
 size = Vector2( 220, 600 )
@@ -94,10 +106,30 @@ margin_bottom = 231.0
 custom_fonts/font = ExtResource( 5 )
 text = "0"
 
+[node name="Popups" type="Node" parent="."]
+
+[node name="ExportDialog" type="FileDialog" parent="Popups"]
+margin_right = 626.0
+margin_bottom = 337.0
+window_title = "Exporter"
+resizable = true
+access = 2
+
+[node name="ImportDialog" type="FileDialog" parent="Popups"]
+margin_right = 622.0
+margin_bottom = 338.0
+window_title = "Open a File"
+mode = 0
+access = 2
+
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
+[connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
+[connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="on_selection" from="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector" to="." method="_on_BGSelector_on_selection"]
 [connection signal="on_selection" from="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector" to="HBoxContainer/Selector" method="_on_BGSelector_on_selection"]
+[connection signal="file_selected" from="Popups/ExportDialog" to="." method="_on_ExportDialog_file_selected"]
+[connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
