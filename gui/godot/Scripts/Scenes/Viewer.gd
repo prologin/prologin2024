@@ -8,6 +8,8 @@ signal bg_drag(pos)
 
 onready var background : TileMap = $BackgroundTileMap
 onready var grid : TileMap = $Grid
+onready var points : Node2D = $Points
+onready var points_sample : Label = $Points/Sample
 
 var map : Models.Map
 
@@ -36,6 +38,7 @@ func update_all(new_map):
 
 	update_zoom()
 	update_grid()
+	update_points()
 	update_background()
 
 
@@ -57,6 +60,27 @@ func update_grid():
 	for i in range(map.height):
 		for j in range(map.width):
 			grid.set_cell(j, i, 0)
+
+
+func update_points():
+	# Clear
+	for child in points.get_children():
+		if child.name != 'Sample':
+			points.remove_child(child)
+
+	# Add points
+	for i in range(map.height - 1):
+		for j in range(map.width - 1):
+			var point : Label = points_sample.duplicate()
+			var xoff = .1
+			var yoff = .2
+			var x = (j + 0.5 + xoff) * Constants.TILE_SIZE
+			var y = (i + 0.5 + yoff) * Constants.TILE_SIZE
+			point.visible = true
+			point.text = str(map.points[i][j])
+			point.set_position(Vector2(x, y))
+			points.add_child(point)
+
 
 func update_background():
 	background.clear()
