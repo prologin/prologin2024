@@ -81,10 +81,8 @@ tile_data = PoolIntArray( 0, 0, 0, 2, 1, 0, 4, 2, 0, 131072, 3, 0, 131074, 4, 0 
 script = ExtResource( 4 )
 
 [node name="PointsSelector" type="GridContainer" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport"]
-margin_left = 20.0
-margin_top = 200.0
-margin_right = 52.0
-margin_bottom = 319.0
+margin_right = 32.0
+margin_bottom = 119.0
 columns = 3
 
 [node name="PointsSelectorSample" type="Button" parent="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport"]

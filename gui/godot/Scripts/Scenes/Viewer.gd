@@ -6,7 +6,7 @@ signal bg_left_click(pos)
 signal bg_right_click(pos)
 signal bg_drag(pos)
 
-onready var background : TileMap = $BackgroundTileMap
+onready var background : InteractiveTileMap = $BackgroundTileMap
 onready var grid : TileMap = $Grid
 onready var points : Node2D = $Points
 onready var points_sample : Label = $Points/Sample
@@ -36,6 +36,10 @@ func _ready():
 func set_alpha(alpha_carte, alpha_points):
 	background.modulate.a = alpha_carte
 	points.modulate.a = alpha_points
+
+
+func set_tiles_mode(is_points_editor_mode: bool):
+	background.set_tiles_mode(is_points_editor_mode)
 
 
 # --- Update ---
@@ -113,4 +117,3 @@ func _on_BackgroundTileMap_click(pos, button):
 			emit_signal("bg_left_click", pos)
 		else:
 			emit_signal("bg_right_click", pos)
-		
