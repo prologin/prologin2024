@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Scenes/Viewer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://Scenes/Viewer/BackgroundTileMap.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Scenes/MapEditor/InteractiveTileMap.gd" type="Script" id=3]
 [ext_resource path="res://Assets/tilemap.png" type="Texture" id=4]
 
 [sub_resource type="TileSet" id=1]
@@ -40,4 +40,5 @@ cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 cell_y_sort = true
 format = 1
 
-[connection signal="leftclick" from="BackgroundTileMap" to="." method="_on_BackgroundTileMap_leftclick"]
+[connection signal="click" from="BackgroundTileMap" to="." method="_on_BackgroundTileMap_click"]
+[connection signal="drag" from="BackgroundTileMap" to="." method="_on_BackgroundTileMap_drag"]

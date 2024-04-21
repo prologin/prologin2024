@@ -64,6 +64,7 @@ format = 1
 tile_data = PoolIntArray( 0, 0, 0, 2, 1, 0, 4, 2, 0, 131072, 3, 0, 131074, 4, 0 )
 script = ExtResource( 4 )
 
+[connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/SampleMap" to="." method="_on_SampleMap_pressed"]
