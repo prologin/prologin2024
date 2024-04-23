@@ -1,4 +1,6 @@
 #include <tuple>
+#include <algorithm>
+
 #include "joueur.hh"
 
 Joueur::Joueur(int sc , int pa, std::vector<Aigle> aigles_vec,
@@ -75,15 +77,27 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
     return territoire;
 }
 
-Aigle* Joueur::trouve_aigle(int aigle_id)
+std::vector<Aigle>::iterator Joueur::trouve_aigle(int aigle_id)
 {
-    for (int i = 0 ; i < aigles.size(); i++)
-    {
-        Aigle aiglantine = aigles[i];
-        if (aiglantine.identifiant == aigle_id)
-        {
-            return &aiglantine;
-        }
-    }
-    return NULL;
+    auto aigle_correct = [aigle_id](Aigle aigle) {
+        return aigle.identifiant == aigle_id;
+    };
+    auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
+    return it;
+}
+
+std::vector<Aigle>::const_iterator Joueur::trouve_aigle(int aigle_id) const
+{
+    auto aigle_correct = [aigle_id](Aigle aigle) {
+        return aigle.identifiant == aigle_id;
+    };
+    auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
+    return it;
+    // for (size_t i = 0 ; i < aigles.size(); i++)
+    // {
+    //     Aigle& aiglantine = aigles[i];
+    //     if (aiglantine.identifiant == aigle_id)
+    //         return &aiglantine;
+    // }
+    // return nullptr;
 }

@@ -10,5 +10,5 @@ struct Aigle
     position pos;
     effet_aigle effet;
     int puissance;
-    int tour_eclosion; // 0 si déjà éclot
+    int tour_eclosion;
 };
