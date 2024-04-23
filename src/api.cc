@@ -25,9 +25,11 @@ dimension Api::dimensions_carte()
 
 etat_case Api::info_case(position pos)
 {
-    // TODO: gestion d'erreur
     int x = pos.colonne;
     int y = pos.ligne;
+    if (!game_state_->carte.case_valide(x, y))
+        return {CASE_INVALIDE, 0, pos};
+
     type_case info = game_state_->carte.get_case(x, y);
     int gains = game_state_->carte.get_gain(x, y);
     return { info, gains, pos };
@@ -35,8 +37,38 @@ etat_case Api::info_case(position pos)
 
 std::vector<aigle> Api::info_aigles()
 {
-    // TODO
-    abort();
+    std::vector<aigle> aigles;
+    for (Aigle& aigle_sauvage : game_state_->aigles_sauvages)
+    {
+        aigle aigle_converti = {
+            aigle_sauvage.identifiant,
+            -1,
+            aigle_sauvage.pos,
+            aigle_sauvage.effet,
+            aigle_sauvage.puissance,
+            aigle_sauvage.tour_eclosion,
+            true
+        };
+        aigles.push_back(aigle_converti);
+    }
+    for (int joueur = 0; joueur <= 1; joueur++)
+    {
+        for (Aigle& aigle_joueur : game_state_->joueurs[joueur].aigles)
+        {
+            aigle aigle_converti = {
+                aigle_joueur.identifiant,
+                joueur,
+                aigle_joueur.pos,
+                aigle_joueur.effet,
+                aigle_joueur.puissance,
+                aigle_joueur.tour_eclosion,
+                true
+            };
+            aigles.push_back(aigle_converti);
+        }
+    }
+
+    return aigles;
 }
 
 int Api::points_action(int joueur)

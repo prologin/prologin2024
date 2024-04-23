@@ -14,7 +14,7 @@ int ActionDeplacerAigle::check(const GameState& st) const
     Aigle* aigle = joueurs[player_id_].trouve_aigle(id_);
     if (aigle == NULL)
         return AIGLE_INVALIDE;
-    Aigle aiglantine = *aigle;
+    //Aigle aiglantine = *aigle; #JesuisAiglantine
     if (!st.carte.emplacement_valide(destination_.colonne, destination_.ligne))
         return DESTINATION_INVALIDE;
 
