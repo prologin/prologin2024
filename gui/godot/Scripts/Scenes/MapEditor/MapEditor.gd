@@ -1,10 +1,10 @@
 extends Node2D
 
 onready var viewer : Viewer = $HBoxContainer/ViewportContainer/Viewport/Viewer
-onready var editor_mode_toggle : Button = $HBoxContainer/Selector/VBoxContainer/EditorModeToggle
-onready var tiles_selector = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector
-onready var points_selector = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelector
-onready var points_selector_sample : Button = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/PointsSelectorSample
+onready var editor_mode_toggle : Button = $HBoxContainer/VBoxContainer/EditorModeToggle
+onready var tiles_selector = $HBoxContainer/VBoxContainer/ViewportContainer/Viewport/CenterContainer/BGSelector
+onready var points_selector = $HBoxContainer/VBoxContainer/ViewportContainer/Viewport/CenterContainer/PointsSelector
+onready var points_selector_sample : Button = $HBoxContainer/VBoxContainer/ViewportContainer/Viewport/CenterContainer/PointsSelectorSample
 
 var bg_selection = null
 var points_selection = null
@@ -70,17 +70,8 @@ func _input(event):
 				points_selection = n
 		else:
 			# Edit map
-			var bg_selection_options = [
-				Constants.TypeCase.VILLAGE,
-				Constants.TypeCase.NORD_OUEST,
-				Constants.TypeCase.SUD_OUEST,
-				Constants.TypeCase.SUD_EST,
-				Constants.TypeCase.NORD_EST,
-				# TODO : Constants.TypeCase.VILLAGE_J1,
-				# TODO : Constants.TypeCase.VILLAGE_J2,
-			]
-			if n < len(bg_selection_options):
-				bg_selection = bg_selection_options[n]
+			if n < len(Viewer.tiles):
+				bg_selection = Viewer.tiles[n]
 
 
 # --- Click ---

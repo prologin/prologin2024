@@ -5,7 +5,12 @@ signal on_selection(tile)
 
 
 func _ready():
-	pass
+	clear()
+	for y in range(0, 2):
+		for x in range(0, 2):
+			var idx = x + y * 2
+			set_cell(x, y, idx + 1)
+	set_cell(2, 0, 0)
 
 
 func _input(event):
