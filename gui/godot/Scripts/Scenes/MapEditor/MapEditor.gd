@@ -8,6 +8,8 @@ onready var points_selector_sample : Button = $HBoxContainer/Selector/VBoxContai
 onready var export_dialog : FileDialog = $Popups/ExportDialog
 onready var import_dialog : FileDialog = $Popups/ImportDialog
 onready var container_interactive = $HBoxContainer
+onready var viewer_viewport = $HBoxContainer/ViewportContainer/Viewport
+onready var selector_viewport = $HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport
 
 var bg_selection = null
 var points_selection = null
@@ -148,3 +150,23 @@ func _on_ExportDialog_file_selected(path):
 
 func _on_ImportDialog_file_selected(path):
 	pass # Replace with function body.
+
+
+func _on_ExportDialog_about_to_show():
+	viewer_viewport.gui_disable_input = true
+	selector_viewport.gui_disable_input = true
+
+
+func _on_ExportDialog_popup_hide():
+	viewer_viewport.gui_disable_input = false
+	selector_viewport.gui_disable_input = false
+
+
+func _on_ImportDialog_about_to_show():
+	viewer_viewport.gui_disable_input = true
+	selector_viewport.gui_disable_input = true
+
+
+func _on_ImportDialog_popup_hide():
+	viewer_viewport.gui_disable_input = false
+	selector_viewport.gui_disable_input = false
