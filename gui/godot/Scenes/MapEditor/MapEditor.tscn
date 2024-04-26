@@ -111,6 +111,7 @@ text = "0"
 [node name="ExportDialog" type="FileDialog" parent="Popups"]
 margin_right = 626.0
 margin_bottom = 337.0
+popup_exclusive = true
 window_title = "Exporter"
 resizable = true
 access = 2
@@ -118,6 +119,7 @@ access = 2
 [node name="ImportDialog" type="FileDialog" parent="Popups"]
 margin_right = 622.0
 margin_bottom = 338.0
+popup_exclusive = true
 window_title = "Open a File"
 mode = 0
 access = 2
@@ -127,9 +129,13 @@ access = 2
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
-[connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
+[connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="on_selection" from="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector" to="." method="_on_BGSelector_on_selection"]
 [connection signal="on_selection" from="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector" to="HBoxContainer/Selector" method="_on_BGSelector_on_selection"]
+[connection signal="about_to_show" from="Popups/ExportDialog" to="." method="_on_ExportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ExportDialog" to="." method="_on_ExportDialog_file_selected"]
+[connection signal="popup_hide" from="Popups/ExportDialog" to="." method="_on_ExportDialog_popup_hide"]
+[connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
+[connection signal="popup_hide" from="Popups/ImportDialog" to="." method="_on_ImportDialog_popup_hide"]
