@@ -52,9 +52,6 @@ func update_selector():
 
 # --- Keyboard ---
 func _input(event):
-	if Inputs.state != Inputs.State.MAP:
-		return
-
 	var matching = {
 		KEY_0: 0,
 		KEY_1: 1,
@@ -106,7 +103,8 @@ func _on_click(pos):
 
 func _on_Viewer_bg_drag(pos):
 	_on_click(pos)
-		
+
+
 func _on_Viewer_bg_left_click(pos):
 	_on_click(pos)
 
@@ -130,26 +128,23 @@ func _on_BGSelector_on_selection(tile):
 	print('bg_selection: ', bg_selection)
 
 
-func _on_export(file):
-	Inputs.state = Inputs.State.MAP
-	print('Saved to ', file)
-
-
 func _on_Export_pressed():
-	Inputs.state = Inputs.State.UI
 	export_dialog.popup_centered()
 
 
 func _on_Import_pressed():
-	pass # Replace with function body.
+	import_dialog.popup_centered()
 
 
 func _on_ExportDialog_file_selected(path):
-	pass # Replace with function body.
+	# TODO : Export dump to path
+	print('Saved to ', path)
 
 
 func _on_ImportDialog_file_selected(path):
-	pass # Replace with function body.
+	print('Importing ', path)
+	# TODO : Import dump from path
+	viewer.update_all(viewer.map)
 
 
 func _on_ExportDialog_about_to_show():
