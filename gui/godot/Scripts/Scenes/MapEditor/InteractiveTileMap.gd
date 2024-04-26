@@ -24,9 +24,6 @@ func get_tile_pos(position):
 
 
 func _input(event):
-	if Inputs.state != Inputs.State.MAP:
-		return
-
 	if event is InputEventMouseMotion and self.get_viewport_rect().has_point(event.position) and mouse_pressed:
 		var pos = get_tile_pos(event.position)
 		emit_signal("drag", pos)
