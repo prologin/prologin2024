@@ -31,8 +31,11 @@ func update_editor_mode():
 
 
 func on_point_selected(i):
-	points_selection = i
-	print('points_selection: ', i)
+	if points_selection in [i, -i]:
+		points_selection = -points_selection
+	else:
+		points_selection = i
+	print('points_selection: ', points_selection)
 
 
 func update_selector():
@@ -65,9 +68,10 @@ func _input(event):
 			# TODO : Highlight selected
 			# Inverse sign
 			if points_selection in [n, -n]:
-				points_selection = -n
+				points_selection = -points_selection
 			else:
 				points_selection = n
+			print('points_selection: ', points_selection)
 		else:
 			# Edit map
 			if n < len(Viewer.tiles):
@@ -82,7 +86,7 @@ func _on_click(pos):
 	if not is_points_editor_mode and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
 		viewer.map.carte[y][x] = bg_selection
 		viewer.update_all(viewer.map)
-	elif is_points_editor_mode and points_selection != null and viewer.map.points[y][x] != points_selection:
+	elif is_points_editor_mode and points_selection != null and y < viewer.map.height - 1 and x < viewer.map.width - 1 and viewer.map.points[y][x] != points_selection:
 		viewer.map.points[y][x] = points_selection
 		viewer.update_all(viewer.map)
 
