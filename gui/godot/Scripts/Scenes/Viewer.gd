@@ -13,13 +13,36 @@ onready var points_sample : Label = $Points/Sample
 
 var map : Models.Map
 
-# Tiles in order
+# Tiles in order of the tileset
 const tiles = [
 	Constants.TypeCase.VILLAGE,
 	Constants.TypeCase.NORD_OUEST,
 	Constants.TypeCase.NORD_EST,
 	Constants.TypeCase.SUD_EST,
 	Constants.TypeCase.SUD_OUEST,
+	Constants.TypeCase.OEUF_BLANC,
+	Constants.TypeCase.OEUF_GRIS,
+	Constants.TypeCase.OEUF_ROUGE,
+	Constants.TypeCase.OEUF_JAUNE,
+	Constants.TypeCase.OEUF_BLEU,
+	Constants.TypeCase.AIGLE_BLANC,
+	Constants.TypeCase.AIGLE_GRIS,
+	Constants.TypeCase.AIGLE_ROUGE,
+	Constants.TypeCase.AIGLE_JAUNE,
+	Constants.TypeCase.AIGLE_BLEU,
+	Constants.TypeCase.DRAPEAU_ROUGE,
+	Constants.TypeCase.DRAPEAU_BLEU,
+	Constants.TypeCase.DEBUG_ROUGE,
+	Constants.TypeCase.DEBUG_BLEU,
+	Constants.TypeCase.DEBUG_VERT,
+	Constants.TypeCase.PONT_1_NORD_OUEST,
+	Constants.TypeCase.PONT_1_SUD_OUEST,
+	Constants.TypeCase.PONT_1_SUD_EST,
+	Constants.TypeCase.PONT_1_NORD_EST,
+	Constants.TypeCase.PONT_2_NORD_OUEST,
+	Constants.TypeCase.PONT_2_SUD_OUEST,
+	Constants.TypeCase.PONT_2_SUD_EST,
+	Constants.TypeCase.PONT_2_NORD_EST,
 ]
 
 # Type case 2 tile id
