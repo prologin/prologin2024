@@ -72,6 +72,7 @@ func _ready():
 
 func set_alpha(alpha_carte, alpha_points):
 	background.modulate.a = alpha_carte
+	foreground.modulate.a = alpha_carte
 	points.modulate.a = alpha_points
 
 
