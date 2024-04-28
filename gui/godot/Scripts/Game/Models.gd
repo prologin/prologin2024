@@ -11,13 +11,13 @@ class Player:
 
 
 class Aigle:
-	 var identifiant
-	 var joueur
-	 var pos
-	 var effet
-	 var puissance
-	 var tour_eclosion
-	 var existant
+	 var identifiant: int = 0
+	 var joueur: Player
+	 var pos: Vector2
+	 var effet: String
+	 var puissance: int
+	 var tour_eclosion: int
+	 var existant: bool
 
 
 class Map:
