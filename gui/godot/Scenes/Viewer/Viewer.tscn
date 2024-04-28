@@ -33,6 +33,13 @@ format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 4, 0, 65536, 4, 0, 65537, 2, 0, 65538, 4, 0 )
 script = ExtResource( 3 )
 
+[node name="ForegroundTileMap" type="TileMap" parent="."]
+position = Vector2( 48, 48 )
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 96, 96 )
+cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
+format = 1
+
 [node name="Grid" type="TileMap" parent="."]
 modulate = Color( 1, 1, 1, 0.501961 )
 tile_set = SubResource( 1 )
