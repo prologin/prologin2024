@@ -115,6 +115,7 @@ popup_exclusive = true
 window_title = "Exporter"
 resizable = true
 access = 2
+filters = PoolStringArray( "*.json" )
 
 [node name="ImportDialog" type="FileDialog" parent="Popups"]
 margin_right = 622.0
@@ -123,14 +124,15 @@ popup_exclusive = true
 window_title = "Open a File"
 mode = 0
 access = 2
+filters = PoolStringArray( "*.json" )
 
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
-[connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
+[connection signal="pressed" from="HBoxContainer/Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="on_selection" from="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector" to="." method="_on_BGSelector_on_selection"]
 [connection signal="on_selection" from="HBoxContainer/Selector/VBoxContainer/ViewportContainer/Viewport/BGSelector" to="HBoxContainer/Selector" method="_on_BGSelector_on_selection"]
 [connection signal="about_to_show" from="Popups/ExportDialog" to="." method="_on_ExportDialog_about_to_show"]
