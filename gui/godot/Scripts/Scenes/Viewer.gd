@@ -7,6 +7,7 @@ signal bg_right_click(pos)
 signal bg_drag(pos)
 
 onready var background : InteractiveTileMap = $BackgroundTileMap
+onready var foreground : TileMap = $ForegroundTileMap
 onready var grid : TileMap = $Grid
 onready var points : Node2D = $Points
 onready var points_sample : Label = $Points/Sample
@@ -49,11 +50,24 @@ const tiles = [
 var case2tile = {}
 var tile2case = {}
 
+# TODO : Update
+var effet2aigle = {
+	'VIE': Constants.TypeCase.OEUF_BLANC,
+	'MORT': Constants.TypeCase.OEUF_GRIS,
+	'FEU': Constants.TypeCase.OEUF_ROUGE,
+	'?': Constants.TypeCase.OEUF_JAUNE,
+	'METEOR': Constants.TypeCase.OEUF_BLEU,
+}
+var aigle2effet = {}
+
 
 func _ready():
 	for i in range(len(tiles)):
 		case2tile[tiles[i]] = i
 		tile2case[i] = tiles[i]
+
+	for k in effet2aigle:
+		aigle2effet[effet2aigle[k]] = k
 
 
 func set_alpha(alpha_carte, alpha_points):
@@ -61,8 +75,8 @@ func set_alpha(alpha_carte, alpha_points):
 	points.modulate.a = alpha_points
 
 
-func set_tiles_mode(is_points_editor_mode: bool):
-	background.set_tiles_mode(is_points_editor_mode)
+func set_tiles_mode(points_editor_mode):
+	background.set_tiles_mode(points_editor_mode)
 
 
 # --- Update ---
@@ -73,6 +87,7 @@ func update_all(new_map):
 	update_grid()
 	update_points()
 	update_background()
+	update_foreground()
 
 
 func update_zoom():
@@ -122,6 +137,14 @@ func update_background():
 		for j in range(map.width):
 			var tile = case2tile[map.carte[i][j]]
 			background.set_cell(j, i, tile)
+
+
+func update_foreground():
+	foreground.clear()
+
+	for aigle in map.aigles:
+		var tile = case2tile[effet2aigle[aigle.effet]]
+		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
 
 
 # --- Signals ---

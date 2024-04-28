@@ -109,3 +109,9 @@ enum EffetAigle {
 	MULTIPLICATIF,
 	BLOQUEUR,
 }
+
+enum EditorMode {
+	BACKGROUND,
+	FOREGROUND,
+	POINTS,
+}

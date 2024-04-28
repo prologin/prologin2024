@@ -6,11 +6,17 @@ signal on_selection(tile)
 
 func _ready():
 	clear()
-	for y in range(0, 2):
-		for x in range(0, 2):
-			var idx = x + y * 2
-			set_cell(x, y, idx + 1)
-	set_cell(2, 0, 0)
+	# Put item list
+	var items = [
+		[1, 2, 3],
+		[4],
+		[5, 6, 7],
+		[8, 9],
+	]
+	for y in len(items):
+		var row = items[y]
+		for x in len(row):
+			set_cell(x, y, row[x])
 
 
 func _input(event):

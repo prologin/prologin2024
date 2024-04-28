@@ -13,7 +13,8 @@ onready var selector_viewport = $Selector/VBoxContainer/ViewportContainer/Viewpo
 
 var bg_selection = null
 var points_selection = null
-var is_points_editor_mode = false
+
+var points_editor_mode = Constants.EditorMode.BACKGROUND
 
 
 func _ready():
@@ -25,9 +26,9 @@ func _ready():
 # --- UI ---
 func update_editor_mode():
 	var alpha_disabled = .25
-	tiles_selector.visible = not is_points_editor_mode
-	points_selector.visible = is_points_editor_mode
-	if is_points_editor_mode:
+	tiles_selector.visible = points_editor_mode != Constants.EditorMode.POINTS
+	points_selector.visible = points_editor_mode == Constants.EditorMode.POINTS
+	if points_editor_mode == Constants.EditorMode.POINTS:
 		editor_mode_toggle.text = 'EDITION POINTS'
 		viewer.set_alpha(alpha_disabled, 1)
 	else:
@@ -69,7 +70,7 @@ func _input(event):
 	}
 	if event is InputEventKey and event.pressed and event.scancode in matching:
 		var n = matching[event.scancode]
-		if is_points_editor_mode:
+		if points_editor_mode == Constants.EditorMode.POINTS:
 			# TODO : Highlight selected
 			# Inverse sign
 			if points_selection in [n, -n]:
@@ -87,13 +88,38 @@ func _input(event):
 func _on_click(pos):
 	var x = pos[0]
 	var y = pos[1]
+	
 	# Edit map
-	if not is_points_editor_mode and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
+	if points_editor_mode == Constants.EditorMode.BACKGROUND and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
 		viewer.map.carte[y][x] = bg_selection
 		viewer.update_all(viewer.map)
-	elif is_points_editor_mode and points_selection != null and y < viewer.map.height - 1 and x < viewer.map.width - 1 and viewer.map.points[y][x] != points_selection:
-		viewer.map.points[y][x] = points_selection
-		viewer.update_all(viewer.map)
+	elif points_editor_mode != Constants.EditorMode.BACKGROUND and y < viewer.map.height - 1 and x < viewer.map.width - 1:
+		if points_editor_mode == Constants.EditorMode.POINTS and points_selection != null and viewer.map.points[y][x] != points_selection:
+			viewer.map.points[y][x] = points_selection
+			viewer.update_all(viewer.map)
+		elif points_editor_mode == Constants.EditorMode.FOREGROUND:
+			# TODO : Dialog
+			var tour_eclosion = 42
+			var puissance = 2
+			
+			# Find eagle in this location
+			var selected_aigle = null
+			for aigle in viewer.map.aigles:
+				if aigle.pos == pos:
+					selected_aigle = aigle
+					break
+
+			if selected_aigle == null:
+				selected_aigle = Models.Aigle.new()
+				viewer.map.aigles.append(selected_aigle)
+
+			selected_aigle.effet = viewer.aigle2effet[bg_selection]
+			selected_aigle.pos = pos
+			selected_aigle.tour_eclosion = tour_eclosion
+			selected_aigle.puissance = puissance
+			print('EFFET ', selected_aigle.effet)
+			print('POS ', selected_aigle.pos)
+			viewer.update_all(viewer.map)
 
 
 func _on_Viewer_bg_drag(pos):
@@ -112,15 +138,30 @@ func _on_ClearMap_pressed():
 
 
 func _on_EditorModeToggle_pressed():
-	is_points_editor_mode = not is_points_editor_mode
-	viewer.set_tiles_mode(is_points_editor_mode)
-	print('points_edition_mode: ', is_points_editor_mode)
+	if points_editor_mode == Constants.EditorMode.POINTS:
+		points_editor_mode = points_editor_mode.BACKGROUND
+	else:
+		points_editor_mode = points_editor_mode.POINTS
+	viewer.set_tiles_mode(points_editor_mode)
+	print('points_edition_mode: ', points_editor_mode)
 	update_editor_mode()
 
 
 func _on_BGSelector_on_selection(tile):
 	bg_selection = viewer.tile2case[tile]
 	print('bg_selection: ', bg_selection)
+	if bg_selection in [
+		Constants.TypeCase.VILLAGE,
+		Constants.TypeCase.VILLAGE_J1,
+		Constants.TypeCase.VILLAGE_J2,
+		Constants.TypeCase.NORD_OUEST,
+		Constants.TypeCase.NORD_EST,
+		Constants.TypeCase.SUD_OUEST,
+		Constants.TypeCase.SUD_EST,
+	]:
+		points_editor_mode = Constants.EditorMode.BACKGROUND
+	else:
+		points_editor_mode = Constants.EditorMode.FOREGROUND
 
 
 func _on_Export_pressed():
