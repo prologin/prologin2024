@@ -136,6 +136,45 @@ mode = 0
 access = 2
 filters = PoolStringArray( "*.json" )
 
+[node name="AigleDialog" type="ConfirmationDialog" parent="Popups"]
+visible = true
+margin_left = 197.0
+margin_top = 154.0
+margin_right = 594.0
+margin_bottom = 331.0
+popup_exclusive = true
+window_title = "Aigle"
+resizable = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popups/AigleDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 389.0
+margin_bottom = 141.0
+
+[node name="PuissanceLabel" type="Label" parent="Popups/AigleDialog/VBoxContainer"]
+margin_right = 381.0
+margin_bottom = 14.0
+text = "Puissance"
+
+[node name="Puissance" type="TextEdit" parent="Popups/AigleDialog/VBoxContainer"]
+margin_top = 18.0
+margin_right = 381.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 80, 40 )
+
+[node name="EclosionLabel" type="Label" parent="Popups/AigleDialog/VBoxContainer"]
+margin_top = 62.0
+margin_right = 381.0
+margin_bottom = 76.0
+text = "Tour d'Eclosion"
+
+[node name="Eclosion" type="TextEdit" parent="Popups/AigleDialog/VBoxContainer"]
+margin_top = 80.0
+margin_right = 381.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 80, 40 )
+
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
 [connection signal="pressed" from="Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
@@ -150,3 +189,6 @@ filters = PoolStringArray( "*.json" )
 [connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
 [connection signal="popup_hide" from="Popups/ImportDialog" to="." method="_on_ImportDialog_popup_hide"]
+[connection signal="about_to_show" from="Popups/AigleDialog" to="." method="_on_AigleDialog_about_to_show"]
+[connection signal="confirmed" from="Popups/AigleDialog" to="." method="_on_AigleDialog_confirmed"]
+[connection signal="popup_hide" from="Popups/AigleDialog" to="." method="_on_AigleDialog_popup_hide"]

@@ -10,11 +10,15 @@ onready var import_dialog : FileDialog = $Popups/ImportDialog
 onready var container_interactive = $HBoxContainer
 onready var viewer_viewport = $HBoxContainer/ViewportContainer/Viewport
 onready var selector_viewport = $Selector/VBoxContainer/ViewportContainer/Viewport
+onready var aigle_dialog = $Popups/AigleDialog
+onready var aigle_dialog_puissance : TextEdit = $Popups/AigleDialog/VBoxContainer/Puissance
+onready var aigle_dialog_eclosion : TextEdit = $Popups/AigleDialog/VBoxContainer/Eclosion
 
 var bg_selection = null
 var points_selection = null
 
 var points_editor_mode = Constants.EditorMode.BACKGROUND
+var selected_aigle_data = null
 
 
 func _ready():
@@ -85,49 +89,41 @@ func _input(event):
 
 
 # --- Click ---
-func _on_click(pos):
+enum ClickType {
+	DRAG,
+	LEFT,
+	RIGHT,
+}
+
+func _on_click(pos, click_type):
 	var x = pos[0]
 	var y = pos[1]
 
 	# Edit map
 	if points_editor_mode == Constants.EditorMode.BACKGROUND and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
+		# Background click
 		viewer.map.carte[y][x] = bg_selection
 		viewer.update_all(viewer.map)
 	elif points_editor_mode != Constants.EditorMode.BACKGROUND and y < viewer.map.height - 1 and x < viewer.map.width - 1:
 		if points_editor_mode == Constants.EditorMode.POINTS and points_selection != null and viewer.map.points[y][x] != points_selection:
+			# Point click
 			viewer.map.points[y][x] = points_selection
 			viewer.update_all(viewer.map)
-		elif points_editor_mode == Constants.EditorMode.FOREGROUND:
-			# TODO : Dialog
-			var tour_eclosion = 42
-			var puissance = 2
-
-			# Find eagle in this location
-			var selected_aigle = null
-			for aigle in viewer.map.aigles:
-				if aigle.pos == pos:
-					selected_aigle = aigle
-					break
-
-			if selected_aigle == null:
-				selected_aigle = Models.Aigle.new()
-				viewer.map.aigles.append(selected_aigle)
-
-			selected_aigle.effet = viewer.aigle2effet[bg_selection]
-			selected_aigle.pos = pos
-			selected_aigle.tour_eclosion = tour_eclosion
-			selected_aigle.puissance = puissance
-			print('EFFET ', selected_aigle.effet)
-			print('POS ', selected_aigle.pos)
-			viewer.update_all(viewer.map)
+		elif click_type == ClickType.LEFT and points_editor_mode == Constants.EditorMode.FOREGROUND:
+			# Foreground click
+			selected_aigle_data = {
+				'pos': pos,
+				'effet': viewer.aigle2effet[bg_selection]
+			}
+			aigle_dialog.popup_centered()
 
 
 func _on_Viewer_bg_drag(pos):
-	_on_click(pos)
+	_on_click(pos, ClickType.DRAG)
 
 
 func _on_Viewer_bg_left_click(pos):
-	_on_click(pos)
+	_on_click(pos, ClickType.LEFT)
 
 
 # --- Signals ---
@@ -205,3 +201,35 @@ func _on_ImportDialog_about_to_show():
 func _on_ImportDialog_popup_hide():
 	viewer_viewport.gui_disable_input = false
 	selector_viewport.gui_disable_input = false
+
+
+func _on_AigleDialog_about_to_show():
+	viewer_viewport.gui_disable_input = true
+	selector_viewport.gui_disable_input = true
+
+
+func _on_AigleDialog_popup_hide():
+	viewer_viewport.gui_disable_input = false
+	selector_viewport.gui_disable_input = false
+
+
+func _on_AigleDialog_confirmed():
+	var tour_eclosion = int(aigle_dialog_eclosion.text)
+	var puissance = int(aigle_dialog_puissance.text)
+
+	# Find eagle in this location
+	var selected_aigle = null
+	for aigle in viewer.map.aigles:
+		if aigle.pos == selected_aigle_data['pos']:
+			selected_aigle = aigle
+			break
+
+	if selected_aigle == null:
+		selected_aigle = Models.Aigle.new()
+		viewer.map.aigles.append(selected_aigle)
+
+	selected_aigle.effet = selected_aigle_data['effet']
+	selected_aigle.pos = selected_aigle_data['pos']
+	selected_aigle.tour_eclosion = tour_eclosion
+	selected_aigle.puissance = puissance
+	viewer.update_all(viewer.map)
