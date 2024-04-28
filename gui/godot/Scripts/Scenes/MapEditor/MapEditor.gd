@@ -19,6 +19,7 @@ var points_selection = null
 
 var points_editor_mode = Constants.EditorMode.BACKGROUND
 var selected_aigle_data = null
+var is_dialog_opened = false
 
 
 func _ready():
@@ -60,6 +61,9 @@ func update_selector():
 
 # --- Keyboard ---
 func _input(event):
+	if is_dialog_opened:
+		return
+
 	var matching = {
 		KEY_0: 0,
 		KEY_1: 1,
@@ -85,7 +89,13 @@ func _input(event):
 		else:
 			# Edit map
 			if n < len(Viewer.tiles):
-				bg_selection = Viewer.tiles[n]
+				set_bg_selection(Viewer.tiles[n])
+
+
+func set_dialog_open(is_open):
+	is_dialog_opened = is_open
+	viewer_viewport.gui_disable_input = is_open
+	selector_viewport.gui_disable_input = is_open
 
 
 # --- Click ---
@@ -109,13 +119,25 @@ func _on_click(pos, click_type):
 			# Point click
 			viewer.map.points[y][x] = points_selection
 			viewer.update_all(viewer.map)
-		elif click_type == ClickType.LEFT and points_editor_mode == Constants.EditorMode.FOREGROUND:
+		elif points_editor_mode == Constants.EditorMode.FOREGROUND:
 			# Foreground click
-			selected_aigle_data = {
-				'pos': pos,
-				'effet': viewer.aigle2effet[bg_selection]
-			}
-			aigle_dialog.popup_centered()
+			if click_type == ClickType.LEFT:
+				selected_aigle_data = {
+					'pos': pos,
+					'effet': viewer.aigle2effet[bg_selection]
+				}
+				aigle_dialog.popup_centered()
+			elif click_type == ClickType.RIGHT:
+				print(pos)
+				print(viewer.map.aigles)
+				# Find eagle in this location
+				var i = 0
+				for aigle in viewer.map.aigles:
+					if aigle.pos == pos:
+						viewer.map.aigles.remove(i)
+						break
+					i += 1
+				viewer.update_all(viewer.map)
 
 
 func _on_Viewer_bg_drag(pos):
@@ -124,6 +146,10 @@ func _on_Viewer_bg_drag(pos):
 
 func _on_Viewer_bg_left_click(pos):
 	_on_click(pos, ClickType.LEFT)
+
+
+func _on_Viewer_bg_right_click(pos):
+	_on_click(pos, ClickType.RIGHT)
 
 
 # --- Signals ---
@@ -144,7 +170,11 @@ func _on_EditorModeToggle_pressed():
 
 
 func _on_BGSelector_on_selection(tile):
-	bg_selection = viewer.tile2case[tile]
+	set_bg_selection(viewer.tile2case[tile])
+
+
+func set_bg_selection(sel):
+	bg_selection = sel
 	print('bg_selection: ', bg_selection)
 	if points_editor_mode != Constants.EditorMode.POINTS:
 		if bg_selection in [
@@ -184,33 +214,27 @@ func _on_ImportDialog_file_selected(path):
 
 
 func _on_ExportDialog_about_to_show():
-	viewer_viewport.gui_disable_input = true
-	selector_viewport.gui_disable_input = true
+	set_dialog_open(true)
 
 
 func _on_ExportDialog_popup_hide():
-	viewer_viewport.gui_disable_input = false
-	selector_viewport.gui_disable_input = false
+	set_dialog_open(false)
 
 
 func _on_ImportDialog_about_to_show():
-	viewer_viewport.gui_disable_input = true
-	selector_viewport.gui_disable_input = true
+	set_dialog_open(true)
 
 
 func _on_ImportDialog_popup_hide():
-	viewer_viewport.gui_disable_input = false
-	selector_viewport.gui_disable_input = false
+	set_dialog_open(false)
 
 
 func _on_AigleDialog_about_to_show():
-	viewer_viewport.gui_disable_input = true
-	selector_viewport.gui_disable_input = true
+	set_dialog_open(true)
 
 
 func _on_AigleDialog_popup_hide():
-	viewer_viewport.gui_disable_input = false
-	selector_viewport.gui_disable_input = false
+	set_dialog_open(false)
 
 
 func _on_AigleDialog_confirmed():
