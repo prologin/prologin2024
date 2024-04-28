@@ -126,7 +126,10 @@ func _on_click(pos, click_type):
 					'pos': pos,
 					'effet': viewer.aigle2effet[bg_selection]
 				}
-				aigle_dialog.popup_centered()
+				if Input.is_key_pressed(KEY_SHIFT):
+					_on_AigleDialog_confirmed()
+				else:
+					aigle_dialog.popup_centered()
 			elif click_type == ClickType.RIGHT:
 				print(pos)
 				print(viewer.map.aigles)
