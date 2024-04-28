@@ -88,7 +88,7 @@ func _input(event):
 func _on_click(pos):
 	var x = pos[0]
 	var y = pos[1]
-	
+
 	# Edit map
 	if points_editor_mode == Constants.EditorMode.BACKGROUND and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
 		viewer.map.carte[y][x] = bg_selection
@@ -101,7 +101,7 @@ func _on_click(pos):
 			# TODO : Dialog
 			var tour_eclosion = 42
 			var puissance = 2
-			
+
 			# Find eagle in this location
 			var selected_aigle = null
 			for aigle in viewer.map.aigles:
@@ -139,9 +139,9 @@ func _on_ClearMap_pressed():
 
 func _on_EditorModeToggle_pressed():
 	if points_editor_mode == Constants.EditorMode.POINTS:
-		points_editor_mode = points_editor_mode.BACKGROUND
+		points_editor_mode = Constants.EditorMode.BACKGROUND
 	else:
-		points_editor_mode = points_editor_mode.POINTS
+		points_editor_mode = Constants.EditorMode.POINTS
 	viewer.set_tiles_mode(points_editor_mode)
 	print('points_edition_mode: ', points_editor_mode)
 	update_editor_mode()
@@ -150,18 +150,19 @@ func _on_EditorModeToggle_pressed():
 func _on_BGSelector_on_selection(tile):
 	bg_selection = viewer.tile2case[tile]
 	print('bg_selection: ', bg_selection)
-	if bg_selection in [
-		Constants.TypeCase.VILLAGE,
-		Constants.TypeCase.VILLAGE_J1,
-		Constants.TypeCase.VILLAGE_J2,
-		Constants.TypeCase.NORD_OUEST,
-		Constants.TypeCase.NORD_EST,
-		Constants.TypeCase.SUD_OUEST,
-		Constants.TypeCase.SUD_EST,
-	]:
-		points_editor_mode = Constants.EditorMode.BACKGROUND
-	else:
-		points_editor_mode = Constants.EditorMode.FOREGROUND
+	if points_editor_mode != Constants.EditorMode.POINTS:
+		if bg_selection in [
+			Constants.TypeCase.VILLAGE,
+			Constants.TypeCase.VILLAGE_J1,
+			Constants.TypeCase.VILLAGE_J2,
+			Constants.TypeCase.NORD_OUEST,
+			Constants.TypeCase.NORD_EST,
+			Constants.TypeCase.SUD_OUEST,
+			Constants.TypeCase.SUD_EST,
+		]:
+			points_editor_mode = Constants.EditorMode.BACKGROUND
+		else:
+			points_editor_mode = Constants.EditorMode.FOREGROUND
 
 
 func _on_Export_pressed():
