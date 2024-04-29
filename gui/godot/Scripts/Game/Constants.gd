@@ -58,9 +58,9 @@ enum TypeCase {
 	VILLAGE_J1, # TODO : Village custom
 	VILLAGE_J2,
 	NORD_OUEST,
-	NORD_EST,
 	SUD_OUEST,
 	SUD_EST,
+	NORD_EST,
 	OEUF_BLANC,
 	OEUF_GRIS,
 	OEUF_ROUGE,

@@ -137,7 +137,6 @@ access = 2
 filters = PoolStringArray( "*.json" )
 
 [node name="AigleDialog" type="ConfirmationDialog" parent="Popups"]
-visible = true
 margin_left = 197.0
 margin_top = 154.0
 margin_right = 594.0
@@ -181,8 +180,8 @@ rect_min_size = Vector2( 80, 40 )
 [connection signal="pressed" from="Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
-[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
+[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="on_selection" from="Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/BGSelector" to="." method="_on_BGSelector_on_selection"]
 [connection signal="about_to_show" from="Popups/ExportDialog" to="." method="_on_ExportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ExportDialog" to="." method="_on_ExportDialog_file_selected"]

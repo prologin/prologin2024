@@ -18,9 +18,9 @@ var map : Models.Map
 const tiles = [
 	Constants.TypeCase.VILLAGE,
 	Constants.TypeCase.NORD_OUEST,
-	Constants.TypeCase.NORD_EST,
-	Constants.TypeCase.SUD_EST,
 	Constants.TypeCase.SUD_OUEST,
+	Constants.TypeCase.SUD_EST,
+	Constants.TypeCase.NORD_EST,
 	Constants.TypeCase.OEUF_BLANC,
 	Constants.TypeCase.OEUF_GRIS,
 	Constants.TypeCase.OEUF_ROUGE,
@@ -44,6 +44,8 @@ const tiles = [
 	Constants.TypeCase.PONT_2_SUD_OUEST,
 	Constants.TypeCase.PONT_2_SUD_EST,
 	Constants.TypeCase.PONT_2_NORD_EST,
+	Constants.TypeCase.VILLAGE_J1,
+	Constants.TypeCase.VILLAGE_J2,
 ]
 
 # Type case 2 tile id

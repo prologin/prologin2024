@@ -5,18 +5,22 @@ signal on_selection(tile)
 
 
 func _ready():
+	var viewer : Viewer = get_tree().current_scene.find_node("Viewer")
+
 	clear()
+
 	# Put item list
 	var items = [
-		[1, 2, 3],
-		[4],
-		[5, 6, 7],
-		[8, 9],
+		[Constants.TypeCase.VILLAGE, Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2],
+		[Constants.TypeCase.NORD_OUEST, Constants.TypeCase.NORD_EST],
+		[Constants.TypeCase.SUD_OUEST, Constants.TypeCase.SUD_EST],
+		[Constants.TypeCase.OEUF_BLANC, Constants.TypeCase.OEUF_BLEU, Constants.TypeCase.OEUF_ROUGE],
+		[Constants.TypeCase.OEUF_JAUNE, Constants.TypeCase.OEUF_GRIS],
 	]
 	for y in len(items):
 		var row = items[y]
 		for x in len(row):
-			set_cell(x, y, row[x])
+			set_cell(x, y, viewer.case2tile[row[x]])
 
 
 func _input(event):
