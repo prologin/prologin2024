@@ -136,7 +136,6 @@ access = 2
 filters = PoolStringArray( "*.json" )
 
 [node name="AigleDialog" type="ConfirmationDialog" parent="Popups"]
-visible = true
 margin_left = 197.0
 margin_top = 154.0
 margin_right = 594.0
