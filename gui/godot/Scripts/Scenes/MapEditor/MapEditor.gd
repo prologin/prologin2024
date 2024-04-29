@@ -111,6 +111,8 @@ func _on_click(pos, click_type):
 
 	# Edit map
 	if points_editor_mode == Constants.EditorMode.BACKGROUND and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
+		if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
+			remove_owned_villages(bg_selection)
 		# Background click
 		viewer.map.carte[y][x] = bg_selection
 		viewer.update_all(viewer.map)
@@ -141,6 +143,16 @@ func _on_click(pos, click_type):
 						break
 					i += 1
 				viewer.update_all(viewer.map)
+
+
+func remove_owned_villages(tile):
+	"""
+	Removes villages of J1 / J2 (replaced by neutral village)
+	"""
+	for y in viewer.map.height:
+		for x in viewer.map.width:
+			if viewer.map.carte[y][x] == tile:
+				viewer.map.carte[y][x] = Constants.TypeCase.VILLAGE
 
 
 func _on_Viewer_bg_drag(pos):
