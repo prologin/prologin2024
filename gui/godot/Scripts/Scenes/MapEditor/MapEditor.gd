@@ -170,7 +170,7 @@ func _on_Viewer_bg_right_click(pos):
 # --- Signals ---
 func _on_ClearMap_pressed():
 	var map = Models.Map.new()
-	map.init(20, 10)
+	map.init(Context.editor_init_width, Context.editor_init_height)
 	viewer.update_all(map)
 
 
