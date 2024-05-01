@@ -64,10 +64,10 @@ var aigle2effet = {}
 
 var case2char = {
 	Constants.TypeCase.VILLAGE: "X",
-	Constants.TypeCase.NORD_OUEST: "1",
-	Constants.TypeCase.SUD_OUEST: "2",
-	Constants.TypeCase.SUD_EST: "3",
-	Constants.TypeCase.NORD_EST: "4",
+	Constants.TypeCase.NORD_EST: "1",
+	Constants.TypeCase.NORD_OUEST: "2",
+	Constants.TypeCase.SUD_OUEST: "3",
+	Constants.TypeCase.SUD_EST: "4",
 }
 var char2case = {}
 
