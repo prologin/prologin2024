@@ -57,11 +57,19 @@ var effet2aigle = {
 	'VIE': Constants.TypeCase.OEUF_BLANC,
 	'MORT': Constants.TypeCase.OEUF_GRIS,
 	'FEU': Constants.TypeCase.OEUF_ROUGE,
-	'?': Constants.TypeCase.OEUF_JAUNE,
+	'GEL': Constants.TypeCase.OEUF_JAUNE,
 	'METEOR': Constants.TypeCase.OEUF_BLEU,
 }
 var aigle2effet = {}
 
+var case2char = {
+	Constants.TypeCase.VILLAGE: "X",
+	Constants.TypeCase.NORD_OUEST: "1",
+	Constants.TypeCase.SUD_OUEST: "2",
+	Constants.TypeCase.SUD_EST: "3",
+	Constants.TypeCase.NORD_EST: "4",
+}
+var char2case = {}
 
 func _ready():
 	for i in range(len(tiles)):
@@ -71,6 +79,8 @@ func _ready():
 	for k in effet2aigle:
 		aigle2effet[effet2aigle[k]] = k
 
+	for k in case2char:
+		char2case[case2char[k]] = k
 
 func set_alpha(alpha_carte, alpha_points):
 	background.modulate.a = alpha_carte
@@ -110,7 +120,7 @@ func update_grid():
 
 	for i in range(map.height):
 		for j in range(map.width):
-			grid.set_cell(j, i, 0)
+			grid.set_cell(j, i, Constants.TypeCase.NORD_OUEST)
 
 
 func update_points():

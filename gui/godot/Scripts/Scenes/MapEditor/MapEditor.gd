@@ -216,7 +216,7 @@ func _on_Import_pressed():
 
 func _on_ExportDialog_file_selected(path):
 	# TODO : Export dump to path
-	var json = Serialization.map_to_json(viewer.map)
+	var json = Serialization.map_to_json(viewer, viewer.map)
 	Serialization.write_json(json, path)
 	print('Saved to ', path)
 
@@ -224,7 +224,7 @@ func _on_ExportDialog_file_selected(path):
 func _on_ImportDialog_file_selected(path):
 	print('Importing ', path)
 	var json = Serialization.read_json(path)
-	var map = Serialization.json_to_map(json)
+	var map = Serialization.json_to_map(viewer, json)
 	viewer.update_all(map)
 
 

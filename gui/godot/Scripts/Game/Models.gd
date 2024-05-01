@@ -55,9 +55,8 @@ class Map:
 				self.points.append(points_row)
 
 		# Villages
-		# TODO
-		carte[0][0] = Constants.TypeCase.VILLAGE # _J1
-		carte[-1][-1] = Constants.TypeCase.VILLAGE # _J2
+		carte[0][0] = Constants.TypeCase.VILLAGE_J1
+		carte[-1][-1] = Constants.TypeCase.VILLAGE_J2
 
 		# Players
 		var j1 = Player.new()
