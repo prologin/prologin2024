@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Scenes/Visualiseur/Visualiseur.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Viewer/Viewer.tscn" type="PackedScene" id=2]
+
+[node name="Visualiseur" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="ViewportContainer" type="ViewportContainer" parent="HBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="Viewport" type="Viewport" parent="HBoxContainer/ViewportContainer"]
+size = Vector2( 800, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ViewportContainer/Viewport"]
+margin_right = 800.0
+margin_bottom = 600.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Viewer" parent="HBoxContainer/ViewportContainer/Viewport" instance=ExtResource( 2 )]
+
+[node name="Menu" type="ColorRect" parent="."]
+margin_left = 800.0
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.231373, 0.231373, 0.231373, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+margin_right = 224.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Import" type="Button" parent="Menu/VBoxContainer"]
+margin_right = 224.0
+margin_bottom = 20.0
+text = "Importer"
+
+[node name="Popups" type="Node" parent="."]
+
+[node name="ImportDialog" type="FileDialog" parent="Popups"]
+margin_right = 622.0
+margin_bottom = 338.0
+popup_exclusive = true
+window_title = "Open a File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.json" )
+
+[connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
+[connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
+[connection signal="bg_right_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_right_click"]
+[connection signal="pressed" from="Menu/VBoxContainer/Import" to="." method="_on_Import_pressed"]
+[connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
+[connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
+[connection signal="popup_hide" from="Popups/ImportDialog" to="." method="_on_ImportDialog_popup_hide"]
