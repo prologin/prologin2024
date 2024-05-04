@@ -104,6 +104,10 @@ func update_all(new_map):
 
 
 func update_zoom():
+	if map.height == 0 or map.width == 0:
+		self.scale = Vector2(1, 1)
+		return
+
 	var target_height = self.get_viewport_rect().size[1]
 	var target_width = self.get_viewport_rect().size[0]
 	var h_target_tile_size = target_height / map.height
