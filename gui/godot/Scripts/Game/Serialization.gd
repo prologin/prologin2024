@@ -20,6 +20,7 @@ static func write_json(json, path):
 
 static func json_to_map(viewer: Viewer, json: Dictionary) -> Models.Map:
 	var map = Models.Map.new()
+
 	map.width = json["largeur"]
 	map.height = json["hauteur"]
 

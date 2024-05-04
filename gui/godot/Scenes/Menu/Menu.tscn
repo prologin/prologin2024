@@ -69,7 +69,6 @@ margin_right = 315.0
 margin_bottom = 96.0
 
 [node name="EditorPopup" type="WindowDialog" parent="."]
-visible = true
 margin_left = 184.208
 margin_top = -329.705
 margin_right = 467.208

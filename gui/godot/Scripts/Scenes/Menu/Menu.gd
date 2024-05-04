@@ -11,8 +11,7 @@ func _on_ButtonEditeurCarte_pressed() -> void:
 
 
 func _on_ButtonReplay_pressed() -> void:
-	pass
-#	Scenes.open_scene(self, Scenes.replay_scene)
+	Scenes.open_scene(self, Scenes.replay_scene)
 
 
 func _ready() -> void:
