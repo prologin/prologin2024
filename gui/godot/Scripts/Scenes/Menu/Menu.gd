@@ -2,8 +2,7 @@ extends Node2D
 
 
 func _on_ButtonVisualiseurCarte_pressed() -> void:
-	pass
-#	Scenes.open_scene(self, Scenes.visualiseur_scene)
+	Scenes.open_scene(self, Scenes.visualiseur_scene)
 
 
 func _on_ButtonEditeurCarte_pressed() -> void:
