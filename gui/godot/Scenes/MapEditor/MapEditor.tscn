@@ -37,25 +37,27 @@ margin_bottom = 600.0
 color = Color( 0.231373, 0.231373, 0.231373, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Selector"]
-margin_right = 224.0
-margin_bottom = 600.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 216.0
+margin_bottom = 592.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Export" type="Button" parent="Selector/VBoxContainer"]
-margin_right = 224.0
+margin_right = 208.0
 margin_bottom = 20.0
 text = "Exporter"
 
 [node name="Import" type="Button" parent="Selector/VBoxContainer"]
 margin_top = 24.0
-margin_right = 224.0
+margin_right = 208.0
 margin_bottom = 44.0
 text = "Importer"
 
 [node name="ClearMap" type="Button" parent="Selector/VBoxContainer"]
 margin_top = 48.0
-margin_right = 224.0
+margin_right = 208.0
 margin_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -63,20 +65,28 @@ text = "Tout Effacer"
 
 [node name="EditorModeToggle" type="Button" parent="Selector/VBoxContainer"]
 margin_top = 72.0
-margin_right = 224.0
+margin_right = 208.0
 margin_bottom = 92.0
 text = "Editor Mode"
 
-[node name="ViewportContainer" type="ViewportContainer" parent="Selector/VBoxContainer"]
+[node name="PointsAmount" type="TextEdit" parent="Selector/VBoxContainer"]
 margin_top = 96.0
-margin_right = 224.0
-margin_bottom = 600.0
+margin_right = 208.0
+margin_bottom = 146.0
+rect_min_size = Vector2( 0, 50 )
+hint_tooltip = "Nombre de points de la sélection"
+custom_fonts/font = ExtResource( 5 )
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Selector/VBoxContainer"]
+margin_top = 150.0
+margin_right = 208.0
+margin_bottom = 584.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Selector/VBoxContainer/ViewportContainer"]
-size = Vector2( 224, 504 )
+size = Vector2( 208, 434 )
 handle_input_locally = false
 render_target_update_mode = 3
 
@@ -182,6 +192,10 @@ rect_min_size = Vector2( 80, 40 )
 [connection signal="pressed" from="Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
+[connection signal="focus_entered" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_entered"]
+[connection signal="focus_exited" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_exited"]
+[connection signal="gui_input" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_gui_input"]
+[connection signal="text_changed" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_text_changed"]
 [connection signal="on_selection" from="Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/BGSelector" to="." method="_on_BGSelector_on_selection"]
 [connection signal="about_to_show" from="Popups/ExportDialog" to="." method="_on_ExportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ExportDialog" to="." method="_on_ExportDialog_file_selected"]
