@@ -13,6 +13,7 @@ onready var selector_viewport = $Selector/VBoxContainer/ViewportContainer/Viewpo
 onready var aigle_dialog = $Popups/AigleDialog
 onready var aigle_dialog_puissance : TextEdit = $Popups/AigleDialog/VBoxContainer/Puissance
 onready var aigle_dialog_eclosion : TextEdit = $Popups/AigleDialog/VBoxContainer/Eclosion
+onready var points_amount : TextEdit = $Selector/VBoxContainer/PointsAmount
 
 var bg_selection = null
 var points_selection = null
@@ -20,6 +21,7 @@ var points_selection = null
 var points_editor_mode = Constants.EditorMode.BACKGROUND
 var selected_aigle_data = null
 var is_dialog_opened = false
+var points_amount_focused = false
 
 
 func _ready():
@@ -33,6 +35,7 @@ func update_editor_mode():
 	var alpha_disabled = .25
 	tiles_selector.visible = points_editor_mode != Constants.EditorMode.POINTS
 	points_selector.visible = points_editor_mode == Constants.EditorMode.POINTS
+	points_amount.visible = points_editor_mode == Constants.EditorMode.POINTS
 	if points_editor_mode == Constants.EditorMode.POINTS:
 		editor_mode_toggle.text = 'EDITION POINTS'
 		viewer.set_alpha(alpha_disabled, 1)
@@ -42,10 +45,12 @@ func update_editor_mode():
 
 
 func on_point_selected(i):
+	# TODO : Highlight selected if exists
 	if points_selection in [i, -i]:
 		points_selection = -points_selection
 	else:
 		points_selection = i
+	points_amount.text = str(points_selection)
 	print('points_selection: ', points_selection)
 
 
@@ -61,7 +66,7 @@ func update_selector():
 
 # --- Keyboard ---
 func _input(event):
-	if is_dialog_opened:
+	if is_dialog_opened or points_amount_focused:
 		return
 
 	var matching = {
@@ -79,13 +84,7 @@ func _input(event):
 	if event is InputEventKey and event.pressed and event.scancode in matching:
 		var n = matching[event.scancode]
 		if points_editor_mode == Constants.EditorMode.POINTS:
-			# TODO : Highlight selected
-			# Inverse sign
-			if points_selection in [n, -n]:
-				points_selection = -points_selection
-			else:
-				points_selection = n
-			print('points_selection: ', points_selection)
+			on_point_selected(n)
 		else:
 			# Edit map
 			if n < len(Viewer.tiles):
@@ -272,3 +271,24 @@ func _on_AigleDialog_confirmed():
 	selected_aigle.tour_eclosion = tour_eclosion
 	selected_aigle.puissance = puissance
 	viewer.update_all(viewer.map)
+
+
+func _on_PointsAmount_text_changed():
+	var n_points = points_amount.text.strip_edges().to_int()
+	if n_points != null:
+		points_selection = n_points
+		print('points_selection: ', points_selection)
+
+
+func _on_PointsAmount_focus_entered():
+	points_amount_focused = true
+
+
+func _on_PointsAmount_focus_exited():
+	points_amount_focused = false
+
+
+func _on_PointsAmount_gui_input(event):
+	if event is InputEventKey and event.pressed and event.scancode == KEY_ENTER:
+		points_amount.release_focus()
+		points_amount.text = str(points_selection)
