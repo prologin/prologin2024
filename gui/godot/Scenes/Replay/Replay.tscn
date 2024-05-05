@@ -34,15 +34,74 @@ margin_bottom = 600.0
 color = Color( 0.231373, 0.231373, 0.231373, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
-margin_right = 224.0
-margin_bottom = 600.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 216.0
+margin_bottom = 592.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Import" type="Button" parent="Menu/VBoxContainer"]
-margin_right = 224.0
+margin_right = 208.0
 margin_bottom = 20.0
 text = "Importer"
+
+[node name="Controls" type="HBoxContainer" parent="Menu/VBoxContainer"]
+margin_top = 24.0
+margin_right = 208.0
+margin_bottom = 44.0
+alignment = 1
+
+[node name="Start" type="Button" parent="Menu/VBoxContainer/Controls"]
+margin_left = 26.0
+margin_right = 54.0
+margin_bottom = 20.0
+text = "<<"
+
+[node name="Prev" type="Button" parent="Menu/VBoxContainer/Controls"]
+margin_left = 58.0
+margin_right = 78.0
+margin_bottom = 20.0
+text = "<"
+
+[node name="PlayPause" type="Button" parent="Menu/VBoxContainer/Controls"]
+margin_left = 82.0
+margin_right = 126.0
+margin_bottom = 20.0
+text = "Jouer"
+
+[node name="Next" type="Button" parent="Menu/VBoxContainer/Controls"]
+margin_left = 130.0
+margin_right = 150.0
+margin_bottom = 20.0
+text = ">"
+
+[node name="End" type="Button" parent="Menu/VBoxContainer/Controls"]
+margin_left = 154.0
+margin_right = 182.0
+margin_bottom = 20.0
+text = ">>"
+
+[node name="StateInfo" type="Label" parent="Menu/VBoxContainer"]
+margin_top = 48.0
+margin_right = 208.0
+margin_bottom = 62.0
+text = "Tour: 42/200 (J1)"
+align = 1
+
+[node name="ScoreJ1" type="Label" parent="Menu/VBoxContainer"]
+margin_top = 66.0
+margin_right = 208.0
+margin_bottom = 80.0
+custom_colors/font_color = Color( 0.545098, 0.839216, 1, 1 )
+text = "J1: 42618"
+
+[node name="ScoreJ2" type="Label" parent="Menu/VBoxContainer"]
+margin_top = 84.0
+margin_right = 208.0
+margin_bottom = 98.0
+custom_colors/font_color = Color( 1, 0.776471, 0.705882, 1 )
+text = "J2: 31442"
 
 [node name="Popups" type="Node" parent="."]
 
@@ -55,10 +114,18 @@ mode = 0
 access = 2
 filters = PoolStringArray( "*.json" )
 
+[node name="TickTimer" type="Timer" parent="."]
+
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
 [connection signal="bg_right_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_right_click"]
 [connection signal="pressed" from="Menu/VBoxContainer/Import" to="." method="_on_Import_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Controls/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Controls/Prev" to="." method="_on_Prev_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Controls/PlayPause" to="." method="_on_PlayPause_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Controls/Next" to="." method="_on_Next_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Controls/End" to="." method="_on_End_pressed"]
 [connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
 [connection signal="popup_hide" from="Popups/ImportDialog" to="." method="_on_ImportDialog_popup_hide"]
+[connection signal="timeout" from="TickTimer" to="." method="_on_TickTimer_timeout"]
