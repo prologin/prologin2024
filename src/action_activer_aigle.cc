@@ -22,7 +22,7 @@ int ActionActiverAigle::check(const GameState& st) const
     return OK;
 }
 
-bool envoler_aigle_id(std::vector<Aigle> aigles, int id)
+bool envoler_aigle_id(std::vector<Aigle>& aigles, int id)
 {
     auto aigle_correct = [id](Aigle aigle) {
         return aigle.identifiant == id;
@@ -34,12 +34,12 @@ bool envoler_aigle_id(std::vector<Aigle> aigles, int id)
     return true;
 }
 
-void envoler_aigle_pos(std::vector<Aigle> aigles, position pos, int tour_actuel)
+void envoler_aigle_pos(std::vector<Aigle>& aigles, position pos, int tour_actuel)
 {
     auto aigle_correct = [pos, tour_actuel](Aigle aigle) {
         return aigle.pos.colonne != pos.colonne ||
             aigle.pos.ligne != pos.ligne ||
-            aigle.tour_eclosion < tour_actuel;
+            aigle.tour_eclosion > tour_actuel;
     };
     std::vector<Aigle> aigles_survivants;
     std::copy_if(aigles.begin(), aigles.end(),
