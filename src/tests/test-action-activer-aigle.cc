@@ -139,8 +139,33 @@ ASSERT_EQ(api->activer_aigle(10), OK);
 ASSERT_EQ(st.joueurs[0].points_action, -3);
 }
 
-
 //EFFET_EFFRAYER
+
+
+TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
+{
+    auto& st = api->game_state();
+    Aigle a(10, {2, 1}, EFFET_EFFRAYER, -5, 0);
+    st.joueurs[0].aigles.push_back(a);
+    Aigle b(11, {2, 1}, EFFET_RAZ_DE_MAREE, -5, 0);
+    st.joueurs[0].aigles.push_back(b);
+    Aigle c(12, {2, 1}, EFFET_MULTIPLICATIF, -5, 0);
+    st.joueurs[1].aigles.push_back(c);
+    Aigle d(13, {2, 1}, EFFET_BLOQUEUR, -5, 0);
+    st.aigles_sauvages.push_back(d);
+    Aigle f(14, {1, 1}, EFFET_BLOQUEUR, -5, 0);
+    st.aigles_sauvages.push_back(f);
+    ASSERT_EQ(st.joueurs[0].aigles.size(), 2);
+    ASSERT_EQ(st.joueurs[1].aigles.size(), 1);
+    ASSERT_EQ(st.aigles_sauvages.size(), 3);
+    ASSERT_EQ(st.aigles_sauvages[0].tour_eclosion, 42);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    EXPECT_EQ(st.joueurs[0].aigles.size(), 0);
+    EXPECT_EQ(st.joueurs[1].aigles.size(), 0);
+    ASSERT_EQ(st.aigles_sauvages.size(), 2);
+    ASSERT_EQ(st.aigles_sauvages[0].identifiant, 0);
+    ASSERT_EQ(st.aigles_sauvages[1].identifiant, 14);
+}
 
 //EFFET_MULTIPLICATIF
 
