@@ -47,11 +47,11 @@ void envoler_aigle_pos(std::vector<Aigle> aigles, position pos, int tour_actuel)
     aigles = aigles_survivants;
 }
 
-void tourner_cases(Carte carte, Aigle& aigle)
+void tourner_cases(Carte& carte, Aigle& aigle)
 {
-    for (int x = aigle.pos.colonne - aigle.puissance; x < aigle.pos.colonne + aigle.puissance; x++)
+    for (int x = aigle.pos.colonne - aigle.puissance; x <= aigle.pos.colonne + aigle.puissance; x++)
     {
-        for (int y = aigle.pos.ligne - aigle.puissance; y < aigle.pos.ligne + aigle.puissance; y++)
+        for (int y = aigle.pos.ligne - aigle.puissance; y <= aigle.pos.ligne + aigle.puissance; y++)
         {
             if (carte.case_valide(x, y))
             {
