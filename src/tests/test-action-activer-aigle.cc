@@ -99,6 +99,45 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectBord)
 
 //EFFET_ACTIONS
 
+TEST_F(ApiTestColibri, ActionActiverAigleActionPositif1)
+{
+    auto& st = api->game_state();
+    Aigle a(10, {0, 0}, EFFET_ACTIONS, 1, 0);
+    ASSERT_EQ(st.joueurs[0].points_action, 2);
+    st.joueurs[0].aigles.push_back(a);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    ASSERT_EQ(st.joueurs[0].points_action, 3);
+}
+
+TEST_F(ApiTestColibri, ActionActiverAigleActionPositif3)
+{
+auto& st = api->game_state();
+Aigle a(10, {0, 0}, EFFET_ACTIONS, 3, 0);
+ASSERT_EQ(st.joueurs[0].points_action, 2);
+st.joueurs[0].aigles.push_back(a);
+ASSERT_EQ(api->activer_aigle(10), OK);
+ASSERT_EQ(st.joueurs[0].points_action, 5);
+}
+
+TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_2)
+{
+auto& st = api->game_state();
+Aigle a(10, {0, 0}, EFFET_ACTIONS, -2, 0);
+ASSERT_EQ(st.joueurs[0].points_action, 2);
+st.joueurs[0].aigles.push_back(a);
+ASSERT_EQ(api->activer_aigle(10), OK);
+ASSERT_EQ(st.joueurs[0].points_action, 0);
+}
+
+TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_5)
+{
+auto& st = api->game_state();
+Aigle a(10, {0, 0}, EFFET_ACTIONS, -5, 0);
+ASSERT_EQ(st.joueurs[0].points_action, 2);
+st.joueurs[0].aigles.push_back(a);
+ASSERT_EQ(api->activer_aigle(10), OK);
+ASSERT_EQ(st.joueurs[0].points_action, -3);
+}
 
 
 //EFFET_EFFRAYER
