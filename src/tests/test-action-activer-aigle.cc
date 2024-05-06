@@ -62,22 +62,22 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect1)
     ASSERT_EQ(api->activer_aigle(10), OK);
     caze = st.carte.get_case(1, 1);
     EXPECT_EQ(caze, SUD_EST);
-caze = st.carte.get_case(0, 0);
-EXPECT_EQ(caze, NORD_OUEST);
-caze = st.carte.get_case(3, 0);
-EXPECT_EQ(caze, SUD_EST);
-caze = st.carte.get_case(4, 0);
-EXPECT_EQ(caze, VILLAGE);
-caze = st.carte.get_case(3, 1);
-EXPECT_EQ(caze, NORD_OUEST);
-caze = st.carte.get_case(4, 1);
-EXPECT_EQ(caze, SUD_OUEST);
-caze = st.carte.get_case(0, 3);
-EXPECT_EQ(caze, VILLAGE);
-caze = st.carte.get_case(3, 3);
-EXPECT_EQ(caze, NORD_OUEST);
-caze = st.carte.get_case(4, 3);
-EXPECT_EQ(caze, SUD_OUEST);
+    caze = st.carte.get_case(0, 0);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(3, 0);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(4, 0);
+    EXPECT_EQ(caze, VILLAGE);
+    caze = st.carte.get_case(3, 1);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(4, 1);
+    EXPECT_EQ(caze, SUD_OUEST);
+    caze = st.carte.get_case(0, 3);
+    EXPECT_EQ(caze, VILLAGE);
+    caze = st.carte.get_case(3, 3);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(4, 3);
+    EXPECT_EQ(caze, SUD_OUEST);
 }
 
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectVillage)
@@ -129,32 +129,32 @@ TEST_F(ApiTestColibri, ActionActiverAigleActionPositif1)
 
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif3)
 {
-auto& st = api->game_state();
-Aigle a(10, {0, 0}, EFFET_ACTIONS, 3, 0);
-ASSERT_EQ(st.joueurs[0].points_action, 2);
-st.joueurs[0].aigles.push_back(a);
-ASSERT_EQ(api->activer_aigle(10), OK);
-ASSERT_EQ(st.joueurs[0].points_action, 5);
+    auto& st = api->game_state();
+    Aigle a(10, {0, 0}, EFFET_ACTIONS, 3, 0);
+    ASSERT_EQ(st.joueurs[0].points_action, 2);
+    st.joueurs[0].aigles.push_back(a);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    ASSERT_EQ(st.joueurs[0].points_action, 5);
 }
 
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_2)
 {
-auto& st = api->game_state();
-Aigle a(10, {0, 0}, EFFET_ACTIONS, -2, 0);
-ASSERT_EQ(st.joueurs[0].points_action, 2);
-st.joueurs[0].aigles.push_back(a);
-ASSERT_EQ(api->activer_aigle(10), OK);
-ASSERT_EQ(st.joueurs[0].points_action, 0);
+    auto& st = api->game_state();
+    Aigle a(10, {0, 0}, EFFET_ACTIONS, -2, 0);
+    ASSERT_EQ(st.joueurs[0].points_action, 2);
+    st.joueurs[0].aigles.push_back(a);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    ASSERT_EQ(st.joueurs[0].points_action, 0);
 }
 
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_5)
 {
-auto& st = api->game_state();
-Aigle a(10, {0, 0}, EFFET_ACTIONS, -5, 0);
-ASSERT_EQ(st.joueurs[0].points_action, 2);
-st.joueurs[0].aigles.push_back(a);
-ASSERT_EQ(api->activer_aigle(10), OK);
-ASSERT_EQ(st.joueurs[0].points_action, -3);
+    auto& st = api->game_state();
+    Aigle a(10, {0, 0}, EFFET_ACTIONS, -5, 0);
+    ASSERT_EQ(st.joueurs[0].points_action, 2);
+    st.joueurs[0].aigles.push_back(a);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    ASSERT_EQ(st.joueurs[0].points_action, -3);
 }
 
 //EFFET_EFFRAYER
@@ -186,6 +186,8 @@ TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
 }
 
 //EFFET_MULTIPLICATIF
+
+//TODO chaud à tester
 
 //EFFET_BLOQUEUR
 
