@@ -18,24 +18,38 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect0)
     ASSERT_EQ(caze, NORD_OUEST);
     st.joueurs[0].aigles.push_back(a);
     ASSERT_EQ(api->activer_aigle(10), OK);
-    caze = st.carte.get_case(1, 1);
-    EXPECT_EQ(caze, SUD_EST);
     caze = st.carte.get_case(0, 0);
     EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(1, 0);
+    EXPECT_EQ(caze, SUD_OUEST);
+    caze = st.carte.get_case(2, 0);
+    EXPECT_EQ(caze, SUD_OUEST);
+    caze = st.carte.get_case(3, 0);
+    EXPECT_EQ(caze, NORD_OUEST);
     caze = st.carte.get_case(0, 1);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(1, 1);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(2, 1);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(3, 1);
     EXPECT_EQ(caze, SUD_EST);
     caze = st.carte.get_case(0, 2);
     EXPECT_EQ(caze, SUD_OUEST);
-    caze = st.carte.get_case(1, 0);
-    EXPECT_EQ(caze, SUD_OUEST);
     caze = st.carte.get_case(1, 2);
-    EXPECT_EQ(caze, NORD_EST);
-    caze = st.carte.get_case(2, 0);
     EXPECT_EQ(caze, SUD_OUEST);
-    caze = st.carte.get_case(2, 1);
-    EXPECT_EQ(caze, SUD_EST);
     caze = st.carte.get_case(2, 2);
-    EXPECT_EQ(caze, NORD_OUEST);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(3, 2);
+    EXPECT_EQ(caze, VILLAGE);
+    caze = st.carte.get_case(0, 3);
+    EXPECT_EQ(caze, VILLAGE);
+    caze = st.carte.get_case(1, 3);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(2, 3);
+    EXPECT_EQ(caze, SUD_OUEST);
+    caze = st.carte.get_case(3, 3);
+    EXPECT_EQ(caze, SUD_EST);
 }
 
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect1)
@@ -48,22 +62,22 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect1)
     ASSERT_EQ(api->activer_aigle(10), OK);
     caze = st.carte.get_case(1, 1);
     EXPECT_EQ(caze, SUD_EST);
-    caze = st.carte.get_case(0, 0);
-    EXPECT_EQ(caze, NORD_OUEST);
-    caze = st.carte.get_case(0, 1);
-    EXPECT_EQ(caze, NORD_OUEST);
-    caze = st.carte.get_case(0, 2);
-    EXPECT_EQ(caze, NORD_EST);
-    caze = st.carte.get_case(1, 0);
-    EXPECT_EQ(caze, NORD_EST);
-    caze = st.carte.get_case(1, 2);
-    EXPECT_EQ(caze, SUD_OUEST);
-    caze = st.carte.get_case(2, 0);
-    EXPECT_EQ(caze, NORD_EST);
-    caze = st.carte.get_case(2, 1);
-    EXPECT_EQ(caze, NORD_OUEST);
-    caze = st.carte.get_case(2, 2);
-    EXPECT_EQ(caze, SUD_EST);
+caze = st.carte.get_case(0, 0);
+EXPECT_EQ(caze, NORD_OUEST);
+caze = st.carte.get_case(3, 0);
+EXPECT_EQ(caze, SUD_EST);
+caze = st.carte.get_case(4, 0);
+EXPECT_EQ(caze, VILLAGE);
+caze = st.carte.get_case(3, 1);
+EXPECT_EQ(caze, NORD_OUEST);
+caze = st.carte.get_case(4, 1);
+EXPECT_EQ(caze, SUD_OUEST);
+caze = st.carte.get_case(0, 3);
+EXPECT_EQ(caze, VILLAGE);
+caze = st.carte.get_case(3, 3);
+EXPECT_EQ(caze, NORD_OUEST);
+caze = st.carte.get_case(4, 3);
+EXPECT_EQ(caze, SUD_OUEST);
 }
 
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectVillage)
@@ -94,6 +108,10 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectBord)
     caze = st.carte.get_case(0, 1);
     EXPECT_EQ(caze, NORD_OUEST);
     caze = st.carte.get_case(1, 1);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(2, 1);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(3, 1);
     EXPECT_EQ(caze, SUD_EST);
 }
 
