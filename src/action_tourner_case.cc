@@ -46,8 +46,9 @@ void ActionTournerCase::apply_on(GameState* st) const
     int x = pos_.colonne;
     int y = pos_.ligne;
 
-    Joueur joueur = st->joueurs[player_id_];
-    Joueur adversaire = st->joueurs[player_id_ ^ 1];
+    Joueur& joueur = st->joueurs[player_id_];
+    Joueur& adversaire = st->joueurs[player_id_ ^ 1];
+    std::cout << "1" << std::endl;
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st->carte);
     int cout = territoire_adverse[y][x] ? 2 : 1;
     joueur.points_action -= cout;

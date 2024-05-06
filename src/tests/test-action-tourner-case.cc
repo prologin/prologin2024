@@ -27,7 +27,7 @@ TEST_F(ApiTestColibri, ActionActiverCaseAllier)
 TEST_F(ApiTestColibri, ActionActiverCaseEnnemi)
 {
     const auto& st = api->game_state();
-    position pos = {0, 2};
+    position pos = {3, 0};
     type_case caze = st.carte.get_case(3, 0);
     EXPECT_EQ(caze, NORD_OUEST);
     EXPECT_EQ(api->tourner_case(pos), OK);
@@ -47,7 +47,7 @@ TEST_F(ApiTestColibri, ActionActiverCaseEnnemi)
 TEST_F(ApiTestColibri, ActionActiverCaseVillage)
 {
     const auto& st = api->game_state();
-    position pos = {0, 2};
+    position pos = {0, 3};
     type_case caze = st.carte.get_case(0, 3);
     EXPECT_EQ(caze, VILLAGE);
     EXPECT_EQ(api->tourner_case(pos), OK);
