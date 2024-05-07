@@ -96,6 +96,33 @@ bool GameState::est_termine() const
     return tour >= NB_TOURS;
 }
 
+
+int calcul_multiplicatif(std::vector<Aigle> aigles, int x, int y)
+{
+    int multiplicatif = 1;
+    for (const Aigle& aiglantine : aigles)
+    {
+        if (aiglantine.effet != EFFET_MULTIPLICATIF)
+            continue;
+        int x_min = aiglantine.pos.colonne;
+        int x_max = aiglantine.pos.colonne + 1;
+        int y_min = aiglantine.pos.ligne;
+        int y_max = aiglantine.pos.ligne + 1;
+        if (!(x >= x_min && x <= x_max && y >= y_min && y <= y_max))
+            continue;
+        multiplicatif *= aiglantine.puissance;
+    }
+    return multiplicatif;
+}
+
+int GameState::calcul_score(int x, int y)
+{
+    int multiplicatif = 1;
+    multiplicatif *= calcul_multiplicatif(joueurs[0].aigles, x, y);
+    multiplicatif *= calcul_multiplicatif(joueurs[1].aigles, x, y);
+    return carte.get_gain(y, x) * multiplicatif;
+}
+
 void GameState::tour_suivant()
 {
     int largeur, hauteur;
@@ -108,7 +135,7 @@ void GameState::tour_suivant()
         for (int x = 0; x < largeur - 1; x++)
         {
             if (territoire[y][x])
-                j_actuel.score += carte.get_gain(x, y);
+                j_actuel.score += calcul_score(x, y);
         }
     }
 

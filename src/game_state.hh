@@ -47,6 +47,8 @@ public:
     GameState* copy() const override;
 
 
+    int calcul_score(int x, int y);
+
     bool est_termine() const;
     void tour_suivant();
     int joueur_actuel() const;
