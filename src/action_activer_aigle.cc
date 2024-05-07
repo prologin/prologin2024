@@ -47,7 +47,7 @@ void envoler_aigle_pos(std::vector<Aigle>& aigles, position pos, int tour_actuel
     aigles = aigles_survivants;
 }
 
-void tourner_cases(Carte& carte, Aigle& aigle)
+void tourner_cases(GameState& st, Carte& carte, Aigle& aigle)
 {
     for (int x = aigle.pos.colonne - aigle.puissance; x <= aigle.pos.colonne + aigle.puissance + 1; x++)
     {
@@ -56,7 +56,10 @@ void tourner_cases(Carte& carte, Aigle& aigle)
             if (carte.case_valide(x, y))
             {
                 for (int i = 0; i < 2; i++)
-                    carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
+                {
+                    if (!case_bloquee(st, x, y))
+                        carte.set_case(x, y, rotation_case(carte.get_case(x, y)));
+                }
             }
         }
     }
@@ -71,7 +74,7 @@ void ActionActiverAigle::apply_on(GameState* st) const
     {
         case EFFET_RAZ_DE_MAREE:
         {
-            tourner_cases(st->carte, *aiglantine);
+            tourner_cases(*st, st->carte, *aiglantine);
             break;
         }
         case EFFET_ACTIONS:

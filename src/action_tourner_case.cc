@@ -3,6 +3,27 @@
 
 #include "actions.hh"
 
+bool case_bloquee(std::vector<Aigle> aigles, int x, int y)
+{
+    for (const Aigle& aigle : aigles)
+    {
+        if (aigle.effet != EFFET_BLOQUEUR)
+            continue;
+        int x_min = aigle.pos.colonne;
+        int x_max = aigle.pos.colonne + 1;
+        int y_min = aigle.pos.ligne;
+        int y_max = aigle.pos.ligne + 1;
+        if (x >= x_min && x <= x_max && y >= y_min && y <= y_max)
+            return true;
+    }
+    return false;
+}
+
+bool case_bloquee(const GameState& st, int x, int y)
+{
+    return case_bloquee(st.joueurs[0].aigles, x, y) || case_bloquee(st.joueurs[1].aigles, x, y);
+}
+
 int ActionTournerCase::check(const GameState& st) const
 {
     if (!st.init)
@@ -12,6 +33,8 @@ int ActionTournerCase::check(const GameState& st) const
     int y = pos_.colonne;
     int x = pos_.ligne;
     if (!carte.case_valide(x, y))
+        return POSITION_INVALIDE;
+    if (case_bloquee(st, x, y))
         return POSITION_INVALIDE;
 
     Joueur joueur = st.joueurs[player_id_];
@@ -48,7 +71,6 @@ void ActionTournerCase::apply_on(GameState* st) const
 
     Joueur& joueur = st->joueurs[player_id_];
     Joueur& adversaire = st->joueurs[player_id_ ^ 1];
-    std::cout << "1" << std::endl;
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st->carte);
     int cout = territoire_adverse[y][x] ? 2 : 1;
     joueur.points_action -= cout;

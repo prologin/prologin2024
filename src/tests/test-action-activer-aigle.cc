@@ -92,7 +92,6 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectVillage)
     EXPECT_EQ(caze, VILLAGE);
 }
 
-
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectBord)
 {
     auto& st = api->game_state();
@@ -111,6 +110,32 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectBord)
     EXPECT_EQ(caze, SUD_EST);
     caze = st.carte.get_case(2, 1);
     EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(3, 1);
+    EXPECT_EQ(caze, SUD_EST);
+}
+
+TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeAigleBloquant)
+{
+    auto& st = api->game_state();
+    Aigle a(10, {0, 0}, EFFET_RAZ_DE_MAREE, 1, 0);
+    Aigle b(10, {0, 0}, EFFET_BLOQUEUR, 0, 0);
+    type_case caze = st.carte.get_case(0, 0);
+    ASSERT_EQ(caze, SUD_EST);
+    st.joueurs[0].aigles.push_back(a);
+    st.joueurs[0].aigles.push_back(b);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    caze = st.carte.get_case(0, 0);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(1, 0);
+    EXPECT_EQ(caze, SUD_OUEST);
+    caze = st.carte.get_case(0, 1);
+    EXPECT_EQ(caze, SUD_EST);
+    caze = st.carte.get_case(1, 1);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(2, 1);
+    EXPECT_EQ(caze, NORD_OUEST);
+    caze = st.carte.get_case(1, 2);
+    EXPECT_EQ(caze, SUD_OUEST);
     caze = st.carte.get_case(3, 1);
     EXPECT_EQ(caze, SUD_EST);
 }

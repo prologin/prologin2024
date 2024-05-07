@@ -37,3 +37,4 @@ private:
 };
 
 enum type_case rotation_case(enum type_case actuel);
+bool case_bloquee(const GameState& st, int x, int y);
