@@ -30,8 +30,8 @@ int ActionTournerCase::check(const GameState& st) const
         return HORS_TOUR;
 
     Carte carte = st.carte;
-    int y = pos_.colonne;
-    int x = pos_.ligne;
+    int x = pos_.colonne;
+    int y = pos_.ligne;
     if (!carte.case_valide(x, y))
         return POSITION_INVALIDE;
     if (case_bloquee(st, x, y))
