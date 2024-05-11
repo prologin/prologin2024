@@ -87,8 +87,18 @@ int Api::score(int joueur)
 
 std::vector<action_hist> Api::historique()
 {
-    // TODO
-    abort();
+    std::vector<action_hist> actions_valides;
+    std::vector<ActionInterne> actions_et_debug =
+        game_state_->historiques[1 - game_state_->joueur_actuel()];
+        // TODO: Pourquoi `1 - game_state_->joueur_actuel()` ? (#jeux/2023)
+
+    for(ActionInterne action : actions_et_debug) {
+        if(!action.est_drakkar) {
+            actions_valides.push_back(action.action);
+        }
+    }
+
+    return actions_valides;
 }
 int Api::moi()
 {
