@@ -24,7 +24,8 @@ Rules::Rules(const rules::Options opt)
             champion_dll_->get<f_champion_partie_fin>("partie_fin");
     }
 
-    auto game_state = std::make_unique<GameState>(opt.players);
+    std::ifstream is(opt.map_file);
+    auto game_state = std::make_unique<GameState>(opt.players, is);
     api_ = std::make_unique<Api>(std::move(game_state), opt.player);
     register_actions();
 }

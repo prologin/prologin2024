@@ -16,6 +16,7 @@ position vec_to_pos(const std::vector<int>& vec)
 GameState::GameState(const rules::Players& players)
     : rules::GameState(players)
 {
+    std::cout << "CQLE" << std::endl;
     // should not come here
 }
 
@@ -44,7 +45,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     joueurs.emplace_back(id_joueur++, -1, aigles2, villages2);
 
     std::vector<std::vector<int>> gains;
-    for (const auto& ligne : donnees["gains"])
+    for (const auto& ligne : donnees["gain"])
     {
         std::vector<int> ligne_vec;
         for (int elt : ligne)
@@ -79,6 +80,9 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         carte_texte.push_back(ligne);
 
     carte = Carte(carte_texte, gains);
+
+    historiques.push_back(std::vector<ActionInterne>());
+    historiques.push_back(std::vector<ActionInterne>());
 
     // FIXME
 }
