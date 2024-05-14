@@ -40,6 +40,7 @@ int ActionTournerCase::check(const GameState& st) const
     Joueur joueur = st.joueurs[player_id_];
     Joueur adversaire = st.joueurs[player_id_ ^ 1];
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st.carte);
+
     int cout = 1;
     for (int emplacement_y = y - 1; emplacement_y <= y; emplacement_y++)
     {

@@ -25,12 +25,15 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
         int x = base.colonne;
         int y = base.ligne;
 
-        for (int dy = 0; dy <= 1; dy++)
+        for (int dy = -1; dy <= 0; dy++)
         {
-            for (int dx = 0; dx <= 1; dx++)
+            for (int dx = -1; dx <= 0; dx++)
             {
                 int rx = x + dx;
                 int ry = y + dy;
+                if (!carte.emplacement_valide(rx, ry))
+                    continue;
+
                 if (territoire[ry][rx])
                     continue;
 
@@ -63,6 +66,9 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
         {
             int rx, ry;
             std::tie(rx, ry) = voisin;
+            if (!carte.emplacement_valide(rx, ry))
+                continue;
+
             if (territoire[ry][rx])
                 continue;
 

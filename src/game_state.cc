@@ -202,10 +202,10 @@ json dump_carte(const Carte& carte)
             case VILLAGE:
                 ligne.push_back('X');
                 break;
-            case NORD_OUEST:
+            case NORD_EST:
                 ligne.push_back('1');
                 break;
-            case NORD_EST:
+            case NORD_OUEST:
                 ligne.push_back('2');
                 break;
             case SUD_OUEST:
