@@ -7,7 +7,7 @@ bool case_bloquee(const std::vector<Aigle>& aigles, int x, int y)
 {
     for (const Aigle& aigle : aigles)
     {
-        if (aigle.effet != EFFET_BLOQUEUR)
+        if (aigle.effet != EFFET_GEL)
             continue;
         if (aigle.case_dans_rayon(x, y))
             return true;

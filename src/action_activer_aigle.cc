@@ -15,9 +15,9 @@ int ActionActiverAigle::check(const GameState& st) const
     if (aiglantine == joueur.aigles.end())
         return AIGLE_INVALIDE;
 
-    if (!(aiglantine->effet == EFFET_RAZ_DE_MAREE ||
-        aiglantine->effet == EFFET_ACTIONS ||
-        aiglantine->effet == EFFET_EFFRAYER))
+    if (!(aiglantine->effet == EFFET_METEORE ||
+        aiglantine->effet == EFFET_VIE ||
+        aiglantine->effet == EFFET_MORT))
         return AIGLE_INVALIDE;
     return OK;
 }
@@ -72,17 +72,17 @@ void ActionActiverAigle::apply_on(GameState* st) const
 
     switch (aiglantine->effet)
     {
-        case EFFET_RAZ_DE_MAREE:
+        case EFFET_METEORE:
         {
             tourner_cases(*st, st->carte, *aiglantine);
             break;
         }
-        case EFFET_ACTIONS:
+        case EFFET_VIE:
         {
             joueur.points_action += aiglantine->puissance;
             break;
         }
-        case EFFET_EFFRAYER:
+        case EFFET_MORT:
         {
             envoler_aigle_pos(st->joueurs[0].aigles, aiglantine->pos, st->tour);
             envoler_aigle_pos(st->joueurs[1].aigles, aiglantine->pos, st->tour);

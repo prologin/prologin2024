@@ -63,6 +63,7 @@ enum:
     enum_field:
       - [ok, "L'action a été effectuée avec succès"]
       - [hors_tour, "Vous ne pouvez pas faire d'action en dehors de votre tour"]
+      - [case_bloquee, "La case est bloquée par un aigle"]
       - [position_invalide, "La position fournie est invalide"]
       - [destination_invalide, "La position d'arrivée est invalide"]
       - [plus_de_pa, "Vous n'avez plus de points d'action"]
@@ -72,8 +73,8 @@ enum:
     enum_summary: "Contenu topographique d'une case"
     enum_field:
       - [village, "Village"]
-      - [nord_ouest, "Case dont le coin manquant est au nord ouest"]
       - [nord_est, "Case dont le coin manquant est au nord est"]
+      - [nord_ouest, "Case dont le coin manquant est au nord ouest"]
       - [sud_ouest, "Case dont le coin manquant est au sud ouest"]
       - [sud_est, "Case dont le coin manquant est au sud est"]
       - [case_invalide, "Case invalide"]
@@ -96,11 +97,11 @@ enum:
     enum_name: effet_aigle
     enum_summary: "Effet de l'aigle"
     enum_field:
-      - [effet_raz_de_maree, "Déclenche un raz de marée"]
-      - [effet_actions, "Donne des points actions"]
-      - [effet_effrayer, "Effraye les aigles d'une case"]
-      - [effet_multiplicatif, "Multiplie les point d'une île"]
-      - [effet_bloqueur, "Bloque les mouvements de cases"]
+      - [effet_meteore, "Fait tomber un météore qui tourne les cases"]
+      - [effet_vie, "Donne des points actions"]
+      - [effet_mort, "Effraye les aigles d'un emplacement"]
+      - [effet_feu, "Multiplie les point d'une île"]
+      - [effet_gel, "Bloque les rotations de cases"]
 
 struct:
   -

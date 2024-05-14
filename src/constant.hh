@@ -46,6 +46,7 @@ typedef enum erreur
 {
     OK, ///< L'action a été effectuée avec succès
     HORS_TOUR, ///< Vous ne pouvez pas faire d'action en dehors de votre tour
+    CASE_BLOQUEE, ///< La case est bloquée par un aigle
     POSITION_INVALIDE, ///< La position fournie est invalide
     DESTINATION_INVALIDE, ///< La position d'arrivée est invalide
     PLUS_DE_PA, ///< Vous n'avez plus de points d'action
@@ -56,8 +57,8 @@ typedef enum erreur
 typedef enum type_case
 {
     VILLAGE, ///< Village
-    NORD_OUEST, ///< Case dont le coin manquant est au nord ouest
     NORD_EST, ///< Case dont le coin manquant est au nord est
+    NORD_OUEST, ///< Case dont le coin manquant est au nord ouest
     SUD_OUEST, ///< Case dont le coin manquant est au sud ouest
     SUD_EST, ///< Case dont le coin manquant est au sud est
     CASE_INVALIDE, ///< Case invalide
@@ -83,11 +84,11 @@ typedef enum type_action
 /// Effet de l'aigle
 typedef enum effet_aigle
 {
-    EFFET_RAZ_DE_MAREE, ///< Déclenche un raz de marée
-    EFFET_ACTIONS, ///< Donne des points actions
-    EFFET_EFFRAYER, ///< Effraye les aigles d'une case
-    EFFET_MULTIPLICATIF, ///< Multiplie les point d'une île
-    EFFET_BLOQUEUR, ///< Bloque les mouvements de cases
+    EFFET_METEORE, ///< Fait tomber un météore qui tourne les cases
+    EFFET_VIE, ///< Donne des points actions
+    EFFET_MORT, ///< Effraye les aigles d'un emplacement
+    EFFET_FEU, ///< Multiplie les point d'une île
+    EFFET_GEL, ///< Bloque les rotations de cases
 } effet_aigle;
 
 

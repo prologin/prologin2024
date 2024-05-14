@@ -8,12 +8,12 @@ TEST_F(ApiTestColibri, ActionActiverAiglePasAigle)
     ASSERT_EQ(st.aigles_sauvages[0].pos.ligne, 1);
 }
 
-//EFFET_RAZ_DE_MAREE
+//EFFET_METEORE
 
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect0)
 {
     auto& st = api->game_state();
-    Aigle a(10, {1, 1}, EFFET_RAZ_DE_MAREE, 0, 0);
+    Aigle a(10, {1, 1}, EFFET_METEORE, 0, 0);
     type_case caze = st.carte.get_case(1, 1);
     ASSERT_EQ(caze, NORD_OUEST);
     st.joueurs[0].aigles.push_back(a);
@@ -55,7 +55,7 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect0)
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect1)
 {
     auto& st = api->game_state();
-    Aigle a(10, {1, 1}, EFFET_RAZ_DE_MAREE, 1, 0);
+    Aigle a(10, {1, 1}, EFFET_METEORE, 1, 0);
     type_case caze = st.carte.get_case(1, 1);
     ASSERT_EQ(caze, NORD_OUEST);
     st.joueurs[0].aigles.push_back(a);
@@ -83,7 +83,7 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrect1)
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectVillage)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 3}, EFFET_RAZ_DE_MAREE, 0, 0);
+    Aigle a(10, {0, 3}, EFFET_METEORE, 0, 0);
     type_case caze = st.carte.get_case(0, 3);
     ASSERT_EQ(caze, VILLAGE);
     st.joueurs[0].aigles.push_back(a);
@@ -95,7 +95,7 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectVillage)
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectBord)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 0}, EFFET_RAZ_DE_MAREE, 1, 0);
+    Aigle a(10, {0, 0}, EFFET_METEORE, 1, 0);
     type_case caze = st.carte.get_case(0, 0);
     ASSERT_EQ(caze, SUD_EST);
     st.joueurs[0].aigles.push_back(a);
@@ -117,8 +117,8 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeCorrectBord)
 TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeAigleBloquant)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 0}, EFFET_RAZ_DE_MAREE, 1, 0);
-    Aigle b(10, {0, 0}, EFFET_BLOQUEUR, 0, 0);
+    Aigle a(10, {0, 0}, EFFET_METEORE, 1, 0);
+    Aigle b(10, {0, 0}, EFFET_GEL, 0, 0);
     type_case caze = st.carte.get_case(0, 0);
     ASSERT_EQ(caze, SUD_EST);
     st.joueurs[0].aigles.push_back(a);
@@ -140,12 +140,12 @@ TEST_F(ApiTestColibri, ActionActiverAigleRazDeMareeAigleBloquant)
     EXPECT_EQ(caze, SUD_EST);
 }
 
-//EFFET_ACTIONS
+//EFFET_VIE
 
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif1)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 0}, EFFET_ACTIONS, 1, 0);
+    Aigle a(10, {0, 0}, EFFET_VIE, 1, 0);
     ASSERT_EQ(st.joueurs[0].points_action, 2);
     st.joueurs[0].aigles.push_back(a);
     ASSERT_EQ(api->activer_aigle(10), OK);
@@ -155,7 +155,7 @@ TEST_F(ApiTestColibri, ActionActiverAigleActionPositif1)
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif3)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 0}, EFFET_ACTIONS, 3, 0);
+    Aigle a(10, {0, 0}, EFFET_VIE, 3, 0);
     ASSERT_EQ(st.joueurs[0].points_action, 2);
     st.joueurs[0].aigles.push_back(a);
     ASSERT_EQ(api->activer_aigle(10), OK);
@@ -165,7 +165,7 @@ TEST_F(ApiTestColibri, ActionActiverAigleActionPositif3)
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_2)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 0}, EFFET_ACTIONS, -2, 0);
+    Aigle a(10, {0, 0}, EFFET_VIE, -2, 0);
     ASSERT_EQ(st.joueurs[0].points_action, 2);
     st.joueurs[0].aigles.push_back(a);
     ASSERT_EQ(api->activer_aigle(10), OK);
@@ -175,28 +175,28 @@ TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_2)
 TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_5)
 {
     auto& st = api->game_state();
-    Aigle a(10, {0, 0}, EFFET_ACTIONS, -5, 0);
+    Aigle a(10, {0, 0}, EFFET_VIE, -5, 0);
     ASSERT_EQ(st.joueurs[0].points_action, 2);
     st.joueurs[0].aigles.push_back(a);
     ASSERT_EQ(api->activer_aigle(10), OK);
     ASSERT_EQ(st.joueurs[0].points_action, -3);
 }
 
-//EFFET_EFFRAYER
+//EFFET_MORT
 
 
 TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
 {
     auto& st = api->game_state();
-    Aigle a(10, {2, 1}, EFFET_EFFRAYER, -5, 0);
+    Aigle a(10, {2, 1}, EFFET_MORT, -5, 0);
     st.joueurs[0].aigles.push_back(a);
-    Aigle b(11, {2, 1}, EFFET_RAZ_DE_MAREE, -5, 0);
+    Aigle b(11, {2, 1}, EFFET_METEORE, -5, 0);
     st.joueurs[0].aigles.push_back(b);
-    Aigle c(12, {2, 1}, EFFET_MULTIPLICATIF, -5, 0);
+    Aigle c(12, {2, 1}, EFFET_FEU, -5, 0);
     st.joueurs[1].aigles.push_back(c);
-    Aigle d(13, {2, 1}, EFFET_BLOQUEUR, -5, 0);
+    Aigle d(13, {2, 1}, EFFET_GEL, -5, 0);
     st.aigles_sauvages.push_back(d);
-    Aigle f(14, {1, 1}, EFFET_BLOQUEUR, -5, 0);
+    Aigle f(14, {1, 1}, EFFET_GEL, -5, 0);
     st.aigles_sauvages.push_back(f);
     ASSERT_EQ(st.joueurs[0].aigles.size(), 2);
     ASSERT_EQ(st.joueurs[1].aigles.size(), 1);
@@ -210,10 +210,10 @@ TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
     ASSERT_EQ(st.aigles_sauvages[1].identifiant, 14);
 }
 
-//EFFET_MULTIPLICATIF
+//EFFET_FEU
 
 //TODO chaud à tester
 
-//EFFET_BLOQUEUR
+//EFFET_GEL
 
 //TODO YAKA

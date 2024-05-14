@@ -57,17 +57,17 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         effet_aigle effet;
         std::string effet_string = aigle["effet"];
         if (!effet_string.compare("METEORE"))
-            effet = EFFET_RAZ_DE_MAREE;
+            effet = EFFET_METEORE;
         else if (!effet_string.compare("VIE"))
-            effet = EFFET_ACTIONS;
+            effet = EFFET_VIE;
+        else if (!effet_string.compare("MORT"))
+            effet = EFFET_MORT;
         else if (!effet_string.compare("FEU"))
-            effet = EFFET_EFFRAYER;
-        else if (!effet_string.compare("ABONDANCE"))
-            effet = EFFET_MULTIPLICATIF;
+            effet = EFFET_FEU;
         else if (!effet_string.compare("GEL"))
-            effet = EFFET_BLOQUEUR;
+            effet = EFFET_GEL;
         else
-            effet = EFFET_BLOQUEUR;
+            effet = EFFET_GEL;
         Aigle a(id, {aigle["pos"]["x"], aigle["pos"]["y"]}, effet, aigle["puissance"], aigle["tour_eclosion"]);
         aigles_sauvages.push_back(a);
     }
@@ -102,7 +102,7 @@ int calcul_multiplicatif(const std::vector<Aigle>& aigles, int x, int y)
     int multiplicatif = 1;
     for (const Aigle& aiglantine : aigles)
     {
-        if (aiglantine.effet != EFFET_MULTIPLICATIF)
+        if (aiglantine.effet != EFFET_FEU)
             continue;
         if (aiglantine.case_dans_rayon(x, y))
             continue;
@@ -294,19 +294,19 @@ json dump_aigle(const Aigle& aigle)
     jaigle["pos"] = dump_position(aigle.pos);
     switch (aigle.effet)
     {
-    case EFFET_RAZ_DE_MAREE:
+    case EFFET_METEORE:
         jaigle["effet"] = "METEORE";
         break;
-    case EFFET_ACTIONS:
+    case EFFET_VIE:
         jaigle["effet"] = "VIE";
         break;
-    case EFFET_EFFRAYER:
+    case EFFET_MORT:
         jaigle["effet"] = "MORT";
         break;
-    case EFFET_MULTIPLICATIF:
+    case EFFET_FEU:
         jaigle["effet"] = "FEU";
         break;
-    case EFFET_BLOQUEUR:
+    case EFFET_GEL:
         jaigle["effet"] = "GEL";
         break;
     }

@@ -156,6 +156,9 @@ std::ostream& operator<<(std::ostream& os, erreur v)
     case HORS_TOUR:
         os << "HORS_TOUR";
         break;
+    case CASE_BLOQUEE:
+        os << "CASE_BLOQUEE";
+        break;
     case POSITION_INVALIDE:
         os << "POSITION_INVALIDE";
         break;
@@ -179,11 +182,11 @@ std::ostream& operator<<(std::ostream& os, type_case v)
     case VILLAGE:
         os << "VILLAGE";
         break;
-    case NORD_OUEST:
-        os << "NORD_OUEST";
-        break;
     case NORD_EST:
         os << "NORD_EST";
+        break;
+    case NORD_OUEST:
+        os << "NORD_OUEST";
         break;
     case SUD_OUEST:
         os << "SUD_OUEST";
@@ -239,20 +242,20 @@ std::ostream& operator<<(std::ostream& os, effet_aigle v)
 {
     switch (v)
     {
-    case EFFET_RAZ_DE_MAREE:
-        os << "EFFET_RAZ_DE_MAREE";
+    case EFFET_METEORE:
+        os << "EFFET_METEORE";
         break;
-    case EFFET_ACTIONS:
-        os << "EFFET_ACTIONS";
+    case EFFET_VIE:
+        os << "EFFET_VIE";
         break;
-    case EFFET_EFFRAYER:
-        os << "EFFET_EFFRAYER";
+    case EFFET_MORT:
+        os << "EFFET_MORT";
         break;
-    case EFFET_MULTIPLICATIF:
-        os << "EFFET_MULTIPLICATIF";
+    case EFFET_FEU:
+        os << "EFFET_FEU";
         break;
-    case EFFET_BLOQUEUR:
-        os << "EFFET_BLOQUEUR";
+    case EFFET_GEL:
+        os << "EFFET_GEL";
         break;
     }
     return os;

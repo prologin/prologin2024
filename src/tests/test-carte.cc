@@ -208,7 +208,7 @@ TEST(CarteTest, json_test_aigle)
 
     ASSERT_EQ(st.aigles_sauvages[0].pos.colonne, 2);
     ASSERT_EQ(st.aigles_sauvages[0].pos.ligne, 1);
-    ASSERT_EQ(st.aigles_sauvages[0].effet, EFFET_BLOQUEUR);
+    ASSERT_EQ(st.aigles_sauvages[0].effet, EFFET_GEL);
     ASSERT_EQ(st.aigles_sauvages[0].puissance, 4);
     ASSERT_EQ(st.aigles_sauvages[0].tour_eclosion, 42);
 }
