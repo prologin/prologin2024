@@ -2,19 +2,18 @@
 // Copyright (c) 2015 Association Prologin <association@prologin.org>
 
 #include "game_state.hh"
-#include "api.hh"
-#include "rules.hh"
 
 namespace
 {
-position vec_to_pos(const std::vector<int>& vec)
-{
-    return {vec[0], vec[1]};
-}
+    position vec_to_pos(const std::vector<int>& vec)
+    {
+        return { vec[0], vec[1] };
+    }
 } // namespace
 
+
 GameState::GameState(const rules::Players& players)
-    : rules::GameState(players)
+        : rules::GameState(players)
 {
     // should not come here
 }
@@ -69,8 +68,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
             effet = EFFET_GEL;
         else
             effet = EFFET_GEL;
-        Aigle a(id, {aigle["pos"]["x"], aigle["pos"]["y"]}, effet,
-                aigle["puissance"], aigle["tour_eclosion"]);
+        Aigle a(id, {aigle["pos"]["x"], aigle["pos"]["y"]}, effet, aigle["puissance"], aigle["tour_eclosion"]);
         aigles_sauvages.push_back(a);
     }
 
@@ -97,6 +95,7 @@ bool GameState::est_termine() const
 {
     return tour >= NB_TOURS;
 }
+
 
 int calcul_multiplicatif(const std::vector<Aigle>& aigles, int x, int y)
 {
@@ -154,14 +153,14 @@ void GameState::debute_tour(int joueur)
 
 void GameState::ajoute_historique(action_hist action)
 {
-    historiques[joueur_actuel()].push_back({false, action, PAS_DE_DRAKKAR});
+    historiques[joueur_actuel()].push_back({ false, action, PAS_DE_DRAKKAR });
 }
 
 void GameState::pose_drakkar(position pos, drakkar_debug couleur)
 {
     action_hist vide;
     vide.fin = pos;
-    historiques[joueur_actuel()].push_back({true, vide, couleur});
+    historiques[joueur_actuel()].push_back({ true, vide, couleur });
 }
 
 bool GameState::annuler()
@@ -245,8 +244,7 @@ json dump_debug(const Carte& carte,
     int largeur, hauteur;
     std::tie(largeur, hauteur) = carte.get_dimension();
 
-    std::vector<std::vector<int>> carte_debug(hauteur,
-                                              std::vector<int>(largeur));
+    std::vector<std::vector<int>> carte_debug(hauteur, std::vector<int>(largeur));
 
     for (int joueur = 0; joueur < 2; joueur++)
     {
@@ -322,12 +320,12 @@ json dump_joueur(const Joueur& joueur)
     json jjoueur;
 
     json jvillages = json::array();
-    for (const position& pos : joueur.villages)
+    for (const position& pos: joueur.villages)
         jvillages.push_back(dump_position(pos));
     jjoueur["villages"] = jvillages;
 
     json jaigles = json::array();
-    for (const Aigle& aigle : joueur.aigles)
+    for (const Aigle& aigle: joueur.aigles)
         jaigles.push_back(dump_aigle(aigle));
     jjoueur["aigles"] = jaigles;
 
@@ -388,7 +386,7 @@ json GameState::dump() const
     json jactions = json::array();
     for (int joueur = 0; joueur <= 1; joueur++)
     {
-        for (const ActionInterne& action_interne : historiques[joueur])
+        for (const ActionInterne& action_interne: historiques[joueur])
         {
             if (action_interne.est_drakkar)
                 continue;
@@ -398,20 +396,4 @@ json GameState::dump() const
     jetat["actions"] = jactions;
 
     return jetat;
-}
-
-extern Api* api;
-
-void Rules::dump_state(std::ostream& ss)
-{
-    ss << api_->game_state().dump() << "\n";
-}
-
-extern "C" const char* dump_state_json()
-{
-    static std::string s;
-    std::ostringstream ss;
-    ss << api->game_state().dump() << "\n";
-    s = ss.str();
-    return s.c_str();
 }

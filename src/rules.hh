@@ -29,7 +29,6 @@ public:
     rules::Actions* get_actions() override;
     void apply_action(const rules::IAction& action) override;
     bool is_finished() override;
-    virtual void dump_state(std::ostream& ss);
 
 protected:
     // FIXME: Override turnbased methods here
