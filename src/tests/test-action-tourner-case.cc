@@ -40,7 +40,7 @@ TEST_F(ApiTestColibri, ActionTournerCaseBloqueeAllier)
     EXPECT_EQ(api->tourner_case(pos), POSITION_INVALIDE);
     pos = {1, 2};
     EXPECT_EQ(api->tourner_case(pos), OK);
-    pos = {2, 0};
+    pos = {1, 2};
     EXPECT_EQ(api->tourner_case(pos), OK);
 }
 
@@ -61,7 +61,7 @@ TEST_F(ApiTestColibri, ActionTournerCaseBloqueeEnnemi)
     EXPECT_EQ(api->tourner_case(pos), POSITION_INVALIDE);
     pos = {1, 2};
     EXPECT_EQ(api->tourner_case(pos), OK);
-    pos = {2, 0};
+    pos = {1, 2};
     EXPECT_EQ(api->tourner_case(pos), OK);
 }
 
