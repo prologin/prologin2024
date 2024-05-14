@@ -40,7 +40,18 @@ int ActionTournerCase::check(const GameState& st) const
     Joueur joueur = st.joueurs[player_id_];
     Joueur adversaire = st.joueurs[player_id_ ^ 1];
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st.carte);
-    int cout = territoire_adverse[y][x] ? 2 : 1;
+    int cout = 1;
+    for (int emplacement_y = y - 1; emplacement_y <= y; emplacement_y++)
+    {
+        for (int emplacement_x = x - 1; emplacement_x <= x; emplacement_x++)
+        {
+            if (!carte.emplacement_valide(emplacement_x, emplacement_y))
+                continue;
+            if (territoire_adverse[emplacement_y][emplacement_x])
+                cout = 2;
+        }
+    }
+
     if (joueur.points_action < cout)
         return PLUS_DE_PA;
 
@@ -66,13 +77,24 @@ enum type_case rotation_case(enum type_case actuel)
 
 void ActionTournerCase::apply_on(GameState* st) const
 {
+    Carte carte = st->carte;
     int x = pos_.colonne;
     int y = pos_.ligne;
 
     Joueur& joueur = st->joueurs[player_id_];
     Joueur& adversaire = st->joueurs[player_id_ ^ 1];
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st->carte);
-    int cout = territoire_adverse[y][x] ? 2 : 1;
+    int cout = 1;
+    for (int emplacement_y = y - 1; emplacement_y <= y; emplacement_y++)
+    {
+        for (int emplacement_x = x - 1; emplacement_x <= x; emplacement_x++)
+        {
+            if (!carte.emplacement_valide(emplacement_x, emplacement_y))
+                continue;
+            if (territoire_adverse[emplacement_y][emplacement_x])
+                cout = 2;
+        }
+    }
     joueur.points_action -= cout;
 
     enum type_case actuel = st->carte.get_case(x, y);

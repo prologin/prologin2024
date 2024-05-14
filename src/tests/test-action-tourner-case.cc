@@ -78,7 +78,7 @@ pos = {1, 0};
 EXPECT_EQ(api->tourner_case(pos), OK);
 }
 
-/* FIXME plante FORT
+// FIXME plante FORT
 TEST_F(ApiTestColibri, ActionTournerCaseEnnemi)
 {
     const auto& st = api->game_state();
@@ -97,9 +97,9 @@ TEST_F(ApiTestColibri, ActionTournerCaseEnnemi)
     EXPECT_EQ(api->tourner_case(pos), PLUS_DE_PA);
     caze = st.carte.get_case(3, 0);
     EXPECT_EQ(caze, SUD_OUEST);
-}*/
+}
 
-/* FIXME plante FORT
+// FIXME plante FORT
 TEST_F(ApiTestColibri, ActionTournerCaseVillage)
 {
     const auto& st = api->game_state();
@@ -115,4 +115,4 @@ TEST_F(ApiTestColibri, ActionTournerCaseVillage)
     EXPECT_EQ(api->tourner_case(pos), PLUS_DE_PA);
     caze = st.carte.get_case(0, 3);
     EXPECT_EQ(caze, VILLAGE);
-}*/
+}
