@@ -14,7 +14,7 @@
 
 #include "aigle.hh"
 #include "joueur.hh"
-#include "../lib/json.hpp" //FIXME j'ai pas trouve mieux
+#include "json.hpp" //DONE j'ai pas trouve mieux
 
 using json = nlohmann::json;
 

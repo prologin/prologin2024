@@ -177,8 +177,227 @@ bool GameState::annuler()
 
 /* DUMPER FOR GAME STATE */
 
+json dump_position(const position& pos)
+{
+    json jpos;
+    jpos["x"] = pos.colonne;
+    jpos["y"] = pos.ligne;
+    return jpos;
+}
+
+json dump_carte(const Carte& carte)
+{
+    json jcarte = json::array();
+
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = carte.get_dimension();
+    for (int y = 0; y < hauteur; y++)
+    {
+        std::string ligne = "";
+        for (int x = 0; x < largeur; x++)
+        {
+            type_case type = carte.get_case(x, y);
+            switch (type)
+            {
+            case VILLAGE:
+                ligne.push_back('X');
+                break;
+            case NORD_OUEST:
+                ligne.push_back('1');
+                break;
+            case NORD_EST:
+                ligne.push_back('2');
+                break;
+            case SUD_OUEST:
+                ligne.push_back('3');
+                break;
+            case SUD_EST:
+                ligne.push_back('4');
+                break;
+            default:
+                break;
+            }
+        }
+        jcarte.push_back(ligne);
+    }
+
+    return jcarte;
+}
+
+json dump_gains(const Carte& carte)
+{
+    json jgains = json::array();
+
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = carte.get_dimension();
+    for (int y = 0; y < hauteur - 1; y++)
+    {
+        json jligne = json::array();
+        for (int x = 0; x < largeur - 1; x++)
+            jligne.push_back(carte.get_gain(x, y));
+
+        jgains.push_back(jligne);
+    }
+
+    return jgains;
+}
+
+json dump_debug(const Carte& carte,
+                const std::vector<std::vector<ActionInterne>>& historiques)
+{
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = carte.get_dimension();
+
+    std::vector<std::vector<int>> carte_debug(hauteur, std::vector<int>(largeur));
+
+    for (int joueur = 0; joueur < 2; joueur++)
+    {
+        for (const ActionInterne& action_interne : historiques[joueur])
+        {
+            if (action_interne.est_drakkar)
+            {
+                position pos = action_interne.action.fin;
+                switch (action_interne.couleur)
+                {
+                case PAS_DE_DRAKKAR:
+                    carte_debug[pos.ligne][pos.colonne] = 0;
+                    break;
+                case DRAKKAR_ROUGE:
+                    carte_debug[pos.ligne][pos.colonne] = 1;
+                    break;
+                case DRAKKAR_JAUNE:
+                    carte_debug[pos.ligne][pos.colonne] = 2;
+                    break;
+                case DRAKKAR_BLEU:
+                    carte_debug[pos.ligne][pos.colonne] = 3;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+    }
+
+    json jdebug = json::array();
+    for (int y = 0; y < hauteur; y++)
+    {
+        json jligne = json::array();
+        for (int x = 0; x < largeur; x++)
+            jligne.push_back(carte_debug[y][x]);
+
+        jdebug.push_back(jligne);
+    }
+
+    return jdebug;
+}
+
+json dump_aigle(const Aigle& aigle)
+{
+    json jaigle;
+    jaigle["id"] = aigle.identifiant;
+    jaigle["pos"] = dump_position(aigle.pos);
+    switch (aigle.effet)
+    {
+    case EFFET_RAZ_DE_MAREE:
+        jaigle["effet"] = "METEORE";
+        break;
+    case EFFET_ACTIONS:
+        jaigle["effet"] = "VIE";
+        break;
+    case EFFET_EFFRAYER:
+        jaigle["effet"] = "MORT";
+        break;
+    case EFFET_MULTIPLICATIF:
+        jaigle["effet"] = "FEU";
+        break;
+    case EFFET_BLOQUEUR:
+        jaigle["effet"] = "GEL";
+        break;
+    }
+    jaigle["puissance"] = aigle.puissance;
+    jaigle["tour_eclosion"] = aigle.tour_eclosion;
+    return jaigle;
+}
+
+json dump_joueur(const Joueur& joueur)
+{
+    json jjoueur;
+
+    json jvillages = json::array();
+    for (const position& pos: joueur.villages)
+        jvillages.push_back(dump_position(pos));
+    jjoueur["villages"] = jvillages;
+
+    json jaigles = json::array();
+    for (const Aigle& aigle: joueur.aigles)
+        jaigles.push_back(dump_aigle(aigle));
+    jjoueur["aigles"] = jaigles;
+
+    // TODO: score vs score total
+    jjoueur["score"] = joueur.score;
+    jjoueur["score_total"] = joueur.score;
+
+    return jjoueur;
+}
+
+json dump_action(const ActionInterne& action_interne)
+{
+    // assert(!action_interne.est_drakkar)
+    json jaction;
+    action_hist action = action_interne.action;
+    switch (action.action_type)
+    {
+    case ACTION_TOURNER_CASE:
+        jaction["type"] = "action_tourner_case";
+        break;
+    case ACTION_ACTIVER_AIGLE:
+        jaction["type"] = "action_activer_aigle";
+        jaction["id"] = action.identifiant_aigle;
+        break;
+    case ACTION_DEPLACER_AIGLE:
+        jaction["type"] = "action_deplacer_aigle";
+        jaction["id"] = action.identifiant_aigle;
+        break;
+    }
+    jaction["position"] = dump_position(action.fin);
+    return jaction;
+}
+
 json GameState::dump() const
 {
-    // FIXME
-    return NULL;
+    json jetat;
+    {
+        json jjeu;
+        jjeu["carte"] = dump_carte(carte);
+        jjeu["gains"] = dump_gains(carte);
+        jjeu["debug"] = dump_debug(carte, historiques);
+        jjeu["joueur 1"] = dump_joueur(joueurs[0]);
+        jjeu["joueur 2"] = dump_joueur(joueurs[1]);
+        json jaigles = json::array();
+        for (const Aigle& aigle : aigles_sauvages)
+            jaigles.push_back(dump_aigle(aigle));
+        jjeu["aigles"] = jaigles;
+        jetat["jeu"] = jjeu;
+    }
+
+    json jtour;
+    jtour["joueur_actuel"] = joueur_actuel();
+    jtour["id_tour"] = tour;
+    jtour["fin"] = est_termine();
+    jetat["tour"] = jtour;
+
+    // TODO: dump que le dernier tour?
+    json jactions = json::array();
+    for (int joueur = 0; joueur <= 1; joueur++)
+    {
+        for (const ActionInterne& action_interne: historiques[joueur])
+        {
+            if (action_interne.est_drakkar)
+                continue;
+            jactions.push_back(dump_action(action_interne));
+        }
+    }
+    jetat["actions"] = jactions;
+
+    return jetat;
 }
