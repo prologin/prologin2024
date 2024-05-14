@@ -9,12 +9,7 @@ bool case_bloquee(const std::vector<Aigle>& aigles, int x, int y)
     {
         if (aigle.effet != EFFET_BLOQUEUR)
             continue;
-
-        int x_min = aigle.pos.colonne - aigle.puissance;
-        int x_max = aigle.pos.colonne + aigle.puissance + 1;
-        int y_min = aigle.pos.ligne - aigle.puissance;
-        int y_max = aigle.pos.ligne + aigle.puissance + 1;
-        if (x >= x_min && x <= x_max && y >= y_min && y <= y_max)
+        if (aigle.case_dans_rayon(x, y))
             return true;
     }
     return false;

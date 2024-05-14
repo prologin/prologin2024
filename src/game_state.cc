@@ -97,18 +97,14 @@ bool GameState::est_termine() const
 }
 
 
-int calcul_multiplicatif(std::vector<Aigle> aigles, int x, int y)
+int calcul_multiplicatif(const std::vector<Aigle>& aigles, int x, int y)
 {
     int multiplicatif = 1;
     for (const Aigle& aiglantine : aigles)
     {
         if (aiglantine.effet != EFFET_MULTIPLICATIF)
             continue;
-        int x_min = aiglantine.pos.colonne;
-        int x_max = aiglantine.pos.colonne + 1;
-        int y_min = aiglantine.pos.ligne;
-        int y_max = aiglantine.pos.ligne + 1;
-        if (!(x >= x_min && x <= x_max && y >= y_min && y <= y_max))
+        if (aiglantine.case_dans_rayon(x, y))
             continue;
         multiplicatif *= aiglantine.puissance;
     }
