@@ -3,16 +3,17 @@
 
 #include "actions.hh"
 
-bool case_bloquee(std::vector<Aigle> aigles, int x, int y)
+bool case_bloquee(const std::vector<Aigle>& aigles, int x, int y)
 {
     for (const Aigle& aigle : aigles)
     {
         if (aigle.effet != EFFET_BLOQUEUR)
             continue;
-        int x_min = aigle.pos.colonne;
-        int x_max = aigle.pos.colonne + 1;
-        int y_min = aigle.pos.ligne;
-        int y_max = aigle.pos.ligne + 1;
+
+        int x_min = aigle.pos.colonne - aigle.puissance;
+        int x_max = aigle.pos.colonne + aigle.puissance + 1;
+        int y_min = aigle.pos.ligne - aigle.puissance;
+        int y_max = aigle.pos.ligne + aigle.puissance + 1;
         if (x >= x_min && x <= x_max && y >= y_min && y <= y_max)
             return true;
     }
@@ -21,7 +22,8 @@ bool case_bloquee(std::vector<Aigle> aigles, int x, int y)
 
 bool case_bloquee(const GameState& st, int x, int y)
 {
-    return case_bloquee(st.joueurs[0].aigles, x, y) || case_bloquee(st.joueurs[1].aigles, x, y);
+    return (case_bloquee(st.joueurs[0].aigles, x, y) ||
+            case_bloquee(st.joueurs[1].aigles, x, y));
 }
 
 int ActionTournerCase::check(const GameState& st) const

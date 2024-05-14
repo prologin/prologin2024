@@ -7,3 +7,8 @@ Aigle::Aigle(int identifiant, position pos, effet_aigle effet, int puissance, in
     puissance{puissance},
     tour_eclosion{tour_eclosion}
 {}
+
+// bool Aigle::case_dans_rayon(int x, int y)
+// {
+//     
+// }
