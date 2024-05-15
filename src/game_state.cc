@@ -45,7 +45,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     joueurs.emplace_back(id_joueur++, -1, aigles2, villages2);
 
     std::vector<std::vector<int>> gains;
-    for (const auto& ligne : donnees["gain"])
+    for (const auto& ligne : donnees["gains"])
     {
         std::vector<int> ligne_vec;
         for (int elt : ligne)
