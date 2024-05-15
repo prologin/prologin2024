@@ -1,5 +1,5 @@
 #pragma once
-#include <array>
+
 #include <fstream>
 #include <gtest/gtest.h>
 #include <rules/player.hh>
@@ -10,12 +10,14 @@
 
 namespace
 {
-    rules::Players make_players(int id_p1, int id_p2)
+    template <typename ...Ts>
+    rules::Players make_players(Ts &&...ids)
     {
-        // Create two players (no spectator)
         rules::Players players;
-        players.add(std::make_shared<rules::Player>(id_p1, rules::PLAYER));
-        players.add(std::make_shared<rules::Player>(id_p2, rules::PLAYER));
+        (
+         players.add(std::make_shared<rules::Player>(ids, rules::PLAYER)),
+         ...
+         );
         return players;
     }
 
@@ -28,7 +30,7 @@ protected:
     constexpr static int PLAYER_ID_1 = 0;
     constexpr static int PLAYER_ID_2 = 1;
 
-    virtual void SetUp()
+     void SetUp() override
     {
         utils::Logger::get().level() = utils::Logger::DEBUG_LEVEL;
         const auto players = make_players(PLAYER_ID_1, PLAYER_ID_2);
@@ -49,7 +51,7 @@ protected:
     constexpr static int PLAYER_ID_1 = 0;
     constexpr static int PLAYER_ID_2 = 1;
 
-    virtual void SetUp()
+     void SetUp() override
     {
         utils::Logger::get().level() = utils::Logger::DEBUG_LEVEL;
         const auto players = make_players(PLAYER_ID_1, PLAYER_ID_2);

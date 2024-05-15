@@ -20,8 +20,6 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     json donnees;
     json_file >> donnees;
 
-    int id_joueur = 0;
-
     int x1 = donnees["joueur1"]["x"];
     int y1 = donnees["joueur1"]["y"];
     std::vector<Aigle> aigles1;
@@ -50,15 +48,15 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     {
         effet_aigle effet;
         std::string effet_string = aigle["effet"];
-        if (!effet_string.compare("METEORE"))
+        if (effet_string == "METEORE")
             effet = EFFET_METEORE;
-        else if (!effet_string.compare("VIE"))
+        else if (effet_string == "VIE")
             effet = EFFET_VIE;
-        else if (!effet_string.compare("MORT"))
+        else if (effet_string == "MORT")
             effet = EFFET_MORT;
-        else if (!effet_string.compare("FEU"))
+        else if (effet_string == "FEU")
             effet = EFFET_FEU;
-        else if (!effet_string.compare("GEL"))
+        else if (effet_string == "GEL")
             effet = EFFET_GEL;
         else
             effet = EFFET_GEL;
@@ -68,13 +66,12 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     }
 
     std::vector<std::string> carte_texte;
-    for (const std::string ligne : donnees["carte"])
+    for (const auto &ligne : donnees["carte"])
         carte_texte.push_back(ligne);
 
     carte = Carte(carte_texte, gains);
 
-    int largeur, hauteur;
-    std::tie(largeur, hauteur) = carte.get_dimension();
+    const auto [largeur, hauteur] = carte.get_dimension();
 
     for (int y = 0; y < hauteur; y++)
     {
@@ -90,9 +87,8 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         }
     }
 
-    historiques.push_back(std::vector<ActionInterne>());
-    historiques.push_back(std::vector<ActionInterne>());
-
+    historiques.emplace_back();
+    historiques.emplace_back();
     // FIXME
 }
 
@@ -135,11 +131,10 @@ int GameState::calcul_score(int x, int y)
 
 void GameState::tour_suivant()
 {
-    int largeur, hauteur;
-    std::tie(largeur, hauteur) = carte.get_dimension();
+    auto [largeur, hauteur] = carte.get_dimension();
 
     Joueur& j_actuel = joueurs[joueur_actuel()];
-    std::vector<std::vector<bool>> territoire = j_actuel.territoire(carte);
+    const auto territoire = j_actuel.territoire(carte);
     for (int y = 0; y < hauteur - 1; y++)
     {
         for (int x = 0; x < largeur - 1; x++)
@@ -199,11 +194,10 @@ json dump_carte(const Carte& carte)
 {
     json jcarte = json::array();
 
-    int largeur, hauteur;
-    std::tie(largeur, hauteur) = carte.get_dimension();
+    const auto [largeur, hauteur] = carte.get_dimension();
     for (int y = 0; y < hauteur; y++)
     {
-        std::string ligne = "";
+        std::string ligne;
         for (int x = 0; x < largeur; x++)
         {
             type_case type = carte.get_case(x, y);
@@ -238,8 +232,7 @@ json dump_gains(const Carte& carte)
 {
     json jgains = json::array();
 
-    int largeur, hauteur;
-    std::tie(largeur, hauteur) = carte.get_dimension();
+    const auto [largeur, hauteur] = carte.get_dimension();
     for (int y = 0; y < hauteur - 1; y++)
     {
         json jligne = json::array();
@@ -255,8 +248,7 @@ json dump_gains(const Carte& carte)
 json dump_debug(const Carte& carte,
                 const std::vector<std::vector<ActionInterne>>& historiques)
 {
-    int largeur, hauteur;
-    std::tie(largeur, hauteur) = carte.get_dimension();
+    const auto [largeur, hauteur] = carte.get_dimension();
 
     std::vector<std::vector<int>> carte_debug(hauteur,
                                               std::vector<int>(largeur));

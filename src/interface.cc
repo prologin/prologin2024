@@ -14,10 +14,9 @@ template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& arr)
 {
     os << "[";
-    typename std::vector<T>::const_iterator it;
-    for (it = arr.begin(); it != arr.end(); ++it)
+    for (auto it = arr.cbegin(); it != arr.cend(); ++it)
     {
-        if (it != arr.begin())
+        if (it != arr.cbegin())
             os << ", ";
         os << *it;
     }

@@ -17,9 +17,9 @@ public:
         , player_id_(player_id)
     {
     }
-    ActionTournerCase() {} // for register_action()
+    ActionTournerCase() = default; // for register_action()
 
-    int check(const GameState& st) const override;
+    [[nodiscard]] int check(const GameState& st) const override;
     void apply_on(GameState* st) const override;
 
     void handle_buffer(utils::Buffer& buf) override
@@ -28,8 +28,8 @@ public:
         buf.handle(player_id_);
     }
 
-    uint32_t player_id() const override { return player_id_; };
-    uint32_t id() const override { return ID_ACTION_TOURNER_CASE; }
+    [[nodiscard]] uint32_t player_id() const override { return player_id_; };
+    [[nodiscard]] uint32_t id() const override { return ID_ACTION_TOURNER_CASE; }
 
 private:
     position pos_;

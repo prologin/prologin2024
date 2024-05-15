@@ -23,8 +23,8 @@ using f_champion_partie_fin = void (*)();
 class Rules : public rules::TurnBasedRules
 {
 public:
-    explicit Rules(const rules::Options opt);
-    virtual ~Rules() {}
+    explicit Rules(const rules::Options &opt);
+     ~Rules() override = default;
 
     rules::Actions* get_actions() override;
     void apply_action(const rules::IAction& action) override;

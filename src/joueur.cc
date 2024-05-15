@@ -1,5 +1,6 @@
 #include <tuple>
 #include <algorithm>
+#include <utility>
 
 #include "joueur.hh"
 
@@ -7,14 +8,13 @@ Joueur::Joueur(int sc , int pa, std::vector<Aigle> aigles_vec,
     std::vector<position> villages_vec)
     : score{sc},
     points_action{pa},
-    aigles{aigles_vec},
-    villages{villages_vec}
+    aigles{std::move(aigles_vec)},
+    villages{std::move(villages_vec)}
 {}
 
 std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
 {
-    int largeur, hauteur;
-    std::tie(largeur, hauteur) = carte.get_dimension();
+    const auto [largeur, hauteur] = carte.get_dimension();
 
     std::vector<std::vector<bool>> territoire(hauteur - 1, std::vector<bool>(largeur - 1));
     std::vector<std::pair<int, int>> pile;
@@ -40,7 +40,7 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
                 if (carte.ile_presente(rx, ry))
                 {
                     territoire[ry][rx] = true;
-                    pile.push_back({rx, ry});
+                    pile.emplace_back(rx, ry);
                 }
             }
         }
@@ -51,8 +51,7 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
         // DFS à pile.
         // les iles de notre territoire sont ajoutées une unique fois
         // dans la pile grâce au tableau de marques.
-        int x, y;
-        std::tie(x, y) = pile.back();
+        const auto [x, y] = pile.back();
         pile.pop_back();
 
         std::pair<int, int> voisins[] = {
@@ -64,8 +63,7 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
 
         for (const std::pair<int, int>& voisin: voisins)
         {
-            int rx, ry;
-            std::tie(rx, ry) = voisin;
+            const auto [rx, ry] = voisin;
             if (!carte.emplacement_valide(rx, ry))
                 continue;
 
@@ -75,7 +73,7 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
             if (carte.ile_presente(rx, ry))
             {
                 territoire[ry][rx] = true;
-                pile.push_back({rx, ry});
+                pile.emplace_back(rx, ry);
             }
         }
     }
@@ -85,25 +83,19 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
 
 std::vector<Aigle>::iterator Joueur::trouve_aigle(int aigle_id)
 {
-    auto aigle_correct = [aigle_id](Aigle aigle) {
+    const auto aigle_correct = [aigle_id](Aigle aigle) {
         return aigle.identifiant == aigle_id;
     };
-    auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
+    const auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
     return it;
 }
 
 std::vector<Aigle>::const_iterator Joueur::trouve_aigle(int aigle_id) const
 {
-    auto aigle_correct = [aigle_id](Aigle aigle) {
+    const auto aigle_correct = [aigle_id](Aigle aigle) {
         return aigle.identifiant == aigle_id;
     };
-    auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
+
+    const auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
     return it;
-    // for (size_t i = 0 ; i < aigles.size(); i++)
-    // {
-    //     Aigle& aiglantine = aigles[i];
-    //     if (aiglantine.identifiant == aigle_id)
-    //         return &aiglantine;
-    // }
-    // return nullptr;
 }

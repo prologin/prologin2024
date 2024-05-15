@@ -3,32 +3,31 @@
 
 #include <algorithm>
 
-#include "actions.hh"
 #include "action_tourner_case.hh"
 
 int ActionActiverAigle::check(const GameState& st) const
 {
     if (!st.init)
         return HORS_TOUR;
-    auto& joueur = st.joueurs[player_id_];
+    const auto& joueur = st.joueurs[player_id_];
     const auto aiglantine = joueur.trouve_aigle(id_);
     if (aiglantine == joueur.aigles.end())
         return AIGLE_INVALIDE;
 
-    if (!(aiglantine->effet == EFFET_METEORE ||
-        aiglantine->effet == EFFET_VIE ||
-        aiglantine->effet == EFFET_MORT))
+    if (aiglantine->effet != EFFET_METEORE &&
+        aiglantine->effet != EFFET_VIE &&
+        aiglantine->effet != EFFET_MORT)
         return AIGLE_INVALIDE;
     return OK;
 }
 
 bool envoler_aigle_id(std::vector<Aigle>& aigles, int id)
 {
-    auto aigle_correct = [id](Aigle aigle) {
+    const auto aigle_correct = [id](const Aigle &aigle) {
         return aigle.identifiant == id;
     };
-    auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
-    if (it == aigles.end())
+    const auto it = std::find_if(aigles.cbegin(), aigles.cend(), aigle_correct);
+    if (it == aigles.cend())
         return false;
     aigles.erase(it);
     return true;
@@ -36,15 +35,14 @@ bool envoler_aigle_id(std::vector<Aigle>& aigles, int id)
 
 void envoler_aigle_pos(std::vector<Aigle>& aigles, position pos, int tour_actuel)
 {
-    auto aigle_correct = [pos, tour_actuel](Aigle aigle) {
-        return aigle.pos.colonne != pos.colonne ||
-            aigle.pos.ligne != pos.ligne ||
-            aigle.tour_eclosion > tour_actuel;
+    const auto aigle_correct = [pos, tour_actuel](const Aigle &aigle) {
+        return aigle.pos.colonne == pos.colonne &&
+            aigle.pos.ligne == pos.ligne &&
+            aigle.tour_eclosion <= tour_actuel;
     };
-    std::vector<Aigle> aigles_survivants;
-    std::copy_if(aigles.begin(), aigles.end(),
-                 std::back_inserter(aigles_survivants), aigle_correct);
-    aigles = aigles_survivants;
+    const auto erase_iterator = std::remove_if(aigles.begin(),
+            aigles.end(), aigle_correct);
+    aigles.erase(erase_iterator, aigles.end());
 }
 
 void tourner_cases(GameState& st, Carte& carte, Aigle& aigle)

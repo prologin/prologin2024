@@ -23,7 +23,7 @@ class Api final : public rules::Api<GameState, erreur>
 public:
     Api(std::unique_ptr<GameState> game_state,
         std::shared_ptr<rules::Player> player);
-    ~Api() {}
+    ~Api() override = default;
 
     /// Rotation d'un quart de tour d'une case dans le sens trigonométrique
     /// (anti-horaire)

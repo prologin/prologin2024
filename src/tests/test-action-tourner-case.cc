@@ -67,16 +67,17 @@ TEST_F(ApiTestColibri, ActionTournerCaseBloqueeEnnemi)
 
 TEST_F(ApiTestColibri, ActionTournerCaseBloqueeAigleSauvage)
 {
-auto &st = api->game_state();
-type_case caze = st.carte.get_case(0, 0);
-EXPECT_EQ(caze, SUD_EST);
-Aigle a(10, {0, 0}, EFFET_FEU, 0, 0);
-st.aigles_sauvages.push_back(a);
-position pos = {0, 0};
-EXPECT_EQ(api->tourner_case(pos), OK);
-pos = {1, 0};
-EXPECT_EQ(api->tourner_case(pos), OK);
+    auto &st = api->game_state();
+    type_case caze = st.carte.get_case(0, 0);
+    EXPECT_EQ(caze, SUD_EST);
+    Aigle a(10, {0, 0}, EFFET_FEU, 0, 0);
+    st.aigles_sauvages.push_back(a);
+    position pos = {0, 0};
+    EXPECT_EQ(api->tourner_case(pos), OK);
+    pos = {1, 0};
+    EXPECT_EQ(api->tourner_case(pos), OK);
 }
+
 
 // FIXME plante FORT
 TEST_F(ApiTestColibri, ActionTournerCaseEnnemi)

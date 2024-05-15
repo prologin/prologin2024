@@ -8,7 +8,7 @@
 
 #include "actions.hh"
 
-Rules::Rules(const rules::Options opt)
+Rules::Rules(const rules::Options &opt)
     : TurnBasedRules(opt)
     , sandbox_(opt.time)
 {
@@ -55,7 +55,7 @@ void Rules::apply_action(const rules::IAction& action)
     // consistent across the clients and the server.
 
     int err = api_->game_state_check(action);
-    if (err)
+    if (err != 0)
         FATAL("Synchronization error: received action %d from player %d, but "
               "check() on current gamestate returned %d.",
               action.id(), action.player_id(), err);

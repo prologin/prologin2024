@@ -11,15 +11,14 @@ Api* api;
 
 Api::Api(std::unique_ptr<GameState> game_state,
          std::shared_ptr<rules::Player> player)
-    : rules::Api<GameState, erreur>(std::move(game_state), player)
+    : rules::Api<GameState, erreur>(std::move(game_state), std::move(player))
 {
     api = this;
 }
 
 dimension Api::dimensions_carte()
 {
-   int largeur, hauteur;
-   std::tie(largeur, hauteur) = game_state_->carte.get_dimension();
+   auto [largeur, hauteur] = game_state_->carte.get_dimension();
    return { hauteur, largeur };
 }
 
@@ -40,7 +39,7 @@ std::vector<aigle> Api::info_aigles()
     std::vector<aigle> aigles;
     for (Aigle& aigle_sauvage : game_state_->aigles_sauvages)
     {
-        aigle aigle_converti = {
+        const aigle aigle_converti = {
             aigle_sauvage.identifiant,
             -1,
             aigle_sauvage.pos,
@@ -90,7 +89,7 @@ std::vector<action_hist> Api::historique()
         game_state_->historiques[game_state_->joueur_actuel()];
         // TODO: Pourquoi `1 - game_state_->joueur_actuel()` ? (#jeux/2023)
 
-    for(ActionInterne action : actions_et_debug) {
+    for (const ActionInterne &action : actions_et_debug) {
         if(!action.est_drakkar) {
             actions_valides.push_back(action.action);
         }

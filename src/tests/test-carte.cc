@@ -91,7 +91,7 @@ TEST(CarteTest, json_test_set_case)
     {
         for (int y = 0; y < 4; y++)
         {
-        ASSERT_EQ(carte.get_case(x, y), NORD_EST);
+            ASSERT_EQ(carte.get_case(x, y), NORD_EST);
         }
     }
 }
@@ -193,7 +193,7 @@ TEST(CarteTest, json_test_ile_presente)
     ASSERT_EQ(carte.ile_presente(1, 2), true);
     ASSERT_EQ(carte.ile_presente(2, 2), true);
     
-    // Ivalide (pas ile)
+    // Invalide (pas ile)
     ASSERT_EQ(carte.ile_presente(0, 0), false);
     ASSERT_EQ(carte.ile_presente(1, 0), false);
     ASSERT_EQ(carte.ile_presente(2, 1), false);
@@ -225,7 +225,7 @@ TEST(CarteTest, json_test_aigle)
 
 TEST(CarteTest, json_test_coq)
 {
-std::ifstream is("coq.json");
-rules::Players players;
-GameState st(players, is);
+    std::ifstream is("coq.json");
+    rules::Players players;
+    GameState st(players, is);
 }

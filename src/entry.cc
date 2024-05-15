@@ -2,7 +2,6 @@
 // Copyright (c) 2012 Association Prologin <association@prologin.org>
 
 #include <cstdlib>
-#include <memory>
 #include <rules/client-messenger.hh>
 #include <rules/config.hh>
 #include <rules/replay-messenger.hh>

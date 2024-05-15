@@ -14,13 +14,13 @@ public:
     Carte& operator=(const Carte& carte) = default;
     ~Carte() = default;
 
-    std::pair<int, int> get_dimension() const; // largeur_, hauteur_
-    type_case get_case(int x, int y) const;
+    [[nodiscard]] std::pair<int, int> get_dimension() const; // largeur_, hauteur_
+    [[nodiscard]] type_case get_case(int x, int y) const;
     void set_case(int x, int y, type_case nouvelle_case);
-    int get_gain(int x, int y) const;
-    bool case_valide(int x, int y) const;
-    bool emplacement_valide(int x, int y) const;
-    bool ile_presente(int x, int y) const;
+    [[nodiscard]] int get_gain(int x, int y) const;
+    [[nodiscard]] bool case_valide(int x, int y) const;
+    [[nodiscard]] bool emplacement_valide(int x, int y) const;
+    [[nodiscard]] bool ile_presente(int x, int y) const;
 
 private:
     std::vector<std::vector<type_case>> grille_;

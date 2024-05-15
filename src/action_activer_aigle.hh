@@ -6,7 +6,6 @@
 #include <rules/action.hh>
 
 #include "actions.hh"
-#include "constant.hh"
 #include "game_state.hh"
 
 class ActionActiverAigle : public rules::Action<GameState>
@@ -17,9 +16,9 @@ public:
         , player_id_(player_id)
     {
     }
-    ActionActiverAigle() {} // for register_action()
+    ActionActiverAigle() = default; // for register_action()
 
-    int check(const GameState& st) const override;
+    [[nodiscard]] int check(const GameState& st) const override;
     void apply_on(GameState* st) const override;
 
     void handle_buffer(utils::Buffer& buf) override
@@ -28,8 +27,8 @@ public:
         buf.handle(player_id_);
     }
 
-    uint32_t player_id() const override { return player_id_; };
-    uint32_t id() const override { return ID_ACTION_ACTIVER_AIGLE; }
+    [[nodiscard]] uint32_t player_id() const override { return player_id_; };
+    [[nodiscard]] uint32_t id() const override { return ID_ACTION_ACTIVER_AIGLE; }
 
 private:
     int id_;

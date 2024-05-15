@@ -42,16 +42,16 @@ public:
     GameState(const rules::Players& players);
     GameState(const rules::Players& players, std::ifstream& json_file);
     GameState(const GameState& st) = default;
-    ~GameState();
+    ~GameState() override;
 
-    GameState* copy() const override;
+    [[nodiscard]] GameState* copy() const override;
 
 
     int calcul_score(int x, int y);
 
-    bool est_termine() const;
+    [[nodiscard]] bool est_termine() const;
     void tour_suivant();
-    int joueur_actuel() const;
+    [[nodiscard]] int joueur_actuel() const;
     void debute_tour(int joueur);
     bool emplacement_dans_territoire(int joueur, position pos);
 
@@ -59,5 +59,5 @@ public:
     void pose_drakkar(position pos, drakkar_debug couleur);
     bool annuler();
 
-    json dump() const;
+    [[nodiscard]] json dump() const;
 };

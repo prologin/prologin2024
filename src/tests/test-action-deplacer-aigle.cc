@@ -1,7 +1,6 @@
 #include "test-helpers.hh"
 
 #include "../game_state.hh"
-#include "../joueur.hh"
 #include "../aigle.hh"
 
 TEST_F(ApiTestColibri, ActionDeplacerAiglePasAigle)

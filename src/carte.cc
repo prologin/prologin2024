@@ -1,8 +1,8 @@
 #include "carte.hh"
 
 Carte::Carte(const std::vector<std::string>& texte, const std::vector<std::vector<int>>& gain)
-    : largeur_{ texte[0].size() },
-    hauteur_{ texte.size() },
+    : largeur_{ static_cast<int>(texte[0].size()) },
+    hauteur_{ static_cast<int>(texte.size()) },
     gain_{ gain }
 {
     grille_.resize(hauteur_, std::vector<type_case>(largeur_));
