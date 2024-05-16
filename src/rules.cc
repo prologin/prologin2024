@@ -65,5 +65,76 @@ void Rules::apply_action(const rules::IAction& action)
 bool Rules::is_finished()
 {
     // FIXME
-    return true;
+    // return true;
+    return api_->game_state().est_termine();
 }
+
+void Rules::at_player_start(rules::ClientMessenger_sptr)
+{
+    try
+    {
+        sandbox_.execute(champion_partie_init_);
+    }
+    catch (utils::SandboxTimeout&)
+    {
+        FATAL("player_start: timeout");
+    }
+}
+
+void Rules::at_spectator_start(rules::ClientMessenger_sptr)
+{
+    champion_partie_init_();
+}
+
+void Rules::at_player_end(rules::ClientMessenger_sptr)
+{
+    try
+    {
+        sandbox_.execute(champion_partie_fin_);
+    }
+    catch (utils::SandboxTimeout&)
+    {
+        FATAL("player_end: timeout");
+    }
+}
+
+void Rules::at_spectator_end(rules::ClientMessenger_sptr)
+{
+    champion_partie_fin_();
+}
+
+void Rules::player_turn()
+{
+    try
+    {
+        sandbox_.execute(champion_jouer_tour_);
+    }
+    catch (utils::SandboxTimeout&)
+    {
+        FATAL("player_turn: timeout");
+    }
+}
+
+void Rules::spectator_turn()
+{
+    champion_jouer_tour_();
+}
+
+void Rules::start_of_player_turn(unsigned int player_key)
+{
+    api_->game_state().debute_tour(player_key);
+    api_->game_state().init = true;
+}
+
+void Rules::end_of_player_turn(unsigned int player_key)
+{
+    api_->game_state().init = false;
+    //api_->game_state().sync_score();
+    api_->game_state().tour_suivant();
+    api_->clear_old_game_states();
+}
+
+void Rules::start_of_round()
+{}
+void Rules::end_of_round()
+{}
