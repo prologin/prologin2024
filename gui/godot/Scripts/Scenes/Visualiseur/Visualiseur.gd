@@ -37,3 +37,7 @@ func _on_ImportDialog_about_to_show():
 
 func _on_ImportDialog_popup_hide():
 	set_dialog_open(false)
+
+
+func _on_Back_to_main_menu_pressed():
+	Scenes.open_scene(self, Scenes.menu_scene)

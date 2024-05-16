@@ -65,8 +65,46 @@ class Map:
 		var j2 = Player.new()
 		j2.identifiant = 2
 		self.joueurs = [j1, j2]
-
 	
+	func rand_init(width, height):
+		self.width = width
+		self.height = height
+
+		self.clear()
+
+		#random int for selection
+		var x = randi() % 4
+		# Cases + score
+		for _i in range(height):
+			var row = []
+			var points_row = []
+			for _j in range(width):
+				x = randi() % 4
+				if (x == 0):
+					row.append(Constants.TypeCase.NORD_OUEST)
+				if (x == 1):
+					row.append(Constants.TypeCase.NORD_EST)
+				if (x == 2):
+					row.append(Constants.TypeCase.SUD_OUEST)
+				if (x == 3):
+					row.append(Constants.TypeCase.SUD_EST)
+				if _j < width - 1:
+					points_row.append(randi() % 10)
+			self.carte.append(row)
+			if _i < height - 1:
+				self.points.append(points_row)
+
+		# Villages
+		if len(carte) > 0:
+			carte[0][0] = Constants.TypeCase.VILLAGE_J1
+			carte[-1][-1] = Constants.TypeCase.VILLAGE_J2
+
+		# Players
+		var j1 = Player.new()
+		j1.identifiant = 1
+		var j2 = Player.new()
+		j2.identifiant = 2
+		self.joueurs = [j1, j2]
 	# TODO
 	# func copy() -> models.Map:
 	#	var map := Map.new()

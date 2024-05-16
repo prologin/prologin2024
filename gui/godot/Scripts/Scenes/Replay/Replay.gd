@@ -124,3 +124,7 @@ func _on_End_pressed():
 func _on_TickTimer_timeout():
 	if is_playing:
 		_on_Next_pressed()
+
+
+func _on_Back_to_main_menu_pressed():
+	Scenes.open_scene(self, Scenes.menu_scene)

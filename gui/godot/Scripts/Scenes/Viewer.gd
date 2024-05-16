@@ -127,6 +127,7 @@ func update_grid():
 			grid.set_cell(j, i, Constants.TypeCase.NORD_OUEST)
 
 
+
 func update_points():
 	# Clear
 	for child in points.get_children():

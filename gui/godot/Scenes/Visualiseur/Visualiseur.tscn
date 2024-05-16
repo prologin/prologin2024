@@ -44,13 +44,21 @@ margin_right = 224.0
 margin_bottom = 20.0
 text = "Importer"
 
+[node name="Back to main menu" type="Button" parent="Menu/VBoxContainer"]
+anchor_top = 0.916
+anchor_bottom = 0.916
+margin_top = 24.0
+margin_right = 224.0
+margin_bottom = 44.0
+text = "Back to main menu"
+
 [node name="Popups" type="Node" parent="."]
 
 [node name="ImportDialog" type="FileDialog" parent="Popups"]
 margin_right = 622.0
 margin_bottom = 338.0
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Ouvrir un fichier"
 mode = 0
 access = 2
 filters = PoolStringArray( "*.json" )
@@ -59,6 +67,7 @@ filters = PoolStringArray( "*.json" )
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
 [connection signal="bg_right_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_right_click"]
 [connection signal="pressed" from="Menu/VBoxContainer/Import" to="." method="_on_Import_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
 [connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
 [connection signal="popup_hide" from="Popups/ImportDialog" to="." method="_on_ImportDialog_popup_hide"]

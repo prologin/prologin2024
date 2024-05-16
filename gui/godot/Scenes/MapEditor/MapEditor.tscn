@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Scenes/MapEditor/MapEditor.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Viewer/Viewer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://Scripts/Scenes/MapEditor/BGSelector.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Scripts/Scenes/MapEditor/Camera2D.gd" type="Script" id=6]
 
 [node name="MapEditor" type="Node2D"]
 script = ExtResource( 1 )
@@ -16,12 +17,17 @@ margin_bottom = 600.0
 [node name="ViewportContainer" type="ViewportContainer" parent="HBoxContainer"]
 margin_right = 1024.0
 margin_bottom = 600.0
+mouse_filter = 1
 size_flags_horizontal = 3
 
 [node name="Viewport" type="Viewport" parent="HBoxContainer/ViewportContainer"]
 size = Vector2( 800, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
+
+[node name="Camera2D" type="Camera2D" parent="HBoxContainer/ViewportContainer/Viewport"]
+current = true
+script = ExtResource( 6 )
 
 [node name="ColorRect" type="ColorRect" parent="HBoxContainer/ViewportContainer/Viewport"]
 margin_right = 800.0
@@ -67,16 +73,28 @@ margin_right = 208.0
 margin_bottom = 92.0
 text = "Editor Mode"
 
-[node name="PointsAmount" type="TextEdit" parent="Selector/VBoxContainer"]
+[node name="Randomizer" type="Button" parent="Selector/VBoxContainer"]
 margin_top = 96.0
 margin_right = 208.0
-margin_bottom = 146.0
+margin_bottom = 116.0
+text = "Randomizer"
+
+[node name="Back to main menu" type="Button" parent="Selector/VBoxContainer"]
+margin_top = 120.0
+margin_right = 208.0
+margin_bottom = 140.0
+text = "Back to main menu"
+
+[node name="PointsAmount" type="TextEdit" parent="Selector/VBoxContainer"]
+margin_top = 144.0
+margin_right = 208.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 0, 50 )
 hint_tooltip = "Nombre de points de la sélection"
 custom_fonts/font = ExtResource( 5 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="Selector/VBoxContainer"]
-margin_top = 150.0
+margin_top = 198.0
 margin_right = 208.0
 margin_bottom = 584.0
 size_flags_horizontal = 3
@@ -84,7 +102,7 @@ size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Selector/VBoxContainer/ViewportContainer"]
-size = Vector2( 208, 434 )
+size = Vector2( 208, 386 )
 handle_input_locally = false
 render_target_update_mode = 3
 
@@ -190,6 +208,8 @@ rect_min_size = Vector2( 80, 40 )
 [connection signal="pressed" from="Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
+[connection signal="pressed" from="Selector/VBoxContainer/Randomizer" to="." method="_on_Randomizer_pressed"]
+[connection signal="pressed" from="Selector/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
 [connection signal="focus_entered" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_entered"]
 [connection signal="focus_exited" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_exited"]
 [connection signal="gui_input" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_gui_input"]
