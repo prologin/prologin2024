@@ -22,7 +22,12 @@ var endV: Vector2 = Vector2()
 var isDragging: bool = false
 
 func _ready():
-	pass
+	update_zoom()
+
+
+func update_zoom():
+	offset.x = self.get_viewport_rect().size[0] / 2
+	offset.y = self.get_viewport_rect().size[1] / 2
 
 
 func _process(delta):
@@ -33,7 +38,7 @@ func _process(delta):
 func zoom_camera(delta: float) -> void:
 	zoom.x = lerp(zoom.x, zoom.x * zoomFactor, ZOOM_SPEED * delta)
 	zoom.y = lerp(zoom.y, zoom.y * zoomFactor, ZOOM_SPEED * delta)
-	
+
 	zoom.x = clamp(zoom.x, ZOOM_MIN, ZOOM_MAX)
 	zoom.y = clamp(zoom.y, ZOOM_MIN, ZOOM_MAX)
 	if not zooming:
