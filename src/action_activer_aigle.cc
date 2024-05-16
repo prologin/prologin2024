@@ -93,4 +93,5 @@ void ActionActiverAigle::apply_on(GameState* st) const
             return;
     }
     envoler_aigle_id(joueur.aigles, id_);
+    st->ajoute_historique({ACTION_ACTIVER_AIGLE, aiglantine->pos, aiglantine->pos, id_});
 }

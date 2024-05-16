@@ -97,4 +97,5 @@ void ActionTournerCase::apply_on(GameState* st) const
 
     enum type_case actuel = st->carte.get_case(x, y);
     st->carte.set_case(x, y, rotation_case(actuel));
+    st->ajoute_historique({ACTION_TOURNER_CASE, pos_, pos_, -1});
 }

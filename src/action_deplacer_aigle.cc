@@ -29,5 +29,6 @@ void ActionDeplacerAigle::apply_on(GameState* st) const
     // if (aigle == nullptr)
     //     return;
     //Aigle aiglantine = *aigle;
+    st->ajoute_historique({ACTION_DEPLACER_AIGLE, aiglantine->pos, destination_, id_});
     aiglantine->pos = destination_;
 }
