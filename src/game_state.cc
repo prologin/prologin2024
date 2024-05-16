@@ -35,14 +35,14 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     std::vector<Aigle> aigles1;
     std::vector<position> villages1;
     villages1.push_back(vec_to_pos({x1, y1}));
-    joueurs.emplace_back(id_joueur++, -1, aigles1, villages1);
+    joueurs.emplace_back(0, TOUR_POINTS_ACTION, aigles1, villages1);
 
     int x2 = donnees["joueur2"]["x"];
     int y2 = donnees["joueur2"]["y"];
     std::vector<Aigle> aigles2;
     std::vector<position> villages2;
     villages2.push_back(vec_to_pos({x2, y2}));
-    joueurs.emplace_back(id_joueur++, -1, aigles2, villages2);
+    joueurs.emplace_back(0, TOUR_POINTS_ACTION, aigles2, villages2);
 
     std::vector<std::vector<int>> gains;
     for (const auto& ligne : donnees["gain"])
