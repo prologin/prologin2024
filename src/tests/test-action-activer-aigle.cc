@@ -210,10 +210,11 @@ TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
     ASSERT_EQ(st.aigles_sauvages[1].identifiant, 14);
 }
 
-//EFFET_FEU
+TEST_F(ApiTestColibri, ActionActiverEffetFeu)
+{
+    auto& st = api->game_state();
+    Aigle a(10, {2, 1}, EFFET_FEU, -5, 0);
+    st.joueurs[0].aigles.push_back(a);
 
-//TODO chaud à tester
-
-//EFFET_GEL
-
-//TODO YAKA
+    ASSERT_EQ(api->activer_aigle(10), AIGLE_INVALIDE);
+}

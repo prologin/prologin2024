@@ -104,7 +104,16 @@ TEST_F(ApiTestColibri, TestApiScore)
 
 TEST_F(ApiTestColibri, TestApiHistorique)
 {
-    //todo
+    ASSERT_EQ(api->points_action(0), 2);
+    position pos = {0, 0};
+    ASSERT_EQ(api->tourner_case(pos), OK);
+    ASSERT_EQ(api->info_case(pos).contenu, NORD_EST);
+    ASSERT_EQ(api->historique()[0].action_type, ACTION_TOURNER_CASE);
+    ASSERT_EQ(api->historique()[0].debut.ligne, 0);
+    ASSERT_EQ(api->historique()[0].debut.colonne, 0);
+    ASSERT_EQ(api->historique()[0].fin.ligne, 0);
+    ASSERT_EQ(api->historique()[0].fin.colonne, 0);
+    ASSERT_EQ(api->historique()[0].identifiant_aigle, -1);
 }
 
 TEST_F(ApiTestColibri, TestApiAnnuler)
