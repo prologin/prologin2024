@@ -51,10 +51,10 @@ static func map_to_json(viewer: Viewer, map: Models.Map) -> Dictionary:
 	var json = {}
 	json["largeur"] = map.width
 	json["hauteur"] = map.height
-	json["gain"] = map.points
+	json["gains"] = map.points
 
 	var carte = []
-	for row in carte.map:
+	for row in map.carte:
 		carte.append("")
 		for tile in row:
 			if tile in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
@@ -77,6 +77,6 @@ static func map_to_json(viewer: Viewer, map: Models.Map) -> Dictionary:
 		for x in len(map.carte[y]):
 			if map.carte[y][x] in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
 				var player_id = "1" if map.carte[y][x] == Constants.TypeCase.VILLAGE_J1 else "2"
-				json["joueur_" + player_id] = {"x": x, "y": y}
+				json["joueur" + player_id] = {"x": x, "y": y}
 
 	return json
