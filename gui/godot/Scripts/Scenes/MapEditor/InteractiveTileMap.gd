@@ -24,15 +24,15 @@ func get_tile_pos(position):
 
 
 func _input(event):
-	if event is InputEventMouseMotion and self.get_viewport_rect().has_point(event.position) and mouse_pressed:
-		var pos = get_tile_pos(event.position)
+	if event is InputEventMouseMotion and self.get_viewport_rect().has_point(get_global_mouse_position()) and mouse_pressed:
+		var pos = get_tile_pos(get_global_mouse_position())
 		emit_signal("drag", pos)
 
 	if event is InputEventMouseButton:
 		if event.button_index == 1:
 			mouse_pressed = event.pressed
 
-		if event.pressed and self.get_viewport_rect().has_point(event.position):
+		if event.pressed and self.get_viewport_rect().has_point(get_global_mouse_position()):
 			# Inverse viewer transform
-			var pos = get_tile_pos(event.position)
+			var pos = get_tile_pos(get_global_mouse_position())
 			emit_signal("click", pos, event.button_index)

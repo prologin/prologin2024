@@ -227,6 +227,14 @@ func _on_ImportDialog_file_selected(path):
 	viewer.update_all(map)
 
 
+func _on_Randomizer_pressed():
+	var new_map = Models.Map.new()
+	new_map.rand_init(Context.editor_init_width, Context.editor_init_height)
+	viewer.update_all(new_map)
+
+func _on_Back_to_main_menu_pressed():
+	Scenes.open_scene(self, Scenes.menu_scene)
+
 func _on_ExportDialog_about_to_show():
 	set_dialog_open(true)
 
@@ -292,3 +300,7 @@ func _on_PointsAmount_gui_input(event):
 	if event is InputEventKey and event.pressed and event.scancode == KEY_ENTER:
 		points_amount.release_focus()
 		points_amount.text = str(points_selection)
+
+
+
+
