@@ -118,15 +118,15 @@ TEST_F(ApiTestColibri, TestApiAnnuler)
     ASSERT_EQ(api->info_case(pos).contenu, NORD_OUEST);
     ASSERT_EQ(api->points_action(0), 0);
 
-    ASSERT_EQ(api->annuler(), true);
+    EXPECT_EQ(api->annuler(), true);
     ASSERT_EQ(api->info_case(pos).contenu, NORD_EST);
     ASSERT_EQ(api->points_action(0), 1);
 
-    ASSERT_EQ(api->annuler(), true);
+    EXPECT_EQ(api->annuler(), true);
     ASSERT_EQ(api->info_case(pos).contenu, SUD_EST);
     ASSERT_EQ(api->points_action(0), 2);
 
-    ASSERT_EQ(api->annuler(), false);
+    EXPECT_EQ(api->annuler(), false);
     ASSERT_EQ(api->info_case(pos).contenu, SUD_EST);
     ASSERT_EQ(api->points_action(0), 2);
 }
