@@ -226,6 +226,21 @@ function:
 
 # Utilitaire
 
+  -
+    fct_name: recuperer_territoire
+    fct_summary: "Renvoie un tableau en 2 dimensions des emplacements indiquant
+                 avec vrai les emplacement du territoire et faux sinon."
+    fct_ret_type: TODO
+    fct_arg:
+      - [joueur, int, "Identifiant du joueur"]
+  -
+    fct_name: case_dans_rayon
+    fct_summary: "Renvoie vrai si la case est dans le rayon de l'aigle. Si l'aigle
+                 est invalide, renvoie faux."
+    fct_ret_type: bool
+    fct_arg:
+      - [Id, int, "Identifiant de l'aigle"]
+
 
 # Autres
   -
