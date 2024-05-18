@@ -1,85 +1,62 @@
 extends Camera2D
 
-signal area_selected
-signal atart_move_selection
+const MAX_ZOOM_LEVEL = 0.5
+const MIN_ZOOM_LEVEL = 1.5
+const ZOOM_INCREMENT = 0.05
+const MIN_OFFSET = -700
+const MAX_OFFSET = 700
 
-export var SPEED: float = 30.0
-export var ZOOM_SPEED: float = 10.0
-export var ZOOM_MARGIN: float = 0.1
-export var ZOOM_MIN: float = 0.5
-export var ZOOM_MAX: float = 3.0
+signal moved()
+signal zoomed()
 
-var zoomFactor: float = 1.0
-var zoomPos: Vector2 = Vector2()
-var zooming: bool = false
-
-var mousePos: Vector2 = Vector2()
-var mousePosGlobal: Vector2 = Vector2()
-var start: Vector2 = Vector2()
-var startV: Vector2 = Vector2()
-var end: Vector2 = Vector2()
-var endV: Vector2 = Vector2()
-var isDragging: bool = false
-
-func _ready():
-	update_zoom()
-
-
-func update_zoom():
-	offset.x = self.get_viewport_rect().size[0] / 2
-	offset.y = self.get_viewport_rect().size[1] / 2
-
-
-func _process(delta):
-	zoom_camera(delta)
-	move_camera(delta)
-
-
-func zoom_camera(delta: float) -> void:
-	zoom.x = lerp(zoom.x, zoom.x * zoomFactor, ZOOM_SPEED * delta)
-	zoom.y = lerp(zoom.y, zoom.y * zoomFactor, ZOOM_SPEED * delta)
-
-	zoom.x = clamp(zoom.x, ZOOM_MIN, ZOOM_MAX)
-	zoom.y = clamp(zoom.y, ZOOM_MIN, ZOOM_MAX)
-	if not zooming:
-		zoomFactor = 1.0
-
-
-func move_camera(delta: float) -> void:
-	var inputX: int = get_input_x()
-	var inputY: int = get_input_y()
-	
-	offset.x = lerp(offset.x, offset.x + inputX * SPEED * zoom.x, SPEED * delta)
-	offset.y = lerp(offset.y, offset.y + inputY * SPEED * zoom.y, SPEED * delta)
-
-
-func get_input_x() -> int:
-	return int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
-	
-	
-func get_input_y() -> int:
-	return int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
-	
+var _current_zoom_level = 1
+var _drag = false
 
 func _input(event: InputEvent) -> void:
-	input_for_zoom(event)
+	if event.is_action_pressed("cam_drag"): # click molette
+		_drag = true
+	elif event.is_action_released("cam_drag"): # lacher de molette
+		_drag = false
+
+	elif event.is_action("cam_zoom_in"): # molette vers le haut
+		_update_zoom(-ZOOM_INCREMENT, get_local_mouse_position())
+	elif event.is_action("cam_zoom_out"): # molette vers le bas
+		_update_zoom(ZOOM_INCREMENT, get_local_mouse_position())
+
+	elif event is InputEventMouseMotion && _drag: # si en cours de drag + la souris a bougé
+		var current_offset = get_offset() - event.relative*_current_zoom_level # calcul du nouveau mouvement
+		set_offset((current_offset))
+		emit_signal("moved")
 
 
-func input_for_zoom(event: InputEvent) -> void:
-	if abs(zoomPos.x - get_global_mouse_position().x) > ZOOM_MARGIN:
-		zoomFactor = 1.0
-	if abs(zoomPos.y - get_global_mouse_position().y) > ZOOM_MARGIN:
-		zoomFactor = 1.0
-		
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			zooming = true
-			if event.is_action("WheelDown"):
-				zoomFactor -= 0.01 * ZOOM_SPEED
-				zoomPos = get_global_mouse_position()
-			if event.is_action("WheelUp"):
-				zoomFactor += 0.01 * ZOOM_SPEED
-				zoomPos = get_global_mouse_position()
-		else:
-			zooming = true
+# limite le mouvement à une certaine plage
+func _get_restricted_offset(current_offset: Vector2) -> Vector2:
+	if current_offset.x < MIN_OFFSET:
+		current_offset.x = MIN_OFFSET
+	if current_offset.y < MIN_OFFSET:
+		current_offset.y = MIN_OFFSET
+	if current_offset.x > MAX_OFFSET:
+		current_offset.x = MAX_OFFSET
+	if current_offset.y > MAX_OFFSET:
+		current_offset.y = MAX_OFFSET
+	return current_offset
 
+
+func _update_zoom(incr: float, zoom_anchor: Vector2) -> void:
+	var old_zoom = _current_zoom_level
+
+	_current_zoom_level += incr
+	if _current_zoom_level < MAX_ZOOM_LEVEL:
+		_current_zoom_level = MAX_ZOOM_LEVEL
+	elif _current_zoom_level > MIN_ZOOM_LEVEL:
+		_current_zoom_level = MIN_ZOOM_LEVEL
+
+	if old_zoom == _current_zoom_level:
+		return
+
+	var zoom_center = zoom_anchor - get_offset()
+	var ratio = 1-_current_zoom_level/old_zoom
+	set_offset(get_offset() + zoom_center*ratio)
+
+	set_zoom(Vector2(_current_zoom_level, _current_zoom_level))
+	emit_signal("zoomed")
