@@ -29,7 +29,7 @@ func _input(event):
 		emit_signal("drag", pos)
 
 	if event is InputEventMouseButton:
-		if event.button_index == 1:
+		if event.button_index == BUTTON_LEFT:
 			mouse_pressed = event.pressed
 
 		if event.pressed and self.get_viewport_rect().has_point(get_global_mouse_position()):

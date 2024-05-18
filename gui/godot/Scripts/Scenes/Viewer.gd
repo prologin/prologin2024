@@ -177,7 +177,7 @@ func _on_BackgroundTileMap_click(pos, button):
 	var j = pos[0]
 	var i = pos[1]
 	if map != null and j >= 0 and j < map.width and i >= 0 and i < map.height:
-		if button == 1:
+		if button == BUTTON_LEFT:
 			emit_signal("bg_left_click", pos)
-		else:
+		elif button == BUTTON_RIGHT:
 			emit_signal("bg_right_click", pos)

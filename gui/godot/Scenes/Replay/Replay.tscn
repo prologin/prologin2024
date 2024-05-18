@@ -20,11 +20,6 @@ size = Vector2( 800, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ViewportContainer/Viewport"]
-margin_right = 800.0
-margin_bottom = 600.0
-color = Color( 0, 0, 0, 1 )
-
 [node name="Viewer" parent="HBoxContainer/ViewportContainer/Viewport" instance=ExtResource( 2 )]
 
 [node name="Menu" type="ColorRect" parent="."]
@@ -104,8 +99,6 @@ custom_colors/font_color = Color( 1, 0.776471, 0.705882, 1 )
 text = "J2: 31442"
 
 [node name="Back to main menu" type="Button" parent="Menu/VBoxContainer"]
-anchor_top = 0.786
-anchor_bottom = 0.786
 margin_top = 102.0
 margin_right = 208.0
 margin_bottom = 122.0

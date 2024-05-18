@@ -132,8 +132,6 @@ func _on_click(pos, click_type):
 				else:
 					aigle_dialog.popup_centered()
 			elif click_type == ClickType.RIGHT:
-				print(pos)
-				print(viewer.map.aigles)
 				# Find eagle in this location
 				var i = 0
 				for aigle in viewer.map.aigles:
