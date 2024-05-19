@@ -136,13 +136,23 @@ std::vector<position> Api::recuperer_territoire(int joueur)
     abort();
 }
 
-bool Api::case_dans_rayon(int id)
+bool Api::case_dans_rayon(int id, position pos)
 {
-    for (const Aigle& aiglantine : info_aigles())
+    for (const Aigle& aiglantine : game_state_->aigles_sauvages)
     {
         if (aiglantine.identifiant == id)
         {
-
+            return aiglantine.case_dans_rayon(pos.colonne, pos.ligne);
+        }
+    }
+    for (int i = 0; i < 2; i++)
+    {
+        for (const Aigle& aiglantine : game_state_->joueurs[i].aigles)
+        {
+            if (aiglantine.identifiant == id)
+            {
+                return aiglantine.case_dans_rayon(pos.colonne, pos.ligne);
+            }
         }
     }
     return false;
