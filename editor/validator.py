@@ -3,7 +3,6 @@
 from yaml import safe_load as chargement_sur
 from json import load as json_chargement
 from sys import argv
-from enum import Enum
 
 with open("../prologin2024.yml") as stream:
     config = chargement_sur(stream)
