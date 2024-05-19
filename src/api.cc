@@ -123,8 +123,11 @@ int Api::tour_actuel()
 
 std::vector<position> Api::liste_villages(int joueur)
 {
-    // TODO
-    abort();
+    if (joueur == -1)
+        return game_state_->villages_libres;
+    if (joueur > 1 || joueur < -1)
+        return std::vector<position>();
+    return game_state_->joueurs[joueur].villages;
 }
 
 std::vector<position> Api::recuperer_territoire(int joueur)
@@ -135,8 +138,14 @@ std::vector<position> Api::recuperer_territoire(int joueur)
 
 bool Api::case_dans_rayon(int id)
 {
-    // TODO
-    abort();
+    for (const Aigle& aiglantine : info_aigles())
+    {
+        if (aiglantine.identifiant == id)
+        {
+
+        }
+    }
+    return false;
 }
 
 // TODO: aucune idée de pourquoi tout cela est là
