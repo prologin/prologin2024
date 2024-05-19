@@ -121,12 +121,6 @@ int Api::tour_actuel()
     return game_state_->tour;
 }
 
-std::vector<position> Api::recuperer_territoire(int joueur)
-{
-    // TODO
-    abort();
-}
-
 std::vector<position> Api::liste_villages(int joueur)
 {
     // TODO
