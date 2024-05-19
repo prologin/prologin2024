@@ -246,6 +246,7 @@ function:
     fct_ret_type: bool
     fct_arg:
       - [id, int, "Identifiant de l'aigle"]
+      - [pos, position, "Position de la case"]
 
 
 # Autres
