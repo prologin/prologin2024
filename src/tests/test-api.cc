@@ -140,4 +140,35 @@ TEST_F(ApiTestColibri, TestApiAnnuler)
     ASSERT_EQ(api->points_action(0), 2);
 }
 
-//todo
+TEST_F(ApiTestColibri, TestApiCaseDansRayon)
+{
+    auto& st = api->game_state();
+    Aigle a(1, {2, 1}, EFFET_GEL, 0, 0);
+    st.joueurs[0].aigles.push_back(a);
+    position caze = {2, 1};
+    ASSERT_EQ(api->case_dans_rayon(1, caze), true);
+    caze = {3, 1};
+    ASSERT_EQ(api->case_dans_rayon(1, caze), true);
+    caze = {3, 2};
+    ASSERT_EQ(api->case_dans_rayon(1, caze), true);
+    caze = {2, 2};
+    ASSERT_EQ(api->case_dans_rayon(1, caze), true);
+
+    caze = {0, 0};
+    EXPECT_EQ(api->case_dans_rayon(1, caze), false);
+    caze = {2, 0};
+    EXPECT_EQ(api->case_dans_rayon(1, caze), false);
+    caze = {4, 2};
+    EXPECT_EQ(api->case_dans_rayon(1, caze), false);
+    caze = {3, 1};
+    EXPECT_EQ(api->case_dans_rayon(2, caze), false);
+}
+
+TEST_F(ApiTestColibri, TestApiListeVillages)
+{
+    ASSERT_EQ(api->liste_villages(-1).size(), 1);
+    ASSERT_EQ(api->liste_villages(0).size(), 1);
+    ASSERT_EQ(api->liste_villages(1).size(), 1);
+    ASSERT_EQ(api->liste_villages(2).size(), 0);
+    ASSERT_EQ(api->liste_villages(-2).size(), 0);
+}
