@@ -86,9 +86,9 @@ extern "C" std::vector<position> api_recuperer_territoire(int joueur)
     return api->recuperer_territoire(joueur);
 }
 
-extern "C" bool api_case_dans_rayon(int id)
+extern "C" bool api_case_dans_rayon(int id, position pos)
 {
-    return api->case_dans_rayon(id);
+    return api->case_dans_rayon(id, pos);
 }
 
 extern "C" int api_moi()

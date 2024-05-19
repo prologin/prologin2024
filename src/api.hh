@@ -68,7 +68,7 @@ public:
 
     /// Renvoie vrai si la case est dans le rayon de l'aigle. Si l'aigle est
     /// invalide, renvoie faux.
-    bool case_dans_rayon(int id);
+    bool case_dans_rayon(int id, position pos);
 
     /// Renvoie votre numéro de joueur.
     int moi();
