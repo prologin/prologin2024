@@ -235,7 +235,7 @@ function:
     fct_name: recuperer_territoire
     fct_summary: "Renvoie un tableau en 2 dimensions des emplacements indiquant
                  avec vrai les emplacement du territoire et faux sinon."
-    fct_ret_type: TODO
+    fct_ret_type: position array
     fct_arg:
       - [joueur, int, "Identifiant du joueur"]
   -
