@@ -5,14 +5,6 @@
 #include "api.hh"
 #include "rules.hh"
 
-namespace
-{
-position vec_to_pos(const std::vector<int>& vec)
-{
-    return {vec[0], vec[1]};
-}
-} // namespace
-
 GameState::GameState(const rules::Players& players)
     : rules::GameState(players)
 {
@@ -34,14 +26,14 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     int y1 = donnees["joueur1"]["y"];
     std::vector<Aigle> aigles1;
     std::vector<position> villages1;
-    villages1.push_back(vec_to_pos({x1, y1}));
+    villages1.emplace_back(x1, y1);
     joueurs.emplace_back(0, TOUR_POINTS_ACTION, aigles1, villages1);
 
     int x2 = donnees["joueur2"]["x"];
     int y2 = donnees["joueur2"]["y"];
     std::vector<Aigle> aigles2;
     std::vector<position> villages2;
-    villages2.push_back(vec_to_pos({x2, y2}));
+    villages2.emplace_back(x2, y2);
     joueurs.emplace_back(0, TOUR_POINTS_ACTION, aigles2, villages2);
 
     std::vector<std::vector<int>> gains;
@@ -80,6 +72,23 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         carte_texte.push_back(ligne);
 
     carte = Carte(carte_texte, gains);
+
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = carte.get_dimension();
+
+    for (int y = 0; y < hauteur; y++)
+    {
+        for (int x = 0; x < largeur; x++)
+        {
+            if (carte.get_case(x, y) != VILLAGE)
+                continue;
+            if (x == villages1[0].colonne && y == villages1[0].ligne)
+                continue;
+            if (x == villages2[0].colonne && y == villages2[0].ligne)
+                continue;
+            villages_libres.emplace_back(x, y);
+        }
+    }
 
     historiques.push_back(std::vector<ActionInterne>());
     historiques.push_back(std::vector<ActionInterne>());
