@@ -18,7 +18,7 @@
  * The methods of this class are exported through 'interface.cc'
  * to be called by the clients
  */
-class Api final : public rules::Api<GameState, erreur>
+class Api final : public rules::Api<GameState, error>
 {
 public:
     Api(std::unique_ptr<GameState> game_state,
@@ -44,6 +44,9 @@ public:
     /// Renvoie la liste d'aigles
     std::vector<aigle> info_aigles();
 
+    /// Renvoie la liste des villages. Identifiant -1 pour les villages libres.
+    std::vector<position> liste_villages(int joueur);
+
     /// Renvoie le nombre de points d'action restant Renvoie -1 si le joueur
     /// est invalide.
     int points_action(int joueur);
@@ -58,6 +61,14 @@ public:
     /// tour, dans l'ordre chronologique. Les actions de débug n'apparaissent
     /// pas dans cette liste.
     std::vector<action_hist> historique();
+
+    /// Renvoie un tableau en 2 dimensions des emplacements indiquant avec vrai
+    /// les emplacement du territoire et faux sinon.
+    std::vector<position> recuperer_territoire(int joueur);
+
+    /// Renvoie vrai si la case est dans le rayon de l'aigle. Si l'aigle est
+    /// invalide, renvoie faux.
+    bool case_dans_rayon(int id);
 
     /// Renvoie votre numéro de joueur.
     int moi();

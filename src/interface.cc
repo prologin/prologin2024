@@ -56,6 +56,11 @@ extern "C" std::vector<aigle> api_info_aigles()
     return api->info_aigles();
 }
 
+extern "C" std::vector<position> api_liste_villages(int joueur)
+{
+    return api->liste_villages(joueur);
+}
+
 extern "C" int api_points_action(int joueur)
 {
     return api->points_action(joueur);
@@ -74,6 +79,16 @@ extern "C" erreur api_debug_poser_drakkar(position pos, drakkar_debug drakkar)
 extern "C" std::vector<action_hist> api_historique()
 {
     return api->historique();
+}
+
+extern "C" std::vector<position> api_recuperer_territoire(int joueur)
+{
+    return api->recuperer_territoire(joueur);
+}
+
+extern "C" bool api_case_dans_rayon(int id)
+{
+    return api->case_dans_rayon(id);
 }
 
 extern "C" int api_moi()

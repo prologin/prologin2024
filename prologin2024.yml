@@ -194,7 +194,8 @@ function:
     fct_name: liste_villages
     fct_summary: "Renvoie la liste des villages. Identifiant -1 pour les villages libres."
     fct_ret_type: position array
-    fct_arg: [joueur, int, "Identifiant du joueur"]
+    fct_arg:
+    - [joueur, int, "Identifiant du joueur"]
   -
     fct_name: points_action
     fct_summary: Renvoie le nombre de points d'action restant
@@ -244,7 +245,7 @@ function:
                  est invalide, renvoie faux."
     fct_ret_type: bool
     fct_arg:
-      - [Id, int, "Identifiant de l'aigle"]
+      - [id, int, "Identifiant de l'aigle"]
 
 
 # Autres

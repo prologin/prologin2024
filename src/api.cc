@@ -121,6 +121,30 @@ int Api::tour_actuel()
     return game_state_->tour;
 }
 
+std::vector<position> Api::recuperer_territoire(int joueur)
+{
+    // TODO
+    abort();
+}
+
+std::vector<position> Api::liste_villages(int joueur)
+{
+    // TODO
+    abort();
+}
+
+std::vector<position> Api::recuperer_territoire(int joueur)
+{
+    // TODO
+    abort();
+}
+
+bool Api::case_dans_rayon(int id)
+{
+    // TODO
+    abort();
+}
+
 // TODO: aucune idée de pourquoi tout cela est là
 std::ostream& operator<<(std::ostream& os, erreur v);
 void Api::afficher_erreur(erreur v)
