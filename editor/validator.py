@@ -27,10 +27,10 @@ def extraire_propriete(json, nom):
     return json[nom]
 
 class Case:
-    NORD_EST = '1',
-    NORD_OUEST = '2',
-    SUD_OUEST = '3',
-    SUD_EST = '4',
+    NORD_EST = '1'
+    NORD_OUEST = '2'
+    SUD_OUEST = '3'
+    SUD_EST = '4'
     VILLAGE = 'X' # X
 
     def __new__(cls, caractere):
@@ -49,10 +49,10 @@ class Case:
                 raise ValueError(f"Type de case `{caractere}` inconnue")
 
 class Effet:
-    FEU = 1,
-    VIE = 2,
-    METEORE = 3,
-    GEL = 4,
+    FEU = 1
+    VIE = 2
+    METEORE = 3
+    GEL = 4
     MORT = 5
 
     def __new__(cls, effet):
@@ -167,7 +167,7 @@ def lire_aigles(aigles_json, hauteur, largeur):
         puissance = extraire_propriete(aigle_json, "puissance")
 
         tour_eclosion = extraire_propriete(aigle_json, "tour_eclosion")
-        if not (0 <= tour_eclosion < NB_TOURS):
+        if not 0 <= tour_eclosion < NB_TOURS:
             raise ValueError(f"L'éclosion prévue tour {tour_eclosion} est en "
                               "dehors de la durée de la partie")
 
@@ -185,7 +185,7 @@ def valide_carte(json):
 
     hauteur = extraire_propriete(json, "hauteur")
     if not HAUTEUR_MIN <= hauteur <= HAUTEUR_MAX:
-        raise ValueError(f"hauteur incorrecte: {hauteur} n'est pas dans "
+        raise ValueError(f"Hauteur incorrecte: {hauteur} n'est pas dans "
                          f"l'intervalle [{HAUTEUR_MIN}, {HAUTEUR_MAX}]")
 
     carte_json = extraire_propriete(json, "carte")
@@ -219,6 +219,7 @@ if __name__ == '__main__':
     )
 
     json_chemin = argv[1]
-    json = json_chargement(open(json_chemin, 'r'))
+    with open(json_chemin) as f:
+        json = json_chargement(f)
 
     valide_carte(json)
