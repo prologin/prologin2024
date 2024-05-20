@@ -130,8 +130,26 @@ std::vector<position> Api::liste_villages(int joueur)
 
 std::vector<position> Api::recuperer_territoire(int joueur)
 {
-    // TODO
-    abort();
+    if (joueur < 0 || joueur > 1)
+        return std::vector<position>();
+
+    const Carte& carte = game_state_->carte;
+    std::vector<std::vector<bool>> territoire = game_state_->joueurs[joueur].territoire(carte);
+
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = game_state_->carte.get_dimension();
+
+    std::vector<position> resultat;
+    for (int y = 0; y < hauteur; y++)
+    {
+        for (int x = 0; x < largeur; x++)
+        {
+            if (territoire[y][x])
+                resultat.push_back({x, y});
+        }
+    }
+
+    return resultat;
 }
 
 bool Api::case_dans_rayon(int id, position pos)
