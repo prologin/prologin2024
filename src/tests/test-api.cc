@@ -195,7 +195,7 @@ TEST_F(ApiTestColibri, TestApiRecupererTerritoire)
         if (p.colonne == pos3.colonne && p.ligne == pos3.ligne)
             b3 = true;
     }
-    ASSERT_EQ(true, b2);
-    ASSERT_EQ(b1, true);
-    ASSERT_EQ(true, b3);
+    ASSERT_TRUE(b2);
+    ASSERT_TRUE(b1);
+    ASSERT_TRUE(b3);
 }
