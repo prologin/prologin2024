@@ -51,6 +51,7 @@ typedef enum erreur
     DESTINATION_INVALIDE, ///< La position d'arrivée est invalide
     PLUS_DE_PA, ///< Vous n'avez plus de points d'action
     AIGLE_INVALIDE, ///< L'identifiant de l'aigle est invalide
+    ROTATION_VILLAGE, ///< Vous essayez de tourner un village
 } erreur;
 
 /// Contenu topographique d'une case
@@ -115,7 +116,6 @@ typedef struct aigle
     effet_aigle effet; ///< Effet de l'aigle
     int puissance; ///< Valeur de la puissance de l'aigle
     int tour_eclosion; ///< Tour d'éclosion de l'oeuf
-    bool existant; ///< Si l'aigle existe toujours
 } aigle;
 
 /// Description complète d'une case

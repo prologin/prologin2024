@@ -68,6 +68,7 @@ enum:
       - [destination_invalide, "La position d'arrivée est invalide"]
       - [plus_de_pa, "Vous n'avez plus de points d'action"]
       - [aigle_invalide, "L'identifiant de l'aigle est invalide"]
+      - [rotation_village, "Vous essayez de tourner un village"]
   -
     enum_name: type_case
     enum_summary: "Contenu topographique d'une case"
@@ -129,7 +130,6 @@ struct:
       - [effet, effet_aigle, "Effet de l'aigle"]
       - [puissance, int, "Valeur de la puissance de l'aigle"]
       - [tour_eclosion, int, "Tour d'éclosion de l'oeuf"]
-      - [existant, bool, "Si l'aigle existe toujours"]
   -
     str_name: etat_case
     str_summary: "Description complète d'une case"

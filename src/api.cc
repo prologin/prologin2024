@@ -46,8 +46,7 @@ std::vector<aigle> Api::info_aigles()
             aigle_sauvage.pos,
             aigle_sauvage.effet,
             aigle_sauvage.puissance,
-            aigle_sauvage.tour_eclosion,
-            true
+            aigle_sauvage.tour_eclosion
         };
         aigles.push_back(aigle_converti);
     }
@@ -61,8 +60,7 @@ std::vector<aigle> Api::info_aigles()
                 aigle_joueur.pos,
                 aigle_joueur.effet,
                 aigle_joueur.puissance,
-                aigle_joueur.tour_eclosion,
-                true
+                aigle_joueur.tour_eclosion
             };
             aigles.push_back(aigle_converti);
         }
