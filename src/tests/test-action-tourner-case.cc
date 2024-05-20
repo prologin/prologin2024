@@ -106,13 +106,17 @@ TEST_F(ApiTestColibri, ActionTournerCaseVillage)
     position pos = {0, 3};
     type_case caze = st.carte.get_case(0, 3);
     EXPECT_EQ(caze, VILLAGE);
-    EXPECT_EQ(api->tourner_case(pos), OK);
+    EXPECT_EQ(api->tourner_case(pos), ROTATION_VILLAGE);
     caze = st.carte.get_case(0, 3);
     EXPECT_EQ(caze, VILLAGE);
-    EXPECT_EQ(api->tourner_case(pos), OK);
+    EXPECT_EQ(api->tourner_case(pos), ROTATION_VILLAGE);
     caze = st.carte.get_case(0, 3);
     EXPECT_EQ(caze, VILLAGE);
-    EXPECT_EQ(api->tourner_case(pos), PLUS_DE_PA);
-    caze = st.carte.get_case(0, 3);
-    EXPECT_EQ(caze, VILLAGE);
+    position pos2 = {3, 0};
+    EXPECT_EQ(api->tourner_case(pos2), OK);
+    caze = st.carte.get_case(3, 0);
+    EXPECT_EQ(caze, SUD_OUEST);
+    EXPECT_EQ(api->tourner_case(pos2), PLUS_DE_PA);
+    caze = st.carte.get_case(3, 0);
+    EXPECT_EQ(caze, SUD_OUEST);
 }
