@@ -172,3 +172,30 @@ TEST_F(ApiTestColibri, TestApiListeVillages)
     ASSERT_EQ(api->liste_villages(2).size(), 0);
     ASSERT_EQ(api->liste_villages(-2).size(), 0);
 }
+
+TEST_F(ApiTestColibri, TestApiRecupererTerritoire)
+{
+    // colibri
+    // ..OO
+    // ....
+    // OOO.
+    ASSERT_EQ(api->recuperer_territoire(0).size(), 3);
+    position pos1 = {0, 2};
+    position pos2 = {1, 2};
+    position pos3 = {2, 2};
+    bool b1 = false;
+    bool b2 = false;
+    bool b3 = false;
+    for (auto& p : api->recuperer_territoire(0))
+    {
+        if (p.colonne == pos1.colonne && p.ligne == pos1.ligne)
+            b1 = true;
+        if (p.colonne == pos2.colonne && p.ligne == pos2.ligne)
+            b2 = true;
+        if (p.colonne == pos3.colonne && p.ligne == pos3.ligne)
+            b3 = true;
+    }
+    ASSERT_EQ(true, b2);
+    ASSERT_EQ(b1, true);
+    ASSERT_EQ(true, b3);
+}
