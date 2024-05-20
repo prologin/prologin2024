@@ -140,9 +140,9 @@ std::vector<position> Api::recuperer_territoire(int joueur)
     std::tie(largeur, hauteur) = game_state_->carte.get_dimension();
 
     std::vector<position> resultat;
-    for (int y = 0; y < hauteur; y++)
+    for (int y = 0; y < hauteur - 1; y++)
     {
-        for (int x = 0; x < largeur; x++)
+        for (int x = 0; x < largeur - 1; x++)
         {
             if (territoire[y][x])
                 resultat.push_back({x, y});
