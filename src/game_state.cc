@@ -109,7 +109,7 @@ int calcul_multiplicatif(const std::vector<Aigle>& aigles, int x, int y)
     {
         if (aiglantine.effet != EFFET_FEU)
             continue;
-        if (aiglantine.case_dans_rayon(x, y))
+        if (aiglantine.pos.colonne != x || aiglantine.pos.ligne != y)
             continue;
         multiplicatif *= aiglantine.puissance;
     }
@@ -121,7 +121,7 @@ int GameState::calcul_score(int x, int y)
     int multiplicatif = 1;
     multiplicatif *= calcul_multiplicatif(joueurs[0].aigles, x, y);
     multiplicatif *= calcul_multiplicatif(joueurs[1].aigles, x, y);
-    return carte.get_gain(y, x) * multiplicatif;
+    return carte.get_gain(x, y) * multiplicatif;
 }
 
 void GameState::tour_suivant()
