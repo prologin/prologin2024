@@ -33,6 +33,8 @@ int ActionTournerCase::check(const GameState& st) const
         return POSITION_INVALIDE;
     if (case_bloquee(st, x, y))
         return CASE_BLOQUEE;
+    if (carte.get_case(x, y) == VILLAGE)
+        return ROTATION_VILLAGE;
 
     Joueur joueur = st.joueurs[player_id_];
     Joueur adversaire = st.joueurs[player_id_ ^ 1];
