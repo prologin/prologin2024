@@ -186,6 +186,9 @@ std::ostream& operator<<(std::ostream& os, erreur v)
     case AIGLE_INVALIDE:
         os << "AIGLE_INVALIDE";
         break;
+    case ROTATION_VILLAGE:
+        os << "ROTATION_VILLAGE";
+        break;
     }
     return os;
 }
@@ -321,9 +324,6 @@ std::ostream& operator<<(std::ostream& os, aigle v)
     os << ", ";
     os << "tour_eclosion"
        << "=" << v.tour_eclosion;
-    os << ", ";
-    os << "existant"
-       << "=" << v.existant;
     os << " }";
     return os;
 }
