@@ -140,7 +140,12 @@ void GameState::tour_suivant()
         for (int x = 0; x < largeur - 1; x++)
         {
             if (territoire[y][x])
-                j_actuel.score += calcul_score(x, y);
+            {
+                if (tour >= NB_TOURS - 2)
+                    j_actuel.score += calcul_score(x, y) * MULTIPLICATEUR_DERNIER_TOUR;
+                else
+                    j_actuel.score += calcul_score(x, y);
+            }
         }
     }
 
