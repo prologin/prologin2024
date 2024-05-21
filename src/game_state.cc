@@ -11,6 +11,49 @@ GameState::GameState(const rules::Players& players)
     std::cout << "CQLE" << std::endl;
     // should not come here
 }
+void GameState::capture(int largeur, int hauteur, Joueur& j_actuel, const std::vector<std::vector<bool>>& territoire)
+{
+    for (int y = 0; y < hauteur - 1; y++)
+    {
+        for (int x = 0; x < largeur - 1; x++)
+        {
+            if (territoire[y][x])
+            {
+                j_actuel.score += calcul_score(x, y);
+                for (auto it = aigles_sauvages.begin(); it != aigles_sauvages.end(); it++)
+                {
+                    if ((*it).pos.colonne == x && (*it).pos.ligne == y)
+                    {
+                        j_actuel.aigles.push_back(*it);
+                        aigles_sauvages.erase(it);
+                    }
+                }
+                for (int x1 = 0; x1 < 2; x1++)
+                {
+                    for (int y1 = 0; y1 < 2; y1++)
+                    {
+                        if (carte.get_case(x+x1, y+y1) == type_case::VILLAGE)
+                        {
+                            std::cout << "vl" << villages_libres.size() << std::endl;
+                            for (auto it = villages_libres.begin(); it != villages_libres.end(); it++)
+                            {
+                                std::cout << "x1" << x1 << std::endl;
+                                std::cout << "y1" << y1 << std::endl;
+                                std::cout << "v" << it->colonne << std::endl;
+                                std::cout << "v" << it->ligne << std::endl;
+                                if ((*it).colonne == x+x1 && (*it).ligne == y+y1)
+                                {
+                                    j_actuel.villages.push_back(*it);
+                                    villages_libres.erase(it);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     : rules::GameState(players)
@@ -90,6 +133,12 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
 
     historiques.emplace_back();
     historiques.emplace_back();
+    for (int i = 0; i <= 1; i++)
+    {
+        const std::vector<std::vector<bool>>& territoire = joueurs[i].territoire(carte);
+        capture(carte.get_dimension().first, carte.get_dimension().second, joueurs[i], territoire);
+    }
+
     // FIXME
 }
 
@@ -135,8 +184,9 @@ void GameState::tour_suivant()
     auto [largeur, hauteur] = carte.get_dimension();
 
     Joueur& j_actuel = joueurs[joueur_actuel()];
-    const auto territoire = j_actuel.territoire(carte);
     j_actuel.score_tour = 0;
+
+    const std::vector<std::vector<bool>>& territoire = j_actuel.territoire(carte);
     for (int y = 0; y < hauteur - 1; y++)
     {
         for (int x = 0; x < largeur - 1; x++)
@@ -150,6 +200,7 @@ void GameState::tour_suivant()
             }
         }
     }
+    capture(largeur, hauteur, j_actuel, territoire);
 
     j_actuel.score += j_actuel.score_tour;
     tour++;
