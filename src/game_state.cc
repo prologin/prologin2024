@@ -11,44 +11,59 @@ GameState::GameState(const rules::Players& players)
     std::cout << "CQLE" << std::endl;
     // should not come here
 }
-void GameState::capture(int largeur, int hauteur, Joueur& j_actuel, const std::vector<std::vector<bool>>& territoire)
+void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::vector<std::vector<bool>>& territoire)
 {
-    for (int y = 0; y < hauteur - 1; y++)
+    Joueur& j_adverse = joueurs[(j_actuel_id + 1) % 2];
+    auto j_actuel = joueurs[j_actuel_id];
+    const std::vector<std::vector<bool>>& territoire_adverse = j_adverse.territoire(carte);
+    auto verifie_territoire = [territoire, territoire_adverse](auto aigle)
     {
-        for (int x = 0; x < largeur - 1; x++)
+        return territoire[aigle.pos.colonne][aigle.pos.ligne]
+        && !territoire_adverse[aigle.pos.colonne][aigle.pos.ligne];
+    };
+    auto verifie_deux_territoires = [largeur, hauteur, territoire, territoire_adverse](auto village)
+    {
+        bool dans_mon_territoire = false;
+        for (int x1 = 0; x1 >= -1; x1--)
         {
-            if (territoire[y][x])
+            for (int y1 = 0; y1 >= -1; y1--)
             {
-                for (auto it = aigles_sauvages.begin(); it != aigles_sauvages.end(); it++)
+                if (village.colonne + x1 >= 0 && village.colonne + x1 < hauteur - 1
+                    && village.ligne + y1 >= 0 && village.ligne + y1 < largeur - 1)
                 {
-                    if ((*it).pos.colonne == x && (*it).pos.ligne == y)
-                    {
-                        j_actuel.aigles.push_back(*it);
-                        aigles_sauvages.erase(it);
-                        return capture(largeur, hauteur, j_actuel, territoire); //TODO FIXME HELP YAKA COMPLEXITE
-                    }
-                }
-                for (int x1 = 0; x1 < 2; x1++)
-                {
-                    for (int y1 = 0; y1 < 2; y1++)
-                    {
-                        if (carte.get_case(x+x1, y+y1) == type_case::VILLAGE)
-                        {
-                            for (auto it = villages_libres.begin(); it != villages_libres.end(); it++)
-                            {
-                                if ((*it).colonne == x+x1 && (*it).ligne == y+y1)
-                                {
-                                    j_actuel.villages.push_back(*it);
-                                    villages_libres.erase(it);
-                                    return capture(largeur, hauteur, j_actuel, territoire); //TODO FIXME HELP YAKA COMPLEXITE
-                                }
-                            }
-                        }
-                    }
+                    if (territoire_adverse[village.colonne + x1][village.ligne + y1])
+                        return false;
+                    else if (territoire[village.colonne + x1][village.ligne + y1])
+                        dans_mon_territoire = true;
                 }
             }
         }
-    }
+        return dans_mon_territoire;
+    };
+
+    std::copy_if(
+        aigles_sauvages.begin(),
+        aigles_sauvages.end(),
+        std::back_inserter(j_actuel.aigles),
+        verifie_territoire
+    );
+    std::remove_if(
+        aigles_sauvages.begin(),
+        aigles_sauvages.end(),
+        verifie_territoire
+    );
+
+    std::copy_if(
+        villages_libres.begin(),
+        villages_libres.end(),
+        std::back_inserter(j_actuel.villages),
+        verifie_deux_territoires
+    );
+    std::remove_if(
+        villages_libres.begin(),
+        villages_libres.end(),
+        verifie_deux_territoires
+    );
 }
 
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)
@@ -146,8 +161,8 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     historiques.emplace_back();
     for (int i = 0; i <= 1; i++)
     {
-        const std::vector<std::vector<bool>>& territoire = joueurs[i].territoire(carte);
-        capture(carte.get_dimension().first, carte.get_dimension().second, joueurs[i], territoire);
+        std::vector<std::vector<bool>> territoire = joueurs[i].territoire(carte);
+        capture(largeur, hauteur, i, territoire);
     }
 
     // FIXME
@@ -211,7 +226,7 @@ void GameState::tour_suivant()
             }
         }
     }
-    capture(largeur, hauteur, j_actuel, territoire);
+    capture(largeur, hauteur, joueur_actuel(), territoire);
 
     j_actuel.score += j_actuel.score_tour;
     tour++;

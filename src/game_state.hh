@@ -63,5 +63,5 @@ public:
     void sync_score();
 
 private:
-    void capture(int largeur, int hauteur, Joueur& j_actuel, const std::vector<std::vector<bool>>& territoire);
+    void capture(int largeur, int hauteur, int j_actuel_id, const std::vector<std::vector<bool>>& territoire);
 };
