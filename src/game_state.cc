@@ -14,14 +14,14 @@ GameState::GameState(const rules::Players& players)
 void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::vector<std::vector<bool>>& territoire)
 {
     Joueur& j_adverse = joueurs[(j_actuel_id + 1) % 2];
-    auto j_actuel = joueurs[j_actuel_id];
+    Joueur& j_actuel = joueurs[j_actuel_id];
     const std::vector<std::vector<bool>>& territoire_adverse = j_adverse.territoire(carte);
-    auto verifie_territoire = [territoire, territoire_adverse](auto aigle)
+    auto const verifie_territoire = [territoire, territoire_adverse](const auto& aigle)
     {
         return territoire[aigle.pos.colonne][aigle.pos.ligne]
         && !territoire_adverse[aigle.pos.colonne][aigle.pos.ligne];
     };
-    auto verifie_deux_territoires = [largeur, hauteur, territoire, territoire_adverse](auto village)
+    auto const verifie_deux_territoires = [largeur, hauteur, territoire, territoire_adverse](const auto& village)
     {
         bool dans_mon_territoire = false;
         for (int x1 = 0; x1 >= -1; x1--)
@@ -40,30 +40,35 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
         }
         return dans_mon_territoire;
     };
+    if (aigles_sauvages.size() > 0)
+    {
+        std::copy_if(
+            aigles_sauvages.begin(),
+            aigles_sauvages.end(),
+            std::back_inserter(j_actuel.aigles),
+            verifie_territoire
+        );
+        aigles_sauvages.erase(std::remove_if(
+            aigles_sauvages.begin(),
+            aigles_sauvages.end(),
+            verifie_territoire
+        ));
+    }
 
-    std::copy_if(
-        aigles_sauvages.begin(),
-        aigles_sauvages.end(),
-        std::back_inserter(j_actuel.aigles),
-        verifie_territoire
-    );
-    std::remove_if(
-        aigles_sauvages.begin(),
-        aigles_sauvages.end(),
-        verifie_territoire
-    );
-
-    std::copy_if(
-        villages_libres.begin(),
-        villages_libres.end(),
-        std::back_inserter(j_actuel.villages),
-        verifie_deux_territoires
-    );
-    std::remove_if(
-        villages_libres.begin(),
-        villages_libres.end(),
-        verifie_deux_territoires
-    );
+    if (villages_libres.size() > 0)
+    {
+        std::copy_if(
+            villages_libres.begin(),
+            villages_libres.end(),
+            std::back_inserter(j_actuel.villages),
+            verifie_deux_territoires
+        );
+        villages_libres.erase(std::remove_if(
+            villages_libres.begin(),
+            villages_libres.end(),
+            verifie_deux_territoires
+        ));
+    }
 }
 
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)

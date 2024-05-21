@@ -57,6 +57,7 @@ TEST_F(ApiTestColibri, TestGameStateTerritoireDebut)
     EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][1], true);
     EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][2], true);
     EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][3], false);
+    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[1][2], false);
 
     EXPECT_EQ(st.joueurs[1].territoire(st.carte)[0][0], false);
     EXPECT_EQ(st.joueurs[1].territoire(st.carte)[0][1], false);
