@@ -72,8 +72,8 @@ TEST_F(ApiTestColibri, TestGameStateCaptureVillageDebut)
     auto& st = api->game_state();
     ASSERT_EQ(st.joueurs[0].villages.size(), 2);
     EXPECT_EQ(st.joueurs[0].villages[0].colonne, 0);
-    EXPECT_EQ(st.joueurs[0].villages[0].ligne, 2);
-    EXPECT_EQ(st.joueurs[0].villages[1].colonne, 0);
+    EXPECT_EQ(st.joueurs[0].villages[0].ligne, 3);
+    EXPECT_EQ(st.joueurs[0].villages[1].colonne, 3);
     EXPECT_EQ(st.joueurs[0].villages[1].ligne, 2);
 }
 

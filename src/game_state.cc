@@ -19,13 +19,13 @@ void GameState::capture(int largeur, int hauteur, Joueur& j_actuel, const std::v
         {
             if (territoire[y][x])
             {
-                j_actuel.score += calcul_score(x, y);
                 for (auto it = aigles_sauvages.begin(); it != aigles_sauvages.end(); it++)
                 {
                     if ((*it).pos.colonne == x && (*it).pos.ligne == y)
                     {
                         j_actuel.aigles.push_back(*it);
                         aigles_sauvages.erase(it);
+                        return capture(largeur, hauteur, j_actuel, territoire); //TODO FIXME HELP YAKA COMPLEXITE
                     }
                 }
                 for (int x1 = 0; x1 < 2; x1++)
@@ -34,17 +34,13 @@ void GameState::capture(int largeur, int hauteur, Joueur& j_actuel, const std::v
                     {
                         if (carte.get_case(x+x1, y+y1) == type_case::VILLAGE)
                         {
-                            std::cout << "vl" << villages_libres.size() << std::endl;
                             for (auto it = villages_libres.begin(); it != villages_libres.end(); it++)
                             {
-                                std::cout << "x1" << x1 << std::endl;
-                                std::cout << "y1" << y1 << std::endl;
-                                std::cout << "v" << it->colonne << std::endl;
-                                std::cout << "v" << it->ligne << std::endl;
                                 if ((*it).colonne == x+x1 && (*it).ligne == y+y1)
                                 {
                                     j_actuel.villages.push_back(*it);
                                     villages_libres.erase(it);
+                                    return capture(largeur, hauteur, j_actuel, territoire); //TODO FIXME HELP YAKA COMPLEXITE
                                 }
                             }
                         }
@@ -114,6 +110,21 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         carte_texte.push_back(ligne);
 
     carte = Carte(carte_texte, gains);
+    const auto [largeur, hauteur] = carte.get_dimension();
+
+    for (int y = 0; y < hauteur; y++)
+    {
+        for (int x = 0; x < largeur; x++)
+        {
+            if (carte.get_case(x, y) != VILLAGE)
+                continue;
+            if (x == villages1[0].colonne && y == villages1[0].ligne)
+                continue;
+            if (x == villages2[0].colonne && y == villages2[0].ligne)
+                continue;
+            villages_libres.push_back({x, y});
+        }
+    }
 
     const auto [largeur, hauteur] = carte.get_dimension();
 
