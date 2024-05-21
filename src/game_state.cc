@@ -63,6 +63,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         Aigle a(id, {aigle["pos"]["x"], aigle["pos"]["y"]}, effet,
                 aigle["puissance"], aigle["tour_eclosion"]);
         aigles_sauvages.push_back(a);
+        id++;
     }
 
     std::vector<std::string> carte_texte;
