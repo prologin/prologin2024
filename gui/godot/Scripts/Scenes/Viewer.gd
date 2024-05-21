@@ -124,7 +124,7 @@ func update_grid():
 
 	for i in range(map.height):
 		for j in range(map.width):
-			grid.set_cell(j, i, Constants.TypeCase.NORD_OUEST)
+			grid.set_cell(j, i, 0)
 
 
 
@@ -181,3 +181,7 @@ func _on_BackgroundTileMap_click(pos, button):
 			emit_signal("bg_left_click", pos)
 		elif button == BUTTON_RIGHT:
 			emit_signal("bg_right_click", pos)
+
+
+func _on_GridOpacitySlider_value_changed(value):
+	self.grid.modulate.a = value / 100

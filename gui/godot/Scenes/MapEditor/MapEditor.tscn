@@ -77,16 +77,35 @@ margin_right = 208.0
 margin_bottom = 140.0
 text = "Back to main menu"
 
-[node name="PointsAmount" type="TextEdit" parent="Selector/VBoxContainer"]
+[node name="GridOpacity" type="HBoxContainer" parent="Selector/VBoxContainer"]
 margin_top = 144.0
 margin_right = 208.0
-margin_bottom = 194.0
+margin_bottom = 160.0
+
+[node name="Label" type="Label" parent="Selector/VBoxContainer/GridOpacity"]
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 15.0
+text = "Opacité grille"
+
+[node name="GridOpacitySlider" type="HSlider" parent="Selector/VBoxContainer/GridOpacity"]
+margin_left = 90.0
+margin_right = 208.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+tick_count = 5
+
+[node name="PointsAmount" type="TextEdit" parent="Selector/VBoxContainer"]
+margin_top = 164.0
+margin_right = 208.0
+margin_bottom = 214.0
 rect_min_size = Vector2( 0, 50 )
 hint_tooltip = "Nombre de points de la sélection"
 custom_fonts/font = ExtResource( 5 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="Selector/VBoxContainer"]
-margin_top = 198.0
+margin_top = 218.0
 margin_right = 208.0
 margin_bottom = 584.0
 size_flags_horizontal = 3
@@ -94,7 +113,7 @@ size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Selector/VBoxContainer/ViewportContainer"]
-size = Vector2( 208, 386 )
+size = Vector2( 208, 366 )
 handle_input_locally = false
 render_target_update_mode = 3
 
@@ -149,7 +168,7 @@ filters = PoolStringArray( "*.json" )
 margin_right = 622.0
 margin_bottom = 338.0
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Ouvrir un fichier"
 mode = 0
 access = 2
 filters = PoolStringArray( "*.json" )
@@ -202,6 +221,7 @@ rect_min_size = Vector2( 80, 40 )
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Randomizer" to="." method="_on_Randomizer_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
+[connection signal="value_changed" from="Selector/VBoxContainer/GridOpacity/GridOpacitySlider" to="HBoxContainer/ViewportContainer/Viewport/Viewer" method="_on_GridOpacitySlider_value_changed"]
 [connection signal="focus_entered" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_entered"]
 [connection signal="focus_exited" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_exited"]
 [connection signal="gui_input" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_gui_input"]
