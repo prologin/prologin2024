@@ -104,6 +104,25 @@ margin_right = 208.0
 margin_bottom = 122.0
 text = "Back to main menu"
 
+[node name="GridOpacity" type="HBoxContainer" parent="Menu/VBoxContainer"]
+margin_top = 126.0
+margin_right = 208.0
+margin_bottom = 142.0
+
+[node name="Label" type="Label" parent="Menu/VBoxContainer/GridOpacity"]
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 15.0
+text = "Opacité grille"
+
+[node name="GridOpacitySlider" type="HSlider" parent="Menu/VBoxContainer/GridOpacity"]
+margin_left = 90.0
+margin_right = 208.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+tick_count = 5
+
 [node name="Popups" type="Node" parent="."]
 
 [node name="ImportDialog" type="FileDialog" parent="Popups"]
@@ -127,6 +146,7 @@ filters = PoolStringArray( "*.json" )
 [connection signal="pressed" from="Menu/VBoxContainer/Controls/Next" to="." method="_on_Next_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/Controls/End" to="." method="_on_End_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
+[connection signal="value_changed" from="Menu/VBoxContainer/GridOpacity/GridOpacitySlider" to="HBoxContainer/ViewportContainer/Viewport/Viewer" method="_on_GridOpacitySlider_value_changed"]
 [connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
 [connection signal="popup_hide" from="Popups/ImportDialog" to="." method="_on_ImportDialog_popup_hide"]

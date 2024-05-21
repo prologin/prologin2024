@@ -66,6 +66,7 @@ window/stretch/aspect="keep"
 [global]
 
 theme=false
+lang=false
 
 [gui]
 
