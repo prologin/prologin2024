@@ -210,6 +210,25 @@ TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
     ASSERT_EQ(st.aigles_sauvages[1].identifiant, 14);
 }
 
+TEST_F(ApiTestColibri, ActionActiverEffrayerValideOeuf)
+{
+    auto& st = api->game_state();
+    Aigle a(10, {2, 1}, EFFET_MORT, -5, 0);
+    st.joueurs[0].aigles.push_back(a);
+    Aigle b(11, {2, 1}, EFFET_METEORE, -5, 10);
+    st.aigles_sauvages.push_back(b);
+    ASSERT_EQ(st.joueurs[0].aigles.size(), 1);
+    ASSERT_EQ(st.joueurs[1].aigles.size(), 0);
+    ASSERT_EQ(st.aigles_sauvages.size(), 2);
+    ASSERT_EQ(st.aigles_sauvages[0].tour_eclosion, 42);
+    ASSERT_EQ(api->activer_aigle(10), OK);
+    EXPECT_EQ(st.joueurs[0].aigles.size(), 0);
+    EXPECT_EQ(st.joueurs[1].aigles.size(), 0);
+    ASSERT_EQ(st.aigles_sauvages.size(), 2);
+    ASSERT_EQ(st.aigles_sauvages[0].identifiant, 0);
+    ASSERT_EQ(st.aigles_sauvages[1].identifiant, 11);
+}
+
 TEST_F(ApiTestColibri, ActionActiverEffetFeu)
 {
     auto& st = api->game_state();
