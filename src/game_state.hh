@@ -60,4 +60,5 @@ public:
     bool annuler();
 
     [[nodiscard]] json dump() const;
+    void sync_score();
 };

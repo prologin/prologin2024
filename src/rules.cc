@@ -129,7 +129,7 @@ void Rules::start_of_player_turn(unsigned int player_key)
 void Rules::end_of_player_turn(unsigned int player_key)
 {
     api_->game_state().init = false;
-    //api_->game_state().sync_score();
+    api_->game_state().sync_score();
     api_->game_state().tour_suivant();
     api_->clear_old_game_states();
 }

@@ -426,3 +426,10 @@ extern "C" const char* dump_state_json()
     s = ss.str();
     return s.c_str();
 }
+
+void GameState::sync_score()
+{
+    int score = joueurs[joueur_actuel()].score;
+    players_[joueur_actuel()]->score = score;
+}
+
