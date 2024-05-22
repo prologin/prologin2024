@@ -40,7 +40,7 @@ int ActionTournerCase::check(const GameState& st) const
     Joueur adversaire = st.joueurs[player_id_ ^ 1];
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st.carte);
 
-    int cout = 1;
+    int cout = TOUR_POINTS_ACTION;
     for (int emplacement_y = y - 1; emplacement_y <= y; emplacement_y++)
     {
         for (int emplacement_x = x - 1; emplacement_x <= x; emplacement_x++)
@@ -48,7 +48,7 @@ int ActionTournerCase::check(const GameState& st) const
             if (!carte.emplacement_valide(emplacement_x, emplacement_y))
                 continue;
             if (territoire_adverse[emplacement_y][emplacement_x])
-                cout = 2;
+                cout = COUT_ROTATION_ENNEMI;
         }
     }
 
@@ -84,7 +84,7 @@ void ActionTournerCase::apply_on(GameState* st) const
     Joueur& joueur = st->joueurs[player_id_];
     Joueur& adversaire = st->joueurs[player_id_ ^ 1];
     std::vector<std::vector<bool>> territoire_adverse = adversaire.territoire(st->carte);
-    int cout = 1;
+    int cout = COUT_ROTATION_STANDARD;
     for (int emplacement_y = y - 1; emplacement_y <= y; emplacement_y++)
     {
         for (int emplacement_x = x - 1; emplacement_x <= x; emplacement_x++)
@@ -92,7 +92,7 @@ void ActionTournerCase::apply_on(GameState* st) const
             if (!carte.emplacement_valide(emplacement_x, emplacement_y))
                 continue;
             if (territoire_adverse[emplacement_y][emplacement_x])
-                cout = 2;
+                cout = COUT_ROTATION_ENNEMI;
         }
     }
     joueur.points_action -= cout;
