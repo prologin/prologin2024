@@ -19,7 +19,7 @@ Api::Api(std::unique_ptr<GameState> game_state,
 dimension Api::dimensions_carte()
 {
    auto [largeur, hauteur] = game_state_->carte.get_dimension();
-   return { hauteur, largeur };
+   return { largeur, hauteur };
 }
 
 etat_case Api::info_case(position pos)

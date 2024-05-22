@@ -103,8 +103,8 @@ typedef struct position
 /// Dimensions de la carte
 typedef struct dimension
 {
-    int hauteur; ///< Hauteur de la carte
     int largeur; ///< Largeur de la carte
+    int hauteur; ///< Hauteur de la carte
 } dimension;
 
 /// Aigle
