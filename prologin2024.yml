@@ -117,8 +117,8 @@ struct:
     str_summary: Dimensions de la carte
     str_tuple: yes
     str_field:
-      - [hauteur, int, "Hauteur de la carte"]
       - [largeur, int, "Largeur de la carte"]
+      - [hauteur, int, "Hauteur de la carte"]
   -
     str_name: aigle
     str_summary: Aigle
