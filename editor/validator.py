@@ -2,9 +2,15 @@
 
 from yaml import safe_load as chargement_sur
 from json import load as json_chargement
-from sys import argv
+from sys import stdin
+from os import environ
 
-with open("../prologin2024.yml") as stream:
+try:
+    yaml_path = environ["PROLOGIN2024_YAML"]
+except KeyError:
+    raise EnvironmentError("PROLOGIN2024_YAML environment variable is undefined")
+
+with open(yaml_path) as stream:
     config = chargement_sur(stream)
 
 constantes = {}
@@ -214,12 +220,5 @@ def valide_carte(json):
     aigles = lire_aigles(aigles_json, hauteur, largeur)
 
 if __name__ == '__main__':
-    assert len(argv) == 2, (
-        "Utilisation attendue : validator.py carte.json"
-    )
-
-    json_chemin = argv[1]
-    with open(json_chemin) as f:
-        json = json_chargement(f)
-
+    json = json_chargement(stdin)
     valide_carte(json)
