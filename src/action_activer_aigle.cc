@@ -33,11 +33,11 @@ bool envoler_aigle_id(std::vector<Aigle>& aigles, int id)
     return true;
 }
 
-void envoler_aigle_pos(std::vector<Aigle>& aigles, position pos, int tour_actuel)
+void envoler_aigle_pos(std::vector<Aigle>& aigles, position pos, int tour_actuel, int puiss)
 {
-    const auto aigle_correct = [pos, tour_actuel](const Aigle &aigle) {
-        return aigle.pos.colonne == pos.colonne &&
-            aigle.pos.ligne == pos.ligne &&
+    const auto aigle_correct = [pos, tour_actuel, puiss](const Aigle &aigle) {
+        return aigle.pos.colonne + puiss <= pos.colonne && aigle.pos.colonne - puiss >= pos.colonne &&
+            aigle.pos.ligne + puiss <= pos.ligne && aigle.pos.ligne - puiss >= pos.ligne &&
             aigle.tour_eclosion <= tour_actuel;
     };
     const auto erase_iterator = std::remove_if(aigles.begin(),
@@ -82,9 +82,9 @@ void ActionActiverAigle::apply_on(GameState* st) const
         }
         case EFFET_MORT:
         {
-            envoler_aigle_pos(st->joueurs[0].aigles, aiglantine->pos, st->tour);
-            envoler_aigle_pos(st->joueurs[1].aigles, aiglantine->pos, st->tour);
-            envoler_aigle_pos(st->aigles_sauvages, aiglantine->pos, st->tour);
+            envoler_aigle_pos(st->joueurs[0].aigles, aiglantine->pos, st->tour, aiglantine->puissance);
+            envoler_aigle_pos(st->joueurs[1].aigles, aiglantine->pos, st->tour, aiglantine->puissance);
+            envoler_aigle_pos(st->aigles_sauvages, aiglantine->pos, st->tour, aiglantine->puissance);
             break;
         }
         default:
