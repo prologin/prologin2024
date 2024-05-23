@@ -7,6 +7,7 @@
 Joueur::Joueur(int sc , int pa, std::vector<Aigle> aigles_vec,
     std::vector<position> villages_vec)
     : score{sc},
+    score_tour{0},
     points_action{pa},
     aigles{std::move(aigles_vec)},
     villages{std::move(villages_vec)}
