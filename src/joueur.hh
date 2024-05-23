@@ -10,6 +10,7 @@ struct Joueur
     Joueur() = default;
     Joueur(int score, int points_action, std::vector<Aigle> aigles, std::vector<position> villages);
     int score;
+    int score_tour;
     int points_action;
     std::vector<Aigle> aigles;
     std::vector<position> villages;

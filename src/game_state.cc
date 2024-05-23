@@ -136,6 +136,7 @@ void GameState::tour_suivant()
 
     Joueur& j_actuel = joueurs[joueur_actuel()];
     const auto territoire = j_actuel.territoire(carte);
+    j_actuel.score_tour = 0;
     for (int y = 0; y < hauteur - 1; y++)
     {
         for (int x = 0; x < largeur - 1; x++)
@@ -143,13 +144,14 @@ void GameState::tour_suivant()
             if (territoire[y][x])
             {
                 if (tour >= NB_TOURS - 2)
-                    j_actuel.score += calcul_score(x, y) * MULTIPLICATEUR_DERNIER_TOUR;
+                    j_actuel.score_tour += calcul_score(x, y) * MULTIPLICATEUR_DERNIER_TOUR;
                 else
-                    j_actuel.score += calcul_score(x, y);
+                    j_actuel.score_tour += calcul_score(x, y);
             }
         }
     }
 
+    j_actuel.score += j_actuel.score_tour;
     tour++;
 }
 
@@ -160,6 +162,8 @@ int GameState::joueur_actuel() const
 
 void GameState::debute_tour(int joueur)
 {
+    historiques[0].clear();
+    historiques[1].clear();
     joueurs[joueur].points_action = TOUR_POINTS_ACTION;
     // FIXME
 }
@@ -342,8 +346,7 @@ json dump_joueur(const Joueur& joueur)
         jaigles.push_back(dump_aigle(aigle));
     jjoueur["aigles"] = jaigles;
 
-    // TODO: score vs score total
-    jjoueur["score"] = joueur.score;
+    jjoueur["score"] = joueur.score_tour;
     jjoueur["score_total"] = joueur.score;
 
     return jjoueur;
@@ -372,20 +375,61 @@ json dump_action(const ActionInterne& action_interne)
     return jaction;
 }
 
+json dump_territoire(const GameState& st)
+{
+    json territoire = json::array();
+
+    auto territoire_j1 = st.joueurs[0].territoire(st.carte);
+    auto territoire_j2 = st.joueurs[1].territoire(st.carte);
+
+    int largeur, hauteur;
+    std::tie(largeur, hauteur) = st.carte.get_dimension();
+
+    std::vector<std::vector<int>> vec_terr(hauteur,
+                                              std::vector<int>(largeur));
+    // TODO : verif
+    for (int y = 0; y < hauteur - 1; y++)
+    {
+        for (int x = 0; x < largeur - 1; x++)
+        {
+            if (territoire_j2[y][x] != 0 && territoire_j1[y][x] != 0)
+                vec_terr[y][x] = 3;
+            else
+                vec_terr[y][x] = (territoire_j2[y][x] != 0) ? 2 : territoire_j1[y][x];
+        }
+    }
+
+    territoire = vec_terr;
+    return territoire;
+}
+
 json GameState::dump() const
 {
     json jetat;
     {
         json jjeu;
+        int largeur, hauteur;
+        std::tie(largeur, hauteur) = carte.get_dimension();
+        jjeu["largeur"] = largeur;
+        jjeu["hauteur"] = hauteur;
         jjeu["carte"] = dump_carte(carte);
         jjeu["gains"] = dump_gains(carte);
         jjeu["debug"] = dump_debug(carte, historiques);
-        jjeu["joueur 1"] = dump_joueur(joueurs[0]);
-        jjeu["joueur 2"] = dump_joueur(joueurs[1]);
+
+        jjeu["territoire"] = dump_territoire(*this);
+
+        jjeu["joueur1"] = dump_joueur(joueurs[0]);
+        jjeu["joueur2"] = dump_joueur(joueurs[1]);
         json jaigles = json::array();
         for (const Aigle& aigle : aigles_sauvages)
+        {
             jaigles.push_back(dump_aigle(aigle));
+        }
         jjeu["aigles"] = jaigles;
+        json jvillages_libres = json::array();
+        for (const position& pos : villages_libres)
+            jvillages_libres.push_back(dump_position(pos));
+        jjeu["villages_libres"] = jvillages_libres;
         jetat["jeu"] = jjeu;
     }
 
