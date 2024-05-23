@@ -188,7 +188,7 @@ TEST_F(ApiTestColibri, ActionActiverAigleActionPositif_5)
 TEST_F(ApiTestColibri, ActionActiverEffrayerValideBonEndroit)
 {
     auto& st = api->game_state();
-    Aigle a(10, {2, 1}, EFFET_MORT, -5, 0);
+    Aigle a(10, {2, 1}, EFFET_MORT, 0, 0);
     st.joueurs[0].aigles.push_back(a);
     Aigle b(11, {2, 1}, EFFET_METEORE, -5, 0);
     st.joueurs[0].aigles.push_back(b);
