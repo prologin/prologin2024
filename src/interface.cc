@@ -294,11 +294,11 @@ std::ostream& operator<<(std::ostream& os, position v)
 std::ostream& operator<<(std::ostream& os, dimension v)
 {
     os << "{ ";
-    os << "hauteur"
-       << "=" << v.hauteur;
-    os << ", ";
     os << "largeur"
        << "=" << v.largeur;
+    os << ", ";
+    os << "hauteur"
+       << "=" << v.hauteur;
     os << " }";
     return os;
 }
