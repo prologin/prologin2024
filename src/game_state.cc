@@ -17,12 +17,12 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
     Joueur& j_actuel = joueurs[j_actuel_id];
     const std::vector<std::vector<bool>>& territoire_adverse = j_adverse.territoire(carte);
     int tour_actuel = tour;
-    auto const verifie_territoire = [territoire, territoire_adverse, tour_actuel](const Aigle& aigle)
+    auto const verifie_territoire = [&territoire, &territoire_adverse, tour_actuel](const Aigle& aigle)
     {
         return territoire[aigle.pos.colonne][aigle.pos.ligne]
         && !territoire_adverse[aigle.pos.colonne][aigle.pos.ligne] && aigle.tour_eclosion <= tour_actuel;
     };
-    auto const verifie_deux_territoires = [largeur, hauteur, territoire, territoire_adverse](const auto& village)
+    auto const verifie_deux_territoires = [largeur, hauteur, &territoire, &territoire_adverse](const auto& village)
     {
         bool dans_mon_territoire = false;
         for (int x1 = 0; x1 >= -1; x1--)
@@ -41,7 +41,7 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
         }
         return dans_mon_territoire;
     };
-    if (aigles_sauvages.size() > 0)
+    if (!aigles_sauvages.empty())
     {
         std::copy_if(
             aigles_sauvages.begin(),
