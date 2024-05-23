@@ -141,17 +141,17 @@ TEST(CarteTest, json_test_case_valide)
     {
         for (int y = 0; y < 4; y++)
         {
-        ASSERT_EQ(carte.case_valide(x, y), true);
+        ASSERT_TRUE(carte.case_valide(x, y));
         }
     }
     
     // Invalide
-    ASSERT_EQ(carte.case_valide(-1, 0), false);
-    ASSERT_EQ(carte.case_valide(-1, -1), false);
-    ASSERT_EQ(carte.case_valide(0, -1), false);
-    ASSERT_EQ(carte.case_valide(5, 4), false);
-    ASSERT_EQ(carte.case_valide(5, 0), false);
-    ASSERT_EQ(carte.case_valide(0, 4), false);
+    ASSERT_FALSE(carte.case_valide(-1, 0));
+    ASSERT_FALSE(carte.case_valide(-1, -1));
+    ASSERT_FALSE(carte.case_valide(0, -1));
+    ASSERT_FALSE(carte.case_valide(5, 4));
+    ASSERT_FALSE(carte.case_valide(5, 0));
+    ASSERT_FALSE(carte.case_valide(0, 4));
 }
 
 TEST(CarteTest, json_test_emplacement_valide)
@@ -166,17 +166,17 @@ TEST(CarteTest, json_test_emplacement_valide)
     {
         for (int y = 0; y < 3; y++)
         {
-        ASSERT_EQ(carte.emplacement_valide(x, y), true);
+        ASSERT_TRUE(carte.emplacement_valide(x, y));
         }
     }
     
     // Invalide
-    ASSERT_EQ(carte.emplacement_valide(-1, 0), false);
-    ASSERT_EQ(carte.emplacement_valide(-1, -1), false);
-    ASSERT_EQ(carte.emplacement_valide(0, -1), false);
-    ASSERT_EQ(carte.emplacement_valide(4, 3), false);
-    ASSERT_EQ(carte.emplacement_valide(4, 0), false);
-    ASSERT_EQ(carte.emplacement_valide(0, 3), false);
+    ASSERT_FALSE(carte.emplacement_valide(-1, 0));
+    ASSERT_FALSE(carte.emplacement_valide(-1, -1));
+    ASSERT_FALSE(carte.emplacement_valide(0, -1));
+    ASSERT_FALSE(carte.emplacement_valide(4, 3));
+    ASSERT_FALSE(carte.emplacement_valide(4, 0));
+    ASSERT_FALSE(carte.emplacement_valide(0, 3));
 }
 
 TEST(CarteTest, json_test_ile_presente)
@@ -187,27 +187,27 @@ TEST(CarteTest, json_test_ile_presente)
     Carte carte = st.carte;
     
     // Valide
-    ASSERT_EQ(carte.ile_presente(2, 0), true);
-    ASSERT_EQ(carte.ile_presente(3, 0), true);
-    ASSERT_EQ(carte.ile_presente(0, 2), true);
-    ASSERT_EQ(carte.ile_presente(1, 2), true);
-    ASSERT_EQ(carte.ile_presente(2, 2), true);
-    
-    // Invalide (pas ile)
-    ASSERT_EQ(carte.ile_presente(0, 0), false);
-    ASSERT_EQ(carte.ile_presente(1, 0), false);
-    ASSERT_EQ(carte.ile_presente(2, 1), false);
-    ASSERT_EQ(carte.ile_presente(3, 1), false);
-    ASSERT_EQ(carte.ile_presente(0, 1), false);
-    ASSERT_EQ(carte.ile_presente(1, 1), false);
-    ASSERT_EQ(carte.ile_presente(2, 1), false);
-    ASSERT_EQ(carte.ile_presente(3, 2), false);
+    ASSERT_TRUE(carte.ile_presente(2, 0));
+    ASSERT_TRUE(carte.ile_presente(3, 0));
+    ASSERT_TRUE(carte.ile_presente(0, 2));
+    ASSERT_TRUE(carte.ile_presente(1, 2));
+    ASSERT_TRUE(carte.ile_presente(2, 2));
+
+    // Ivalide (pas ile)
+    ASSERT_FALSE(carte.ile_presente(0, 0));
+    ASSERT_FALSE(carte.ile_presente(1, 0));
+    ASSERT_FALSE(carte.ile_presente(2, 1));
+    ASSERT_FALSE(carte.ile_presente(3, 1));
+    ASSERT_FALSE(carte.ile_presente(0, 1));
+    ASSERT_FALSE(carte.ile_presente(1, 1));
+    ASSERT_FALSE(carte.ile_presente(2, 1));
+    ASSERT_FALSE(carte.ile_presente(3, 2));
     
     // Invalide (hors carte)
-    ASSERT_EQ(carte.ile_presente(-1, 0), false);
-    ASSERT_EQ(carte.ile_presente(1, -1), false);
-    ASSERT_EQ(carte.ile_presente(4, 1), false);
-    ASSERT_EQ(carte.ile_presente(3, 3), false);
+    ASSERT_FALSE(carte.ile_presente(-1, 0));
+    ASSERT_FALSE(carte.ile_presente(1, -1));
+    ASSERT_FALSE(carte.ile_presente(4, 1));
+    ASSERT_FALSE(carte.ile_presente(3, 3));
 }
 
 TEST(CarteTest, json_test_aigle)

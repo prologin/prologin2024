@@ -51,21 +51,21 @@ TEST_F(ApiTestColibri, TestGameStateTerritoireDebut)
 {
     auto& st = api->game_state();
     EXPECT_FALSE(st.joueurs[0].territoire(st.carte)[0][0]);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[0][2], false);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[0][3], false);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][0], true);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][1], true);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][2], true);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[2][3], false);
-    EXPECT_EQ(st.joueurs[0].territoire(st.carte)[1][2], false);
+    EXPECT_FALSE(st.joueurs[0].territoire(st.carte)[0][2]);
+    EXPECT_FALSE(st.joueurs[0].territoire(st.carte)[0][3]);
+    EXPECT_TRUE(st.joueurs[0].territoire(st.carte)[2][0]);
+    EXPECT_TRUE(st.joueurs[0].territoire(st.carte)[2][1]);
+    EXPECT_TRUE(st.joueurs[0].territoire(st.carte)[2][2]);
+    EXPECT_FALSE(st.joueurs[0].territoire(st.carte)[2][3]);
+    EXPECT_FALSE(st.joueurs[0].territoire(st.carte)[1][2]);
 
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[0][0], false);
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[0][1], false);
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[0][2], true);
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[0][3], true);
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[2][1], false);
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[2][2], false);
-    EXPECT_EQ(st.joueurs[1].territoire(st.carte)[2][3], false);
+    EXPECT_FALSE(st.joueurs[1].territoire(st.carte)[0][0]);
+    EXPECT_FALSE(st.joueurs[1].territoire(st.carte)[0][1]);
+    EXPECT_TRUE(st.joueurs[1].territoire(st.carte)[0][2]);
+    EXPECT_TRUE(st.joueurs[1].territoire(st.carte)[0][3]);
+    EXPECT_FALSE(st.joueurs[1].territoire(st.carte)[2][1]);
+    EXPECT_FALSE(st.joueurs[1].territoire(st.carte)[2][2]);
+    EXPECT_FALSE(st.joueurs[1].territoire(st.carte)[2][3]);
 }
 
 TEST_F(ApiTestColibri, TestGameStateCaptureVillageDebut)

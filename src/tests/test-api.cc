@@ -127,15 +127,15 @@ TEST_F(ApiTestColibri, TestApiAnnuler)
     ASSERT_EQ(api->info_case(pos).contenu, NORD_OUEST);
     ASSERT_EQ(api->points_action(0), 0);
 
-    EXPECT_EQ(api->annuler(), true);
+    EXPECT_TRUE(api->annuler());
     ASSERT_EQ(api->info_case(pos).contenu, NORD_EST);
     ASSERT_EQ(api->points_action(0), 1);
 
-    EXPECT_EQ(api->annuler(), true);
+    EXPECT_TRUE(api->annuler());
     ASSERT_EQ(api->info_case(pos).contenu, SUD_EST);
     ASSERT_EQ(api->points_action(0), 2);
 
-    EXPECT_EQ(api->annuler(), false);
+    EXPECT_FALSE(api->annuler());
     ASSERT_EQ(api->info_case(pos).contenu, SUD_EST);
     ASSERT_EQ(api->points_action(0), 2);
 }
@@ -166,11 +166,11 @@ TEST_F(ApiTestColibri, TestApiCaseDansRayon)
 
 TEST_F(ApiTestColibri, TestApiListeVillages)
 {
-    ASSERT_EQ(api->liste_villages(-1).size(), 1);
-    ASSERT_EQ(api->liste_villages(0).size(), 1);
-    ASSERT_EQ(api->liste_villages(1).size(), 1);
-    ASSERT_EQ(api->liste_villages(2).size(), 0);
-    ASSERT_EQ(api->liste_villages(-2).size(), 0);
+    EXPECT_EQ(api->liste_villages(-1).size(), 0);
+    EXPECT_EQ(api->liste_villages(0).size(), 2);
+    EXPECT_EQ(api->liste_villages(1).size(), 1);
+    EXPECT_EQ(api->liste_villages(2).size(), 0);
+    EXPECT_EQ(api->liste_villages(-2).size(), 0);
 }
 
 TEST_F(ApiTestColibri, TestApiRecupererTerritoire)

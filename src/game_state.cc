@@ -147,22 +147,6 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
         }
     }
 
-    const auto [largeur, hauteur] = carte.get_dimension();
-
-    for (int y = 0; y < hauteur; y++)
-    {
-        for (int x = 0; x < largeur; x++)
-        {
-            if (carte.get_case(x, y) != VILLAGE)
-                continue;
-            if (x == villages1[0].colonne && y == villages1[0].ligne)
-                continue;
-            if (x == villages2[0].colonne && y == villages2[0].ligne)
-                continue;
-            villages_libres.push_back({x, y});
-        }
-    }
-
     historiques.emplace_back();
     historiques.emplace_back();
     for (int i = 0; i <= 1; i++)
