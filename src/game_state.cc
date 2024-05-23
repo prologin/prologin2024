@@ -16,10 +16,11 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
     Joueur& j_adverse = joueurs[(j_actuel_id + 1) % 2];
     Joueur& j_actuel = joueurs[j_actuel_id];
     const std::vector<std::vector<bool>>& territoire_adverse = j_adverse.territoire(carte);
-    auto const verifie_territoire = [territoire, territoire_adverse](const auto& aigle)
+    int tour_actuel = tour;
+    auto const verifie_territoire = [territoire, territoire_adverse, tour_actuel](const Aigle& aigle)
     {
         return territoire[aigle.pos.colonne][aigle.pos.ligne]
-        && !territoire_adverse[aigle.pos.colonne][aigle.pos.ligne];
+        && !territoire_adverse[aigle.pos.colonne][aigle.pos.ligne] && aigle.tour_eclosion <= tour_actuel;
     };
     auto const verifie_deux_territoires = [largeur, hauteur, territoire, territoire_adverse](const auto& village)
     {
@@ -52,7 +53,7 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
             aigles_sauvages.begin(),
             aigles_sauvages.end(),
             verifie_territoire
-        ));
+        ), aigles_sauvages.end());
     }
 
     if (villages_libres.size() > 0)
@@ -67,7 +68,7 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
             villages_libres.begin(),
             villages_libres.end(),
             verifie_deux_territoires
-        ));
+        ), villages_libres.end());
     }
 }
 

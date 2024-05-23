@@ -101,6 +101,7 @@ TEST_F(ApiTestColibri, TestGameStateCaptureAigleDebut)
     st.carte.set_case(3, 3, SUD_EST);
     st.carte.set_case(4, 3, SUD_EST);
     st.carte.set_case(3, 2, NORD_EST);
+    st.tour = 42;
     st.tour_suivant();
     ASSERT_EQ(st.joueurs[0].aigles.size(), 1);
     ASSERT_EQ(st.joueurs[0].aigles[0].identifiant, 0);
