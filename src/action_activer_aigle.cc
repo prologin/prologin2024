@@ -84,8 +84,7 @@ void ActionActiverAigle::apply_on(GameState* st) const
         {
             envoler_aigle_pos(st->joueurs[0].aigles, aiglantine->pos, st->tour);
             envoler_aigle_pos(st->joueurs[1].aigles, aiglantine->pos, st->tour);
-            if (aiglantine->tour_eclosion <= st->tour)
-                envoler_aigle_pos(st->aigles_sauvages, aiglantine->pos, st->tour);
+            envoler_aigle_pos(st->aigles_sauvages, aiglantine->pos, st->tour);
             break;
         }
         default:
