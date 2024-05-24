@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/Game/Models.gd"
 }, {
 "base": "Node",
+"class": "ReplayManager",
+"language": "GDScript",
+"path": "res://Scripts/Game/ReplayManager.gd"
+}, {
+"base": "Node",
 "class": "Scenes",
 "language": "GDScript",
 "path": "res://Scripts/Scenes/Scenes.gd"
@@ -43,6 +48,7 @@ _global_script_class_icons={
 "Constants": "",
 "InteractiveTileMap": "",
 "Models": "",
+"ReplayManager": "",
 "Scenes": "",
 "Serialization": "",
 "Viewer": ""

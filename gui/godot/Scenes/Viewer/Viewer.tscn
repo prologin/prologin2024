@@ -68,7 +68,6 @@ align = 1
 valign = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 512, 304 )
 current = true
 script = ExtResource( 6 )
 

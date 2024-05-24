@@ -13,6 +13,7 @@ onready var points : Node2D = $Points
 onready var points_sample : Label = $Points/Sample
 
 var map : Models.Map
+var tour : int = 0
 
 # Tiles in order of the tileset
 const tiles = [
@@ -52,15 +53,21 @@ const tiles = [
 var case2tile = {}
 var tile2case = {}
 
-# TODO : Update
 var effet2aigle = {
+	'VIE': Constants.TypeCase.AIGLE_BLANC,
+	'MORT': Constants.TypeCase.AIGLE_GRIS,
+	'FEU': Constants.TypeCase.AIGLE_ROUGE,
+	'GEL': Constants.TypeCase.AIGLE_JAUNE,
+	'METEORE': Constants.TypeCase.AIGLE_BLEU,
+}
+var aigle2effet = {}
+var effet2oeuf = {
 	'VIE': Constants.TypeCase.OEUF_BLANC,
 	'MORT': Constants.TypeCase.OEUF_GRIS,
 	'FEU': Constants.TypeCase.OEUF_ROUGE,
 	'GEL': Constants.TypeCase.OEUF_JAUNE,
-	'METEOR': Constants.TypeCase.OEUF_BLEU,
+	'METEORE': Constants.TypeCase.OEUF_BLEU,
 }
-var aigle2effet = {}
 
 var case2char = {
 	Constants.TypeCase.VILLAGE: "X",
@@ -71,6 +78,15 @@ var case2char = {
 }
 var char2case = {}
 
+var rotate = {
+	Constants.TypeCase.NORD_OUEST: Constants.TypeCase.SUD_OUEST,
+	Constants.TypeCase.SUD_OUEST: Constants.TypeCase.SUD_EST,
+	Constants.TypeCase.SUD_EST: Constants.TypeCase.NORD_EST,
+	Constants.TypeCase.NORD_EST: Constants.TypeCase.NORD_OUEST,
+}
+var unrotate = {}
+var rotatable = rotate.keys()
+
 func _ready():
 	for i in range(len(tiles)):
 		case2tile[tiles[i]] = i
@@ -78,9 +94,14 @@ func _ready():
 
 	for k in effet2aigle:
 		aigle2effet[effet2aigle[k]] = k
+	for k in effet2oeuf:
+		aigle2effet[effet2oeuf[k]] = k
 
 	for k in case2char:
 		char2case[case2char[k]] = k
+	
+	for k in rotate:
+		unrotate[rotate[k]] = k
 
 func set_alpha(alpha_carte, alpha_points):
 	background.modulate.a = alpha_carte
@@ -93,8 +114,9 @@ func set_tiles_mode(points_editor_mode):
 
 
 # --- Update ---
-func update_all(new_map):
+func update_all(new_map, new_tour = 0):
 	map = new_map
+	tour = new_tour
 
 	update_zoom()
 	update_grid()
@@ -161,7 +183,8 @@ func update_foreground():
 	foreground.clear()
 
 	for aigle in map.aigles:
-		var tile = case2tile[effet2aigle[aigle.effet]]
+		var transform = effet2oeuf if tour < aigle.tour_eclosion else effet2aigle
+		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
 
 
