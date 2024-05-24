@@ -10,7 +10,7 @@ func _on_ButtonEditeurCarte_pressed() -> void:
 
 
 func _on_ButtonReplay_pressed() -> void:
-	Scenes.open_scene(self, Scenes.replay_scene)
+	$ReplayPopup.popup_centered()
 
 
 func _ready() -> void:
@@ -45,3 +45,8 @@ func _on_Creer_pressed():
 		$EditorPopup/VBoxContainer/Error.show()
 		yield(get_tree().create_timer(5), "timeout")
 		$EditorPopup/VBoxContainer/Error.hide()
+
+
+func _on_ReplayPopup_file_selected(path):
+	Context.replay_path = path
+	Scenes.open_scene(self, Scenes.replay_scene)

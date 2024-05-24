@@ -151,7 +151,15 @@ margin_right = 263.0
 margin_bottom = 162.0
 text = "Créer"
 
+[node name="ReplayPopup" type="FileDialog" parent="."]
+margin_right = 670.0
+margin_bottom = 402.0
+window_title = "Ouvrir un fichier"
+mode = 0
+filters = PoolStringArray( "*.json" )
+
 [connection signal="pressed" from="TextureRect/VBoxContainer/ButtonEditeurCarte" to="." method="_on_ButtonEditeurCarte_pressed"]
 [connection signal="pressed" from="TextureRect/VBoxContainer/ButtonVisualiseurCarte" to="." method="_on_ButtonVisualiseurCarte_pressed"]
 [connection signal="pressed" from="TextureRect/VBoxContainer/ButtonReplay" to="." method="_on_ButtonReplay_pressed"]
 [connection signal="pressed" from="EditorPopup/VBoxContainer/Creer" to="." method="_on_Creer_pressed"]
+[connection signal="file_selected" from="ReplayPopup" to="." method="_on_ReplayPopup_file_selected"]

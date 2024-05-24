@@ -133,7 +133,7 @@ tile_set = ExtResource( 3 )
 cell_size = Vector2( 110, 110 )
 cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 format = 1
-tile_data = PoolIntArray( 0, 9, 0, 4, 2, 0 )
+tile_data = PoolIntArray( 0, 9, 0 )
 script = ExtResource( 4 )
 
 [node name="PointsSelector" type="GridContainer" parent="Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer"]

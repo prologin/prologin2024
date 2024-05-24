@@ -16,41 +16,36 @@ const TICK_DURATION_MS = 300
 var is_dialog_opened = false
 
 var is_playing = false
-# TODO : These variables might be useless with the variables within Models
-# A turn is composed of multiple actions
-var turn_id = 0
-var action_id = 0
 var is_j1_playing = true
-var n_turns = 200
-var j1_score = 0
-var j2_score = 0
+
+var manager : ReplayManager
 
 
 func _ready():
-	var map = Models.Map.new()
-	map.init(0, 0)
-	viewer.update_all(map)
-
 	ticktimer.wait_time = TICK_DURATION_MS / 1000.0
 	ticktimer.start()
+
+	if Context.replay_path != "":
+		_on_ImportDialog_file_selected(Context.replay_path)
 
 
 # --- Logic ---
 # do_transition: Whether or not to play animations
 func update_all(do_transition: bool):
-	# TODO : Remove
-	j1_score = turn_id * 2
-	j2_score = turn_id * 3
-	is_j1_playing = turn_id % 2 == 0
+	var tour = manager.current_state.tour
+	# TODO : Verify 0 or 1
+	is_j1_playing = tour.joueur_actuel == 0
 	update_info()
+	viewer.update_all(manager.current_map(), tour.id_tour)
 
 
 func update_info():
-	var info = "Tour: " + str(turn_id + 1) + "/" + str(n_turns) + " (J" + str(1 if is_j1_playing else 2) + ")"
+	var n_turns = str(str(manager.states[-1].tour.id_tour))
+	var info = "Tour: " + str(manager.current_state.tour.id_tour) + "/" + n_turns + " (J" + str(1 if is_j1_playing else 2) + "), Action: " + str(manager.icurrent_state + 1)
 	print('Replay.update_info, ', info)
 	stateinfo.text = info
-	scorej1.text = "J1: " + str(j1_score)
-	scorej2.text = "J2: " + str(j2_score)
+	scorej1.text = "J1: " + str(manager.current_state.map.joueurs[0].score)
+	scorej2.text = "J2: " + str(manager.current_state.map.joueurs[1].score)
 
 
 # --- UI ---
@@ -61,7 +56,7 @@ func set_dialog_open(is_open):
 
 func set_playing(playing):
 	is_playing = playing
-	playpause.text = "Pause" if is_playing else "Jouer"	
+	playpause.text = "Pause" if is_playing else "Jouer"
 
 
 # --- Signals ---
@@ -71,10 +66,14 @@ func _on_Import_pressed():
 
 func _on_ImportDialog_file_selected(path):
 	print('Importing ', path)
-	# TODO : Read dump not only map
-	var json = Serialization.read_json(path)
-	var map = Serialization.json_to_map(viewer, json)
-	viewer.update_all(map)
+	var json = Serialization.read_multiline_json(path)
+
+	manager = ReplayManager.new()
+	manager.init(viewer)
+
+	for turn in json:
+		var game_state = Models.GameState.from_json(viewer, turn)
+		manager.add_state(game_state)
 
 	# Load
 	_on_Start_pressed()
@@ -89,16 +88,14 @@ func _on_ImportDialog_popup_hide():
 
 
 func _on_Start_pressed():
-	turn_id = 0
+	manager.set_state(0)
 	set_playing(false)
-	# TODO
 	update_all(false)
 
 
 func _on_Prev_pressed():
-	# TODO
-	# TODO : Check not first turn
-	turn_id -= 1
+	manager.prev()
+	set_playing(false)
 	update_all(true)
 
 
@@ -106,24 +103,23 @@ func _on_PlayPause_pressed():
 	set_playing(not is_playing)
 
 
-func _on_Next_pressed():
-	# TODO
-	# TODO : Check not last turn, if last disable is_playing
-	turn_id += 1
+func _on_Next_pressed(is_autoplay = false):
+	manager.next()
+	if not is_autoplay or manager.icurrent_state + 1 == len(manager.states):
+		set_playing(false)
 	update_all(true)
 
 
 func _on_End_pressed():
-	turn_id = n_turns - 1
+	manager.set_state(len(manager.states) - 1)
 	set_playing(false)
-	# TODO
 	update_all(false)
 
 
 # When is_playing, will play next turn
 func _on_TickTimer_timeout():
 	if is_playing:
-		_on_Next_pressed()
+		_on_Next_pressed(true)
 
 
 func _on_Back_to_main_menu_pressed():
