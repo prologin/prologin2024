@@ -217,20 +217,21 @@ class Map:
 			
 		# Drakkars
 		map.debug = []
-		for i in range(len(json["debug"])):
-			map.debug.append([])
-			for j in range(len(json["debug"][i])):
-				var drakkar = null
-				match json["debug"][i][j]:
-					0.0:
-						drakkar = Constants.DrakkarDebug.PAS_DE_DRAKKAR
-					1.0:
-						drakkar = Constants.DrakkarDebug.ROUGE
-					2.0:
-						drakkar = Constants.DrakkarDebug.JAUNE
-					3.0:
-						drakkar = Constants.DrakkarDebug.BLEU
-				map.debug[i].append(drakkar)
+		if json.has("debug"):
+			for i in range(len(json["debug"])):
+				map.debug.append([])
+				for j in range(len(json["debug"][i])):
+					var drakkar = null
+					match json["debug"][i][j]:
+						0.0:
+							drakkar = Constants.DrakkarDebug.PAS_DE_DRAKKAR
+						1.0:
+							drakkar = Constants.DrakkarDebug.ROUGE
+						2.0:
+							drakkar = Constants.DrakkarDebug.JAUNE
+						3.0:
+							drakkar = Constants.DrakkarDebug.BLEU
+					map.debug[i].append(drakkar)
 
 		var j1 = Player.new()
 		j1.score = json["joueur1"].get("score", 0)
