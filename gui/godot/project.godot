@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Game/Models.gd"
 }, {
+"base": "Node2D",
+"class": "Replay",
+"language": "GDScript",
+"path": "res://Scripts/Scenes/Replay/Replay.gd"
+}, {
 "base": "Node",
 "class": "ReplayManager",
 "language": "GDScript",
@@ -39,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Game/Serialization.gd"
 }, {
+"base": "Node",
+"class": "SocketManager",
+"language": "GDScript",
+"path": "res://Scripts/Game/SocketManager.gd"
+}, {
 "base": "Node2D",
 "class": "Viewer",
 "language": "GDScript",
@@ -48,9 +58,11 @@ _global_script_class_icons={
 "Constants": "",
 "InteractiveTileMap": "",
 "Models": "",
+"Replay": "",
 "ReplayManager": "",
 "Scenes": "",
 "Serialization": "",
+"SocketManager": "",
 "Viewer": ""
 }
 
