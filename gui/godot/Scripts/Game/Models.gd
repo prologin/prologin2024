@@ -52,6 +52,7 @@ class Map:
 	var carte = []
 	var points = []
 	var debug = []
+	var territoire = []
 	var joueurs = []
 	var aigles = []
 	
@@ -78,6 +79,12 @@ class Map:
 			for e in row:
 				newrow.append(e)
 			map.points.append(newrow)
+		map.territoire = []
+		for row in self.territoire:
+			var newrow = []
+			for e in row:
+				newrow.append(e)
+			map.territoire.append(newrow)
 		map.debug = []
 		for row in self.debug:
 			var newrow = []
@@ -103,13 +110,16 @@ class Map:
 		for _i in range(height):
 			var row = []
 			var points_row = []
+			var territory_row = []
 			for _j in range(width):
 				row.append(Constants.TypeCase.NORD_OUEST)
 				if _j < width - 1:
 					points_row.append((_j + _i) % 2)
+					territory_row.append(0)
 			self.carte.append(row)
 			if _i < height - 1:
 				self.points.append(points_row)
+				self.territoire.append(territory_row)
 
 		# Villages
 		if len(carte) > 0:
@@ -181,6 +191,7 @@ class Map:
 				map.carte[i].append(tile)
 
 		map.points = json["gains"]
+		map.territoire = json.get("territoire", null)
 		for aigle in json["aigles"]:
 			var a = Aigle.new()
 			a.effet = aigle["effet"]
@@ -212,6 +223,9 @@ class Map:
 		json["largeur"] = self.width
 		json["hauteur"] = self.height
 		json["gains"] = self.points
+
+		if self.territoire != null:
+			json["territoire"] = self.territoire
 
 		var carte = []
 		for row in self.carte:

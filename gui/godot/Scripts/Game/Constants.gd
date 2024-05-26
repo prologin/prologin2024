@@ -84,6 +84,9 @@ enum TypeCase {
 	PONT_2_SUD_OUEST,
 	PONT_2_SUD_EST,
 	PONT_2_NORD_EST,
+	TERRITOIRE_1,
+	TERRITOIRE_2,
+	TERRITOIRE_1_2,
 }
 
 # Type de drakkar de debug
