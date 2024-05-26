@@ -416,14 +416,15 @@ func update_foreground():
 		var transform = effet2oeuf if tour < aigle.tour_eclosion else effet2aigle
 		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
-		
-	for i in range(map.height):
-		for j in range(map.width):
-			var drakkar = map.debug[i][j]
-			if drakkar == Constants.DrakkarDebug.PAS_DE_DRAKKAR:
-				continue
-			var tile = case2tile[drakkar2case[drakkar]]
-			debug.set_cell(j, i, tile)
+	
+	if len(map.debug) > 0:
+		for i in range(map.height):
+			for j in range(map.width):
+				var drakkar = map.debug[i][j]
+				if drakkar == Constants.DrakkarDebug.PAS_DE_DRAKKAR:
+					continue
+				var tile = case2tile[drakkar2case[drakkar]]
+				debug.set_cell(j, i, tile)
 
 
 func update_territory():
