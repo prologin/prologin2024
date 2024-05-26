@@ -5,7 +5,7 @@
 
 int ActionDebugPoserDrakkar::check(const GameState& st) const
 {
-    if (!st.carte.case_valide(pos_.ligne, pos_.colonne))
+    if (!st.carte.case_valide(pos_.colonne, pos_.ligne))
         return POSITION_INVALIDE;
 
     if (drakkar_ != PAS_DE_DRAKKAR && drakkar_ != DRAKKAR_BLEU &&
