@@ -10,6 +10,7 @@ onready var background : InteractiveTileMap = $BackgroundTileMap
 onready var foreground : TileMap = $ForegroundTileMap
 onready var grid : TileMap = $Grid
 onready var points : Node2D = $Points
+onready var territory : TileMap = $Territory
 onready var points_sample : Label = $Points/Sample
 
 var map : Models.Map
@@ -47,6 +48,9 @@ const tiles = [
 	Constants.TypeCase.PONT_2_NORD_EST,
 	Constants.TypeCase.VILLAGE_J1,
 	Constants.TypeCase.VILLAGE_J2,
+	Constants.TypeCase.TERRITOIRE_1,
+	Constants.TypeCase.TERRITOIRE_2,
+	Constants.TypeCase.TERRITOIRE_1_2,
 ]
 
 # Type case 2 tile id
@@ -87,6 +91,12 @@ var rotate = {
 var unrotate = {}
 var rotatable = rotate.keys()
 
+var territory2tile = {
+	1: Constants.TypeCase.TERRITOIRE_1,
+	2: Constants.TypeCase.TERRITOIRE_2,
+	3: Constants.TypeCase.TERRITOIRE_1_2,
+}
+
 func _ready():
 	for i in range(len(tiles)):
 		case2tile[tiles[i]] = i
@@ -123,6 +133,7 @@ func update_all(new_map, new_tour = 0):
 	update_points()
 	update_background()
 	update_foreground()
+	update_territory()
 
 
 func update_zoom():
@@ -186,6 +197,17 @@ func update_foreground():
 		var transform = effet2oeuf if tour < aigle.tour_eclosion else effet2aigle
 		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
+
+
+func update_territory():
+	territory.clear()
+
+	for i in range(map.height - 1):
+		for j in range(map.width - 1):
+			if map.territoire[i][j] == 0:
+				continue
+			var tile = territory2tile[int(map.territoire[i][j])]
+			territory.set_cell(j, i, tile)
 
 
 # --- Signals ---
