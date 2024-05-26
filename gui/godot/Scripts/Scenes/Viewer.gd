@@ -193,7 +193,8 @@ func update_all(new_map, new_tour = 0):
 	map = new_map
 	tour = new_tour
 
-	update_cache()
+	if not cache_computed:
+		update_cache()
 	update_zoom()
 	update_grid()
 	update_points()
