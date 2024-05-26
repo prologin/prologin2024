@@ -154,6 +154,7 @@ text = "Créer"
 [node name="ReplayPopup" type="FileDialog" parent="."]
 margin_right = 670.0
 margin_bottom = 402.0
+rect_min_size = Vector2( 400, 140 )
 window_title = "Ouvrir un fichier"
 mode = 0
 filters = PoolStringArray( "*.json" )
