@@ -14,6 +14,7 @@ onready var aigle_dialog = $Popups/AigleDialog
 onready var aigle_dialog_puissance : TextEdit = $Popups/AigleDialog/VBoxContainer/Puissance
 onready var aigle_dialog_eclosion : TextEdit = $Popups/AigleDialog/VBoxContainer/Eclosion
 onready var points_amount : TextEdit = $Selector/VBoxContainer/PointsAmount
+onready var selection_rect : Sprite = $Selector/VBoxContainer/ViewportContainer/Viewport/SelectionRect
 
 var bg_selection = null
 var points_selection = null
@@ -38,9 +39,11 @@ func update_editor_mode():
 	points_amount.visible = points_editor_mode == Constants.EditorMode.POINTS
 	if points_editor_mode == Constants.EditorMode.POINTS:
 		editor_mode_toggle.text = 'EDITION POINTS'
+		selection_rect.visible = false
 		viewer.set_alpha(alpha_disabled, 1)
 	else:
 		editor_mode_toggle.text = 'EDITION CARTE'
+		selection_rect.visible = true
 		viewer.set_alpha(1, alpha_disabled)
 
 

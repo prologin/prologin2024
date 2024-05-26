@@ -167,7 +167,6 @@ func _ready():
 	for i in range(len(tiles)):
 		case2tile[tiles[i]] = i
 		tile2case[i] = tiles[i]
-
 	for k in effet2aigle:
 		aigle2effet[effet2aigle[k]] = k
 	for k in effet2oeuf:
