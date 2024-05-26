@@ -24,8 +24,8 @@ func _ready() -> void:
 		return
 	
 	for arg in OS.get_cmdline_args():
-		if arg.begins_with("-socket="):
-			Scenes.open_scene(self, Scenes.replay_scene)
+		if arg.contains("-socket="):
+			_launch_igui()
 			return
 
 func _on_Creer_pressed():
@@ -50,3 +50,14 @@ func _on_Creer_pressed():
 func _on_ReplayPopup_file_selected(path):
 	Context.replay_path = path
 	Scenes.open_scene(self, Scenes.replay_scene)
+
+func _launch_igui():
+	var port = 0;
+	for arg in OS.get_cmdline_args():
+		if arg.begins_with("-socket="):
+			port = int(arg.trim_prefix("-socket="));
+			
+	if SocketManager.init_socket(port):
+		Scenes.open_scene(self, Scenes.replay_scene)
+	else:
+		print("Could not open client socket on port " + str(port))
