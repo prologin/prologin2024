@@ -102,6 +102,14 @@ cell_size = Vector2( 96, 96 )
 cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 format = 1
 
+[node name="DebugTileMap" type="TileMap" parent="."]
+position = Vector2( 48, 48 )
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 96, 96 )
+cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 983058, 0, 0 )
+
 [node name="Points" type="Node2D" parent="."]
 
 [node name="Sample" type="Label" parent="Points"]
@@ -130,7 +138,7 @@ script = ExtResource( 3 )
 current = true
 script = ExtResource( 6 )
 
-[connection signal="click" from="InteractiveTileMap" to="." method="_on_InteractiveTileMap_click"]
 [connection signal="click" from="InteractiveTileMap" to="." method="_on_BackgroundTileMap_click"]
-[connection signal="drag" from="InteractiveTileMap" to="." method="_on_InteractiveTileMap_drag"]
+[connection signal="click" from="InteractiveTileMap" to="." method="_on_InteractiveTileMap_click"]
 [connection signal="drag" from="InteractiveTileMap" to="." method="_on_BackgroundTileMap_drag"]
+[connection signal="drag" from="InteractiveTileMap" to="." method="_on_InteractiveTileMap_drag"]

@@ -9,6 +9,7 @@ signal bg_drag(pos)
 onready var background : TileMap = $BackgroundTileMap
 onready var interactive_tile_map : InteractiveTileMap = $InteractiveTileMap
 onready var foreground : TileMap = $ForegroundTileMap
+onready var debug : TileMap = $DebugTileMap
 onready var grid : TileMap = $Grid
 onready var points : Node2D = $Points
 onready var territory : TileMap = $Territory
@@ -44,7 +45,7 @@ const tiles = [
 	Constants.TypeCase.DRAPEAU_BLEU,
 	Constants.TypeCase.DEBUG_ROUGE,
 	Constants.TypeCase.DEBUG_BLEU,
-	Constants.TypeCase.DEBUG_VERT,
+	Constants.TypeCase.DEBUG_JAUNE,
 	Constants.TypeCase.PONT_1_NORD_OUEST,
 	Constants.TypeCase.PONT_1_SUD_OUEST,
 	Constants.TypeCase.PONT_1_SUD_EST,
@@ -126,6 +127,12 @@ var case2char = {
 	Constants.TypeCase.SUD_EST: "4",
 }
 var char2case = {}
+
+var drakkar2case = {
+	Constants.DrakkarDebug.BLEU: Constants.TypeCase.DEBUG_BLEU,
+	Constants.DrakkarDebug.ROUGE: Constants.TypeCase.DEBUG_ROUGE,
+	Constants.DrakkarDebug.JAUNE: Constants.TypeCase.DEBUG_JAUNE,
+}
 
 var rotate = {
 	Constants.TypeCase.NORD_OUEST: Constants.TypeCase.SUD_OUEST,
@@ -403,11 +410,20 @@ func update_ponts():
 
 func update_foreground():
 	foreground.clear()
+	debug.clear()
 
 	for aigle in map.aigles:
 		var transform = effet2oeuf if tour < aigle.tour_eclosion else effet2aigle
 		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
+		
+	for i in range(map.height):
+		for j in range(map.width):
+			var drakkar = map.debug[i][j]
+			if drakkar == Constants.DrakkarDebug.PAS_DE_DRAKKAR:
+				continue
+			var tile = case2tile[drakkar2case[drakkar]]
+			debug.set_cell(j, i, tile)
 
 
 func update_territory():
