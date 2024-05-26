@@ -15,22 +15,7 @@ region = Rect2( 96, 192, 96, 96 )
 [node name="MapEditor" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
-
-[node name="ViewportContainer" type="ViewportContainer" parent="HBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 600.0
-mouse_filter = 1
-size_flags_horizontal = 3
-
-[node name="Viewport" type="Viewport" parent="HBoxContainer/ViewportContainer"]
-size = Vector2( 800, 600 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="Viewer" parent="HBoxContainer/ViewportContainer/Viewport" instance=ExtResource( 2 )]
+[node name="Viewer" parent="." instance=ExtResource( 2 )]
 
 [node name="Selector" type="ColorRect" parent="."]
 margin_left = 800.0
@@ -82,25 +67,6 @@ margin_top = 120.0
 margin_right = 208.0
 margin_bottom = 140.0
 text = "Back to main menu"
-
-[node name="GridOpacity" type="HBoxContainer" parent="Selector/VBoxContainer"]
-margin_top = 144.0
-margin_right = 208.0
-margin_bottom = 160.0
-
-[node name="Label" type="Label" parent="Selector/VBoxContainer/GridOpacity"]
-margin_top = 1.0
-margin_right = 86.0
-margin_bottom = 15.0
-text = "Opacité grille"
-
-[node name="GridOpacitySlider" type="HSlider" parent="Selector/VBoxContainer/GridOpacity"]
-margin_left = 90.0
-margin_right = 208.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-value = 50.0
-tick_count = 5
 
 [node name="PointsAmount" type="TextEdit" parent="Selector/VBoxContainer"]
 margin_top = 164.0
@@ -227,17 +193,16 @@ margin_bottom = 120.0
 rect_min_size = Vector2( 80, 40 )
 text = "1"
 
-[connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
-[connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]
-[connection signal="bg_right_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_right_click"]
+[connection signal="bg_drag" from="Viewer" to="." method="_on_Viewer_bg_drag"]
+[connection signal="bg_left_click" from="Viewer" to="." method="_on_Viewer_bg_left_click"]
+[connection signal="bg_right_click" from="Viewer" to="." method="_on_Viewer_bg_right_click"]
 [connection signal="pressed" from="Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
-[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
+[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Randomizer" to="." method="_on_Randomizer_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
-[connection signal="value_changed" from="Selector/VBoxContainer/GridOpacity/GridOpacitySlider" to="HBoxContainer/ViewportContainer/Viewport/Viewer" method="_on_GridOpacitySlider_value_changed"]
 [connection signal="focus_entered" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_entered"]
 [connection signal="focus_exited" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_exited"]
 [connection signal="gui_input" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_gui_input"]

@@ -1,10 +1,10 @@
 extends Node2D
 
 
-onready var viewer : Viewer = $HBoxContainer/ViewportContainer/Viewport/Viewer
+onready var viewer : Viewer = $Viewer
 onready var import_dialog : FileDialog = $Popups/ImportDialog
 onready var container_interactive = $HBoxContainer
-onready var viewer_viewport = $HBoxContainer/ViewportContainer/Viewport
+onready var viewer_viewport = $Viewer/ViewportContainer/Viewport
 
 var is_dialog_opened = false
 

@@ -6,23 +6,25 @@ signal bg_left_click(pos)
 signal bg_right_click(pos)
 signal bg_drag(pos)
 
-onready var background : TileMap = $BackgroundTileMap
-onready var interactive_tile_map : InteractiveTileMap = $InteractiveTileMap
-onready var foreground : TileMap = $ForegroundTileMap
-onready var debug : TileMap = $DebugTileMap
-onready var grid : TileMap = $Grid
-onready var points : Node2D = $Points
-onready var territory : TileMap = $Territory
-onready var points_sample : Label = $Points/Sample
-onready var eau : TileMap = $Eau
-onready var iles : TileMap = $Iles
-onready var villages : TileMap = $Villages
-onready var ponts : Node2D = $Ponts
-onready var ponts_sample_h : Sprite = $PontsSample/h
-onready var ponts_sample_v : Sprite = $PontsSample/v
+onready var interactive_tile_map : InteractiveTileMap = $ViewportContainer/Viewport/InteractiveTileMap
+onready var debug : TileMap = $ViewportContainer/Viewport/DebugTileMap
+onready var territory : TileMap = $ViewportContainer/Viewport/Territory
+onready var eau : TileMap = $ViewportContainer/Viewport/Eau
+onready var iles : TileMap = $ViewportContainer/Viewport/Iles
+onready var villages : TileMap = $ViewportContainer/Viewport/Villages
+onready var ponts : Node2D = $ViewportContainer/Viewport/Ponts
+onready var ponts_sample_h : Sprite = $ViewportContainer/Viewport/PontsSample/h
+onready var ponts_sample_v : Sprite = $ViewportContainer/Viewport/PontsSample/v
+onready var foreground : TileMap = $ViewportContainer/Viewport/ForegroundTileMap
+onready var grid : TileMap = $ViewportContainer/Viewport/Grid
+onready var container : ViewportContainer = $ViewportContainer
+onready var points : Node2D = $ViewportContainer/Viewport/Points
+onready var points_sample : Label = $ViewportContainer/Viewport/Points/Sample
+onready var camera : Camera2D = $ViewportContainer/Viewport/Camera2D
 
 var map : Models.Map
 var tour : int = 0
+var original_res: Vector2 = Vector2.ZERO
 
 # Tiles in order of the tileset
 const tiles = [
@@ -178,6 +180,7 @@ func _ready():
 	for k in rotate:
 		unrotate[rotate[k]] = k
 
+	original_res = container.rect_size
 
 func set_alpha(alpha_carte, alpha_points):
 	iles.modulate.a = alpha_carte
@@ -199,9 +202,9 @@ func update_all(new_map, new_tour = 0):
 	map = new_map
 	tour = new_tour
 
-	if not cache_computed:
+	if cache_computed == false:
 		update_cache()
-	update_zoom()
+		update_zoom()
 	update_grid()
 	update_points()
 	update_iles()
@@ -213,18 +216,20 @@ func update_all(new_map, new_tour = 0):
 
 func update_zoom():
 	if map.height == 0 or map.width == 0:
-		self.scale = Vector2(1, 1)
 		return
 
-	var target_height = self.get_viewport_rect().size[1]
-	var target_width = self.get_viewport_rect().size[0]
+	var target_height = container.get_rect().size[1]
+	var target_width = container.get_rect().size[0]
 	var h_target_tile_size = target_height / map.height
 	var h_target_scale = h_target_tile_size / Constants.TILE_SIZE
 	var w_target_tile_size = target_width / map.width
 	var w_target_scale = w_target_tile_size / Constants.TILE_SIZE
 	var target_scale = min(h_target_scale, w_target_scale)
 
-	self.scale = Vector2(target_scale, target_scale)
+	container.rect_size = original_res / target_scale
+	container.rect_scale = Vector2(target_scale, target_scale)
+
+	camera.offset = map.size * Constants.TILE_SIZE / 2
 
 
 func update_cache():

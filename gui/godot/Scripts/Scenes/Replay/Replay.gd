@@ -3,10 +3,10 @@ class_name Replay
 extends Node2D
 
 
-onready var viewer : Viewer = $HBoxContainer/ViewportContainer/Viewport/Viewer
+onready var viewer : Viewer = $Viewer
 onready var import_dialog : FileDialog = $Popups/ImportDialog
 onready var container_interactive = $HBoxContainer
-onready var viewer_viewport = $HBoxContainer/ViewportContainer/Viewport
+onready var viewer_viewport = $Viewer/ViewportContainer/Viewport
 onready var playpause = $Menu/VBoxContainer/Controls/PlayPause
 onready var next_button = $Menu/VBoxContainer/Controls/Next
 onready var end_button = $Menu/VBoxContainer/Controls/End
