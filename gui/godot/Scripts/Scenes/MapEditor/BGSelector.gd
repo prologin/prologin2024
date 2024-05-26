@@ -14,7 +14,7 @@ func _ready():
 		[Constants.TypeCase.VILLAGE, Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2],
 		[Constants.TypeCase.NORD_OUEST, Constants.TypeCase.NORD_EST],
 		[Constants.TypeCase.SUD_OUEST, Constants.TypeCase.SUD_EST],
-		[Constants.TypeCase.OEUF_BLANC, Constants.TypeCase.OEUF_BLEU, Constants.TypeCase.OEUF_ROUGE],
+		[Constants.TypeCase.OEUF_VERT, Constants.TypeCase.OEUF_BLEU, Constants.TypeCase.OEUF_ROUGE],
 		[Constants.TypeCase.OEUF_JAUNE, Constants.TypeCase.OEUF_GRIS],
 	]
 	for y in len(items):

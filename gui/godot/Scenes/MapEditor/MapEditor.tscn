@@ -198,6 +198,7 @@ margin_top = 18.0
 margin_right = 381.0
 margin_bottom = 58.0
 rect_min_size = Vector2( 80, 40 )
+text = "1"
 
 [node name="EclosionLabel" type="Label" parent="Popups/AigleDialog/VBoxContainer"]
 margin_top = 62.0
@@ -210,6 +211,7 @@ margin_top = 80.0
 margin_right = 381.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 80, 40 )
+text = "1"
 
 [connection signal="bg_drag" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="HBoxContainer/ViewportContainer/Viewport/Viewer" to="." method="_on_Viewer_bg_left_click"]

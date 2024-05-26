@@ -17,10 +17,15 @@ func set_tiles_mode(mode):
 
 func get_tile_pos(position):
 	var mouse_pos = self.get_parent().transform.affine_inverse().xform(position)
+	# Pos within the map that contains tile quarters
+	var map_pos = self.world_to_map(mouse_pos)
+
 	if points_editor_mode != Constants.EditorMode.BACKGROUND:
-		mouse_pos[0] -= Constants.TILE_SIZE / 2
-		mouse_pos[1] -= Constants.TILE_SIZE / 2
-	return self.world_to_map(mouse_pos)
+		var emplacement_pos = Vector2(int(map_pos.x - 1) / 2, int(map_pos.y - 1) / 2)
+		return emplacement_pos
+	else:
+		var case_pos = Vector2(int(map_pos.x) / 2, int(map_pos.y) / 2)
+		return case_pos
 
 
 func _input(event):

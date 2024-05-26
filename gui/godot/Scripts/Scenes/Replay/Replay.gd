@@ -20,6 +20,9 @@ var is_j1_playing = true
 
 var manager : ReplayManager
 
+var play_button = load('res:///Assets/PlayButton.tres')
+var pause_button = load('res:///Assets/PauseButton.tres')
+
 
 func _ready():
 	ticktimer.wait_time = TICK_DURATION_MS / 1000.0
@@ -56,7 +59,7 @@ func set_dialog_open(is_open):
 
 func set_playing(playing):
 	is_playing = playing
-	playpause.text = "Pause" if is_playing else "Jouer"
+	playpause.icon = pause_button if is_playing else play_button
 
 
 # --- Signals ---
