@@ -1,14 +1,13 @@
 extends Node2D
 
-onready var viewer : Viewer = $HBoxContainer/ViewportContainer/Viewport/Viewer
+onready var viewer : Viewer = $Viewer
 onready var editor_mode_toggle : Button = $Selector/VBoxContainer/EditorModeToggle
 onready var tiles_selector = $Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/BGSelector
 onready var points_selector = $Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/PointsSelector
 onready var points_selector_sample : Button = $Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/PointsSelectorSample
 onready var export_dialog : FileDialog = $Popups/ExportDialog
 onready var import_dialog : FileDialog = $Popups/ImportDialog
-onready var container_interactive = $HBoxContainer
-onready var viewer_viewport = $HBoxContainer/ViewportContainer/Viewport
+onready var viewer_viewport = $Viewer/ViewportContainer/Viewport
 onready var selector_viewport = $Selector/VBoxContainer/ViewportContainer/Viewport
 onready var aigle_dialog = $Popups/AigleDialog
 onready var aigle_dialog_puissance : TextEdit = $Popups/AigleDialog/VBoxContainer/Puissance

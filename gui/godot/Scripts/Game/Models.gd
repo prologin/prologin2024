@@ -55,6 +55,11 @@ class Map:
 	var territoire = []
 	var joueurs = []
 	var aigles = []
+
+	var size: Vector2 setget ,get_size
+
+	func get_size():
+		return Vector2(width, height)
 	
 	func clear():
 		carte.clear()
