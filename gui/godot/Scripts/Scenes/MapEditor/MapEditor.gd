@@ -187,7 +187,6 @@ func _on_BGSelector_on_selection(tile):
 
 func set_bg_selection(sel):
 	bg_selection = sel
-	print('bg_selection: ', bg_selection)
 	if points_editor_mode != Constants.EditorMode.POINTS:
 		if bg_selection in [
 			Constants.TypeCase.VILLAGE,
@@ -201,6 +200,7 @@ func set_bg_selection(sel):
 			points_editor_mode = Constants.EditorMode.BACKGROUND
 		else:
 			points_editor_mode = Constants.EditorMode.FOREGROUND
+		viewer.set_tiles_mode(points_editor_mode)
 
 
 func _on_Export_pressed():
@@ -250,6 +250,7 @@ func _on_ImportDialog_popup_hide():
 
 
 func _on_AigleDialog_about_to_show():
+	aigle_dialog.window_title = 'Aigle - ' + selected_aigle_data['effet']
 	set_dialog_open(true)
 
 
