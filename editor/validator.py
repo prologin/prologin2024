@@ -1,31 +1,30 @@
 #! /usr/bin/env python3
 
-from yaml import safe_load as chargement_sur
 from json import load as json_chargement
 from sys import stdin
 from os import environ
 
-try:
-    yaml_path = environ["PROLOGIN2024_YAML"]
-except KeyError:
-    raise EnvironmentError("PROLOGIN2024_YAML environment variable is undefined")
+#try:
+#    yaml_path = environ["PROLOGIN2024_YAML"]
+#except KeyError:
+#    raise EnvironmentError("PROLOGIN2024_YAML environment variable is undefined")
 
-with open(yaml_path) as stream:
-    config = chargement_sur(stream)
+#with open(yaml_path) as stream:
+#    config = chargement_sur(stream)
 
 constantes = {}
-for constante in config["constant"]:
-    nom = constante["cst_name"]
-    valeur = constante["cst_val"]
-    constantes[nom] = valeur
+#for constante in config["constant"]:
+#    nom = constante["cst_name"]
+#    valeur = constante["cst_val"]
+#    constantes[nom] = valeur
 
-LARGEUR_MIN = constantes["LARGEUR_MIN"]
-LARGEUR_MAX = constantes["LARGEUR_MAX"]
-HAUTEUR_MIN = constantes["HAUTEUR_MIN"]
-HAUTEUR_MAX = constantes["HAUTEUR_MAX"]
-POINTS_MIN = constantes["POINTS_MIN"]
-POINTS_MAX = constantes["POINTS_MAX"]
-NB_TOURS = constantes["NB_TOURS"]
+LARGEUR_MIN = 10 #constantes["LARGEUR_MIN"]
+LARGEUR_MAX = 100 #constantes["LARGEUR_MAX"]
+HAUTEUR_MIN = 10 #constantes["HAUTEUR_MIN"]
+HAUTEUR_MAX = 100 #constantes["HAUTEUR_MAX"]
+POINTS_MIN = -100 #constantes["POINTS_MIN"]
+POINTS_MAX = 100 #constantes["POINTS_MAX"]
+NB_TOURS = 400#constantes["NB_TOURS"]
 
 def extraire_propriete(json, nom):
     if nom not in json:
