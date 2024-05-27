@@ -406,10 +406,11 @@ func update_villages():
 func update_ponts():
 	for i in map.height - 1:
 		for j in map.width - 1:
-			if i + 2 != map.height and connections[i][j] and connections[i + 1][j]:
-				vponts[i][j].visible = true
-			if j + 2 != map.width and connections[i][j] and connections[i][j + 1]:
-				hponts[i][j].visible = true
+			if i + 2 != map.height:
+				vponts[i][j].visible = connections[i][j] and connections[i + 1][j]
+
+			if j + 2 != map.width:
+				hponts[i][j].visible = connections[i][j] and connections[i][j + 1]
 
 
 func update_foreground():
