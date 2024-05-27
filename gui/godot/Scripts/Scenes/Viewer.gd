@@ -433,6 +433,8 @@ func update_foreground():
 
 
 func update_territory():
+	if map.territoire == null:
+		return
 	territory.clear()
 
 	for i in range(map.height - 1):
