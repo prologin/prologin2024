@@ -196,6 +196,8 @@ class Map:
 				map.carte[i].append(tile)
 
 		map.points = json["gains"]
+		print(len(map.points), len(map.points[0]))
+		
 		map.territoire = json.get("territoire", null)
 		for aigle in json["aigles"]:
 			var a = Aigle.new()
