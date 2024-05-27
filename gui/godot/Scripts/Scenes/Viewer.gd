@@ -203,7 +203,6 @@ func update_all(new_map, new_tour = 0):
 	tour = new_tour
 
 	if cache_computed == false:
-		print('CACHE')
 		update_cache()
 		update_zoom()
 	update_grid()
