@@ -107,5 +107,19 @@ TEST_F(ApiTestColibri, TestGameStateCaptureAigleDebut)
     ASSERT_EQ(st.joueurs[0].aigles[0].identifiant, 0);
     ASSERT_EQ(st.joueurs[0].aigles[0].effet, EFFET_GEL);
     ASSERT_EQ(st.joueurs[1].aigles.size(), 0);
+}
 
+TEST_F(ApiTestColibri, TestGameStateScoreTourNormal)
+{
+    auto &st = api->game_state();
+    st.tour_suivant();
+    EXPECT_EQ(st.joueurs[0].score, 16);
+}
+
+TEST_F(ApiTestColibri, TestGameStateScoreTourDernier)
+{
+    auto &st = api->game_state();
+st.tour = NB_TOURS - 2;
+    st.tour_suivant();
+    EXPECT_EQ(st.joueurs[0].score, 16 * 42);
 }
