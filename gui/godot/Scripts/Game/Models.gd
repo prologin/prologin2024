@@ -67,6 +67,10 @@ class Map:
 		debug.clear()
 		joueurs.clear()
 		aigles.clear()
+		if territoire != null:
+			territoire.clear()
+		else:
+			territoire = []
 
 	func copy():
 		var map = Map.new()
@@ -143,6 +147,7 @@ class Map:
 		self.height = height
 
 		self.clear()
+		self.territoire = null
 
 		#random int for selection
 		var x = randi() % 4
