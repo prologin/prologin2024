@@ -19,14 +19,14 @@
 /// Nombre de tours à jouer avant la fin de la partie
 #define NB_TOURS 400
 
-/// Points maximum qu'apporte une ile
-#define POINTS_MAX 100
+/// Gains maximum qu'apporte une ile
+#define GAINS_MAX 100
 
-/// Points minimum qu'apporte une ile
-#define POINTS_MIN -100
+/// Gains minimum qu'apporte une ile
+#define GAINS_MIN -100
 
-/// Points d'action au début d'un tour
-#define TOUR_POINTS_ACTION 2
+/// Gains d'action au début d'un tour
+#define TOUR_GAINS_ACTION 2
 
 /// Coût de rotation d'une case en lien avec une île ennemi
 #define COUT_ROTATION_ENNEMI 2
@@ -69,7 +69,7 @@ typedef enum type_case
 typedef enum drakkar_debug
 {
     PAS_DE_DRAKKAR, ///< Aucun drakkar, enlève le drakkar présent
-    DRAKKAR_BLEU, ///< Drakkar bleue
+    DRAKKAR_BLEU, ///< Drakkar bleu
     DRAKKAR_JAUNE, ///< Drakkar jaune
     DRAKKAR_ROUGE, ///< Drakkar rouge
 } drakkar_debug;
@@ -88,7 +88,7 @@ typedef enum effet_aigle
     EFFET_METEORE, ///< Fait tomber un météore qui tourne les cases
     EFFET_VIE, ///< Donne des points actions
     EFFET_MORT, ///< Effraye les aigles d'un emplacement
-    EFFET_FEU, ///< Multiplie les point d'une île
+    EFFET_FEU, ///< Multiplie les gains d'une île
     EFFET_GEL, ///< Bloque les rotations de cases
 } effet_aigle;
 
@@ -122,7 +122,7 @@ typedef struct aigle
 typedef struct etat_case
 {
     type_case contenu; ///< Contenu topographique de la case
-    int points; ///< Points dans le coin sud-est de la case
+    int gains; ///< Gains dans le coin sud-est de la case
     position pos_case; ///< Position de la case
 } etat_case;
 

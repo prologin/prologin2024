@@ -14,9 +14,10 @@ template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& arr)
 {
     os << "[";
-    for (auto it = arr.cbegin(); it != arr.cend(); ++it)
+    typename std::vector<T>::const_iterator it;
+    for (it = arr.begin(); it != arr.end(); ++it)
     {
-        if (it != arr.cbegin())
+        if (it != arr.begin())
             os << ", ";
         os << *it;
     }
@@ -278,7 +279,6 @@ std::ostream& operator<<(std::ostream& os, effet_aigle v)
     return os;
 }
 
-
 std::ostream& operator<<(std::ostream& os, position v)
 {
     os << "{ ";
@@ -333,8 +333,8 @@ std::ostream& operator<<(std::ostream& os, etat_case v)
     os << "contenu"
        << "=" << v.contenu;
     os << ", ";
-    os << "points"
-       << "=" << v.points;
+    os << "gains"
+       << "=" << v.gains;
     os << ", ";
     os << "pos_case"
        << "=" << v.pos_case;

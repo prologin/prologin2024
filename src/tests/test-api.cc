@@ -15,22 +15,22 @@ TEST_F(ApiTestColibri, TestApiDimensionsCarte)
 TEST_F(ApiTestColibri, TestApiInfoCaseValide)
 {
     ASSERT_EQ(api->info_case({0, 0}).contenu, SUD_EST);
-    ASSERT_EQ(api->info_case({0, 0}).points, 3);
+    ASSERT_EQ(api->info_case({0, 0}).gains, 3);
     ASSERT_EQ(api->info_case({0, 0}).pos_case.ligne, 0);
     ASSERT_EQ(api->info_case({0, 0}).pos_case.colonne, 0);
 
     ASSERT_EQ(api->info_case({1, 0}).contenu, SUD_OUEST);
-    ASSERT_EQ(api->info_case({1, 0}).points, 2);
+    ASSERT_EQ(api->info_case({1, 0}).gains, 2);
     ASSERT_EQ(api->info_case({1, 0}).pos_case.ligne, 0);
     ASSERT_EQ(api->info_case({1, 0}).pos_case.colonne, 1);
 
     ASSERT_EQ(api->info_case({4, 0}).contenu, VILLAGE);
-    ASSERT_EQ(api->info_case({4, 0}).points, 0);
+    ASSERT_EQ(api->info_case({4, 0}).gains, 0);
     ASSERT_EQ(api->info_case({4, 0}).pos_case.ligne, 0);
     ASSERT_EQ(api->info_case({4, 0}).pos_case.colonne, 4);
 
     ASSERT_EQ(api->info_case({4, 3}).contenu, SUD_OUEST);
-    ASSERT_EQ(api->info_case({4, 3}).points, 0);
+    ASSERT_EQ(api->info_case({4, 3}).gains, 0);
     ASSERT_EQ(api->info_case({4, 3}).pos_case.ligne, 3);
     ASSERT_EQ(api->info_case({4, 3}).pos_case.colonne, 4);
 }
