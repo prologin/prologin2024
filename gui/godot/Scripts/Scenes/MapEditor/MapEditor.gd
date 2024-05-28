@@ -14,6 +14,8 @@ onready var aigle_dialog_puissance : LineEdit = $Popups/AigleDialog/VBoxContaine
 onready var aigle_dialog_eclosion : LineEdit = $Popups/AigleDialog/VBoxContainer/Eclosion
 onready var points_amount : TextEdit = $Selector/VBoxContainer/PointsAmount
 onready var selection_rect : Sprite = $Selector/VBoxContainer/ViewportContainer/Viewport/SelectionRect
+onready var validator_fail_dialog : AcceptDialog = $Popups/ValidatorFailDialog
+onready var validator_fail_text : Label = $Popups/ValidatorFailDialog/Container/Error
 
 var bg_selection = null
 var points_selection = null
@@ -206,9 +208,17 @@ func set_bg_selection(sel):
 		viewer.set_tiles_mode(points_editor_mode)
 
 
-func _on_Export_pressed():
-	export_dialog.popup_centered()
+func _on_Export_pressed(force=false):
+	if force:
+		export_dialog.popup_centered()
+		return
 
+	var err = Validator.validate(viewer.map)
+	if not err:
+		export_dialog.popup_centered()
+	else:
+		validator_fail_text.text = err
+		validator_fail_dialog.popup_centered()
 
 func _on_Import_pressed():
 	import_dialog.popup_centered()
@@ -304,5 +314,5 @@ func _on_PointsAmount_gui_input(event):
 		points_amount.text = str(points_selection)
 
 
-
-
+func _on_ValidatorFailDialog_confirmed():
+	_on_Export_pressed(true)

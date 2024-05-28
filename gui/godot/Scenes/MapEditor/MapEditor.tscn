@@ -162,6 +162,36 @@ offset = Vector2( 48, 48 )
 
 [node name="Popups" type="Node" parent="."]
 
+[node name="ValidatorFailDialog" type="ConfirmationDialog" parent="Popups"]
+visible = true
+margin_right = 495.0
+margin_bottom = 238.0
+window_title = "Veuillez confirmer…"
+
+[node name="Container" type="VBoxContainer" parent="Popups/ValidatorFailDialog"]
+margin_right = 40.0
+margin_bottom = 40.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Popups/ValidatorFailDialog/Container"]
+margin_right = 274.0
+margin_bottom = 14.0
+grow_horizontal = 2
+text = "Voulez-vous vraiment enregistrer la carte ?"
+align = 1
+
+[node name="Error" type="Label" parent="Popups/ValidatorFailDialog/Container"]
+modulate = Color( 1, 0, 0, 1 )
+margin_top = 18.0
+margin_right = 274.0
+margin_bottom = 40.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Erreur : !!!!"
+align = 1
+valign = 1
+
 [node name="ExportDialog" type="FileDialog" parent="Popups"]
 margin_right = 626.0
 margin_bottom = 337.0
@@ -237,6 +267,7 @@ theme = ExtResource( 7 )
 [connection signal="gui_input" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_gui_input"]
 [connection signal="text_changed" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_text_changed"]
 [connection signal="on_selection" from="Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/BGSelector" to="." method="_on_BGSelector_on_selection"]
+[connection signal="confirmed" from="Popups/ValidatorFailDialog" to="." method="_on_ValidatorFailDialog_confirmed"]
 [connection signal="about_to_show" from="Popups/ExportDialog" to="." method="_on_ExportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ExportDialog" to="." method="_on_ExportDialog_file_selected"]
 [connection signal="popup_hide" from="Popups/ExportDialog" to="." method="_on_ExportDialog_popup_hide"]
