@@ -1,0 +1,59 @@
+body {
+  --background-color: #1d2331;
+  --background-color-bis: #e4422e;
+  --background-color-hover: #803931;
+  --background-color-active: #e4422e;
+  --text-color: #ff5428;
+  --text-color-bis: #b3bab8;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/************/
+/*  navbar  */
+/************/
+
+.navbar-default {
+  background: transparent;
+  border: transparent;
+  border-radius: 0;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.text-muted {
+  color: var(--text-color-bis);
+}
+
+a {
+  color: var(--text-color);
+}
+
+.nav-pills > li > a:focus,
+.nav-pills > li > a:hover {
+  background-color: var(--background-color-hover);
+  color: var(--text-color);
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:focus,
+.nav-pills > li.active > a:hover {
+  background-color: var(--background-color-active);
+}
+
+.breadcrumb {
+  background-color: var(--background-color-bis);
+}
+
+.breadcrumb > li > a,
+.breadcrumb > li + li:before,
+.breadcrumb > li.active {
+  color: var(--background-color);
+  font-weight: bold;
+}
