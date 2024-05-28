@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 from json import load as json_chargement
-from sys import stdin
+from sys import stdin, stderr
 from os import environ
 
 #try:
@@ -220,4 +220,7 @@ def valide_carte(json):
 
 if __name__ == '__main__':
     json = json_chargement(stdin)
-    valide_carte(json)
+    try:
+        valide_carte(json)
+    except ValueError as e:
+        print(e.args[0], file=stderr)
