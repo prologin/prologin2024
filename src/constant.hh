@@ -25,8 +25,8 @@
 /// Gains minimum qu'apporte une ile
 #define GAINS_MIN -100
 
-/// Gains d'action au début d'un tour
-#define TOUR_GAINS_ACTION 2
+/// Points d'action au début d'un tour
+#define TOUR_POINTS_ACTION 2
 
 /// Coût de rotation d'une case en lien avec une île ennemi
 #define COUT_ROTATION_ENNEMI 2

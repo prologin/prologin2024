@@ -35,9 +35,9 @@ constant:
     cst_val: -100
     cst_comment: "Gains minimum qu'apporte une ile"
   -
-    cst_name: TOUR_GAINS_ACTION
+    cst_name: TOUR_POINTS_ACTION
     cst_val: 2
-    cst_comment: "Gains d'action au début d'un tour"
+    cst_comment: "Points d'action au début d'un tour"
   -
     cst_name: COUT_ROTATION_ENNEMI
     cst_val: 2
