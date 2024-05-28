@@ -55,7 +55,7 @@ func set_selection_rect(tilepos):
 	select_rect.visible = true
 
 func _input(event):
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
 		var pos = self.transform.affine_inverse().xform(event.position)
 		var tilepos = self.world_to_map(pos)
 		var tile = self.get_cell(tilepos[0], tilepos[1])
