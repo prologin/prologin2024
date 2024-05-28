@@ -422,7 +422,7 @@ func update_foreground():
 		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
 	
-	if len(map.debug) > 0:
+	if map.debug != null and len(map.debug) > 0:
 		for i in range(map.height):
 			for j in range(map.width):
 				var drakkar = map.debug[i][j]

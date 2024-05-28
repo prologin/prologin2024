@@ -51,8 +51,8 @@ class Map:
 	var height
 	var carte = []
 	var points = []
-	var debug = []
-	var territoire = []
+	var debug = null
+	var territoire = null
 	var joueurs = []
 	var aigles = []
 
@@ -63,8 +63,10 @@ class Map:
 	
 	func clear():
 		carte.clear()
-		points.clear()
-		debug.clear()
+		if points != null:
+			points.clear()
+		if debug != null:
+			debug.clear()
 		joueurs.clear()
 		aigles.clear()
 		if territoire != null:
@@ -88,18 +90,20 @@ class Map:
 			for e in row:
 				newrow.append(e)
 			map.points.append(newrow)
-		map.territoire = []
-		for row in self.territoire:
-			var newrow = []
-			for e in row:
-				newrow.append(e)
-			map.territoire.append(newrow)
-		map.debug = []
-		for row in self.debug:
-			var newrow = []
-			for e in row:
-				newrow.append(e)
-			map.debug.append(newrow)
+		if self.territoire != null:
+			map.territoire = []
+			for row in self.territoire:
+				var newrow = []
+				for e in row:
+					newrow.append(e)
+				map.territoire.append(newrow)
+		if self.debug != null:
+			map.debug = []
+			for row in self.debug:
+				var newrow = []
+				for e in row:
+					newrow.append(e)
+				map.debug.append(newrow)
 		map.joueurs = []
 		for j in self.joueurs:
 			map.joueurs.append(j.copy())
@@ -116,6 +120,7 @@ class Map:
 		self.clear()
 
 		# Cases + score
+		self.territoire = []
 		for _i in range(height):
 			var row = []
 			var points_row = []

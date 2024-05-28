@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Scenes/Visualiseur/Visualiseur.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Viewer/Viewer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Theme/popup_theme.tres" type="Theme" id=3]
 
 [node name="Visualiseur" type="Node2D"]
 script = ExtResource( 1 )
@@ -12,25 +13,27 @@ script = ExtResource( 1 )
 margin_left = 800.0
 margin_right = 1024.0
 margin_bottom = 600.0
-color = Color( 0.231373, 0.231373, 0.231373, 1 )
+color = Color( 0.796078, 0.415686, 0.266667, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
-margin_right = 224.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 214.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Import" type="Button" parent="Menu/VBoxContainer"]
-margin_right = 224.0
-margin_bottom = 20.0
+margin_right = 204.0
+margin_bottom = 25.0
+theme = ExtResource( 3 )
 text = "Importer"
 
 [node name="Back to main menu" type="Button" parent="Menu/VBoxContainer"]
-anchor_top = 0.916
-anchor_bottom = 0.916
-margin_top = 24.0
-margin_right = 224.0
-margin_bottom = 44.0
+margin_top = 29.0
+margin_right = 204.0
+margin_bottom = 54.0
+theme = ExtResource( 3 )
 text = "Back to main menu"
 
 [node name="Popups" type="Node" parent="."]
@@ -38,6 +41,7 @@ text = "Back to main menu"
 [node name="ImportDialog" type="FileDialog" parent="Popups"]
 margin_right = 622.0
 margin_bottom = 338.0
+rect_min_size = Vector2( 400, 140 )
 popup_exclusive = true
 window_title = "Ouvrir un fichier"
 mode = 0

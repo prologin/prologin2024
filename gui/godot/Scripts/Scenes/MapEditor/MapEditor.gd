@@ -10,8 +10,8 @@ onready var import_dialog : FileDialog = $Popups/ImportDialog
 onready var viewer_viewport = $Viewer/ViewportContainer/Viewport
 onready var selector_viewport = $Selector/VBoxContainer/ViewportContainer/Viewport
 onready var aigle_dialog = $Popups/AigleDialog
-onready var aigle_dialog_puissance : TextEdit = $Popups/AigleDialog/VBoxContainer/Puissance
-onready var aigle_dialog_eclosion : TextEdit = $Popups/AigleDialog/VBoxContainer/Eclosion
+onready var aigle_dialog_puissance : LineEdit = $Popups/AigleDialog/VBoxContainer/Puissance
+onready var aigle_dialog_eclosion : LineEdit = $Popups/AigleDialog/VBoxContainer/Eclosion
 onready var points_amount : TextEdit = $Selector/VBoxContainer/PointsAmount
 onready var selection_rect : Sprite = $Selector/VBoxContainer/ViewportContainer/Viewport/SelectionRect
 

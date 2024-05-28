@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Scenes/Replay/Replay.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Viewer/Viewer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/tilemap.png" type="Texture" id=3]
 [ext_resource path="res://Assets/PlayButton.tres" type="Texture" id=4]
+[ext_resource path="res://Assets/Theme/popup_theme.tres" type="Theme" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -34,7 +35,7 @@ script = ExtResource( 1 )
 margin_left = 800.0
 margin_right = 1024.0
 margin_bottom = 600.0
-color = Color( 0.231373, 0.231373, 0.231373, 1 )
+color = Color( 0.796078, 0.415686, 0.266667, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
 margin_left = 8.0
@@ -45,89 +46,99 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Import" type="Button" parent="Menu/VBoxContainer"]
-margin_right = 208.0
-margin_bottom = 20.0
+margin_right = 216.0
+margin_bottom = 25.0
+theme = ExtResource( 5 )
 text = "Importer"
 
 [node name="Controls" type="HBoxContainer" parent="Menu/VBoxContainer"]
-margin_top = 24.0
-margin_right = 208.0
-margin_bottom = 54.0
+margin_top = 29.0
+margin_right = 216.0
+margin_bottom = 61.0
 alignment = 1
 
 [node name="Start" type="Button" parent="Menu/VBoxContainer/Controls"]
-margin_left = 6.0
-margin_right = 42.0
-margin_bottom = 30.0
+margin_right = 40.0
+margin_bottom = 32.0
+theme = ExtResource( 5 )
 icon = SubResource( 1 )
 
 [node name="Prev" type="Button" parent="Menu/VBoxContainer/Controls"]
-margin_left = 46.0
-margin_right = 82.0
-margin_bottom = 30.0
+margin_left = 44.0
+margin_right = 84.0
+margin_bottom = 32.0
+theme = ExtResource( 5 )
 icon = SubResource( 2 )
 
 [node name="PlayPause" type="Button" parent="Menu/VBoxContainer/Controls"]
-margin_left = 86.0
-margin_right = 122.0
-margin_bottom = 30.0
+margin_left = 88.0
+margin_right = 128.0
+margin_bottom = 32.0
+theme = ExtResource( 5 )
 icon = ExtResource( 4 )
 
 [node name="Next" type="Button" parent="Menu/VBoxContainer/Controls"]
-margin_left = 126.0
-margin_right = 162.0
-margin_bottom = 30.0
+margin_left = 132.0
+margin_right = 172.0
+margin_bottom = 32.0
+theme = ExtResource( 5 )
 icon = SubResource( 3 )
 
 [node name="End" type="Button" parent="Menu/VBoxContainer/Controls"]
-margin_left = 166.0
-margin_right = 202.0
-margin_bottom = 30.0
+margin_left = 176.0
+margin_right = 216.0
+margin_bottom = 32.0
+theme = ExtResource( 5 )
 icon = SubResource( 4 )
 
 [node name="StateInfo" type="Label" parent="Menu/VBoxContainer"]
-margin_top = 58.0
-margin_right = 208.0
-margin_bottom = 72.0
+margin_top = 65.0
+margin_right = 216.0
+margin_bottom = 82.0
+theme = ExtResource( 5 )
 text = "Tour: 42/200 (J1)"
 align = 1
 
 [node name="ScoreJ1" type="Label" parent="Menu/VBoxContainer"]
-margin_top = 76.0
-margin_right = 208.0
-margin_bottom = 90.0
-custom_colors/font_color = Color( 0.545098, 0.839216, 1, 1 )
+margin_top = 86.0
+margin_right = 216.0
+margin_bottom = 103.0
+theme = ExtResource( 5 )
+custom_colors/font_color = Color( 0.545098, 0.946691, 1, 1 )
 text = "J1: 42618"
 
 [node name="ScoreJ2" type="Label" parent="Menu/VBoxContainer"]
-margin_top = 94.0
-margin_right = 208.0
-margin_bottom = 108.0
-custom_colors/font_color = Color( 1, 0.776471, 0.705882, 1 )
+margin_top = 107.0
+margin_right = 216.0
+margin_bottom = 124.0
+theme = ExtResource( 5 )
+custom_colors/font_color = Color( 0.643137, 0.0509804, 0.0470588, 1 )
 text = "J2: 31442"
 
 [node name="Back to main menu" type="Button" parent="Menu/VBoxContainer"]
-margin_top = 112.0
-margin_right = 208.0
-margin_bottom = 132.0
+margin_top = 128.0
+margin_right = 216.0
+margin_bottom = 153.0
+theme = ExtResource( 5 )
 text = "Back to main menu"
 
 [node name="GridOpacity" type="HBoxContainer" parent="Menu/VBoxContainer"]
-margin_top = 136.0
-margin_right = 208.0
-margin_bottom = 152.0
+margin_top = 157.0
+margin_right = 216.0
+margin_bottom = 174.0
 
 [node name="Label" type="Label" parent="Menu/VBoxContainer/GridOpacity"]
-margin_top = 1.0
-margin_right = 86.0
-margin_bottom = 15.0
+margin_right = 91.0
+margin_bottom = 17.0
+theme = ExtResource( 5 )
 text = "Opacité grille"
 
 [node name="GridOpacitySlider" type="HSlider" parent="Menu/VBoxContainer/GridOpacity"]
-margin_left = 90.0
-margin_right = 208.0
+margin_left = 95.0
+margin_right = 216.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
+theme = ExtResource( 5 )
 value = 50.0
 tick_count = 5
 
@@ -136,6 +147,7 @@ tick_count = 5
 [node name="ImportDialog" type="FileDialog" parent="Popups"]
 margin_right = 622.0
 margin_bottom = 338.0
+rect_min_size = Vector2( 400, 140 )
 popup_exclusive = true
 window_title = "Ouvrir un fichier"
 mode = 0
