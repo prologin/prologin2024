@@ -5,6 +5,7 @@ body {
   --background-color-active: #e4422e;
   --text-color: #ff5428;
   --text-color-bis: #b3bab8;
+  --text-color-third: #eee;
 }
 
 body {
@@ -24,7 +25,7 @@ body {
 
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-color-third);
 }
 
 .text-muted {
@@ -32,7 +33,7 @@ body {
 }
 
 a {
-  color: var(--text-color);
+  color: var(--text-color-third);
 }
 
 .nav-pills > li > a:focus,
@@ -54,6 +55,20 @@ a {
 .breadcrumb > li > a,
 .breadcrumb > li + li:before,
 .breadcrumb > li.active {
-  color: var(--background-color);
+  color: var(--text-color-third);
   font-weight: bold;
+}
+
+pre {
+  background-color: var(--background-color);
+  color: var(--text-color-third);
+}
+
+p {
+  color: var(--text-color-third);
+}
+
+/* map preview */
+.map-preview {
+  padding-bottom: 5rem;
 }
