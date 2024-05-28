@@ -465,3 +465,6 @@ func _on_InteractiveTileMap_click(pos, button):
 
 func _on_GridOpacitySlider_value_changed(value):
 	self.grid.modulate.a = value / 100
+	
+func _on_PointOpacitySlider_value_changed(value):
+	self.points.modulate.a = value / 100
