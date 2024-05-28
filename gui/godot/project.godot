@@ -79,6 +79,7 @@ Context="*res://Scripts/Game/Context.gd"
 [display]
 
 window/ios/hide_home_indicator=false
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [global]
