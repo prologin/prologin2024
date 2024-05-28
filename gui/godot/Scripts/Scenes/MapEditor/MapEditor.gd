@@ -38,11 +38,12 @@ func update_editor_mode():
 	points_amount.visible = points_editor_mode == Constants.EditorMode.POINTS
 	if points_editor_mode == Constants.EditorMode.POINTS:
 		editor_mode_toggle.text = 'EDITION POINTS'
-		selection_rect.visible = false
+		selection_rect.self_modulate.a = 0
 		viewer.set_alpha(alpha_disabled, 1)
 	else:
 		editor_mode_toggle.text = 'EDITION CARTE'
-		selection_rect.visible = true
+		if bg_selection != null:
+			selection_rect.self_modulate.a = 1
 		viewer.set_alpha(1, alpha_disabled)
 
 
@@ -188,8 +189,8 @@ func _on_BGSelector_on_selection(tile):
 
 
 func set_bg_selection(sel):
-	bg_selection = sel
 	if points_editor_mode != Constants.EditorMode.POINTS:
+		bg_selection = sel
 		if bg_selection in [
 			Constants.TypeCase.VILLAGE,
 			Constants.TypeCase.VILLAGE_J1,

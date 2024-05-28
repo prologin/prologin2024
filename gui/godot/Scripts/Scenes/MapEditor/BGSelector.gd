@@ -60,5 +60,6 @@ func _input(event):
 		var tilepos = self.world_to_map(pos)
 		var tile = self.get_cell(tilepos[0], tilepos[1])
 		if tile != -1:
-			set_selection_rect(tilepos)
+			if select_rect.self_modulate.a != 0:
+				set_selection_rect(tilepos)
 			emit_signal("on_selection", tile)
