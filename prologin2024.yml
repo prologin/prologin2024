@@ -27,17 +27,17 @@ constant:
     cst_val: 400
     cst_comment: Nombre de tours à jouer avant la fin de la partie
   -
-    cst_name: POINTS_MAX
+    cst_name: GAINS_MAX
     cst_val: 100
-    cst_comment: "Points maximum qu'apporte une ile"
+    cst_comment: "Gains maximum qu'apporte une ile"
   -
-    cst_name: POINTS_MIN
+    cst_name: GAINS_MIN
     cst_val: -100
-    cst_comment: "Points minimum qu'apporte une ile"
+    cst_comment: "Gains minimum qu'apporte une ile"
   -
-    cst_name: TOUR_POINTS_ACTION
+    cst_name: TOUR_GAINS_ACTION
     cst_val: 2
-    cst_comment: "Points d'action au début d'un tour"
+    cst_comment: "Gains d'action au début d'un tour"
   -
     cst_name: COUT_ROTATION_ENNEMI
     cst_val: 2
@@ -84,7 +84,7 @@ enum:
     enum_summary: "Type de drakkar de debug"
     enum_field:
       - [pas_de_drakkar, "Aucun drakkar, enlève le drakkar présent"]
-      - [drakkar_bleu, "Drakkar bleue"]
+      - [drakkar_bleu, "Drakkar bleu"]
       - [drakkar_jaune, "Drakkar jaune"]
       - [drakkar_rouge, "Drakkar rouge"]
   -
@@ -101,7 +101,7 @@ enum:
       - [effet_meteore, "Fait tomber un météore qui tourne les cases"]
       - [effet_vie, "Donne des points actions"]
       - [effet_mort, "Effraye les aigles d'un emplacement"]
-      - [effet_feu, "Multiplie les point d'une île"]
+      - [effet_feu, "Multiplie les gains d'une île"]
       - [effet_gel, "Bloque les rotations de cases"]
 
 struct:
@@ -136,7 +136,7 @@ struct:
     str_tuple: no
     str_field:
       - [contenu, type_case, "Contenu topographique de la case"]
-      - [points, int, "Points dans le coin sud-est de la case"]
+      - [gains, int, "Gains dans le coin sud-est de la case"]
       - [pos_case, position, "Position de la case"]
   -
     str_name: action_hist
@@ -198,7 +198,7 @@ function:
     - [joueur, int, "Identifiant du joueur"]
   -
     fct_name: points_action
-    fct_summary: Renvoie le nombre de points d'action restant
+    fct_summary: Renvoie le nombre de points d'action restant.
                  Renvoie -1 si le joueur est invalide.
     fct_ret_type: int
     fct_arg:
@@ -234,8 +234,7 @@ function:
 
   -
     fct_name: recuperer_territoire
-    fct_summary: "Renvoie un tableau en 2 dimensions des emplacements indiquant
-                 avec vrai les emplacement du territoire et faux sinon."
+    fct_summary: "Renvoie une liste des positions du territoire d'un joueur."
     fct_ret_type: position array
     fct_arg:
       - [joueur, int, "Identifiant du joueur"]
