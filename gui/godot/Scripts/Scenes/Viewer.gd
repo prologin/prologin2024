@@ -196,7 +196,7 @@ func set_tiles_mode(points_editor_mode):
 
 # --- Update ---
 func update_all(new_map, new_tour = 0):
-	if map == null or new_map.width != map.width or new_map.height != new_map.height:
+	if map == null or new_map.width != map.width or new_map.height != map.height:
 		cache_computed = false
 
 	map = new_map
