@@ -10,9 +10,10 @@ int ActionDeplacerAigle::check(const GameState& st) const
 {
     if (!st.init)
         return HORS_TOUR;
+
     const auto& joueur = st.joueurs[player_id_];
-    const auto aigle = joueur.trouve_aigle(id_);
-    if (aigle == joueur.aigles.cend())
+    const auto *const aigle = joueur.trouve_aigle(id_);
+    if (aigle == nullptr)
         return AIGLE_INVALIDE;
 
     //Aigle aiglantine = *aigle; #JesuisAiglantine
@@ -24,7 +25,7 @@ int ActionDeplacerAigle::check(const GameState& st) const
 
 void ActionDeplacerAigle::apply_on(GameState* st) const
 {
-    auto aiglantine = st->joueurs[player_id_].trouve_aigle(id_);
+    auto *aiglantine = st->joueurs[player_id_].trouve_aigle(id_);
     st->ajoute_historique({ACTION_DEPLACER_AIGLE, aiglantine->pos, destination_, id_});
     aiglantine->pos = destination_;
 }

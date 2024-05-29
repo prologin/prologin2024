@@ -82,21 +82,28 @@ std::vector<std::vector<bool>> Joueur::territoire(const Carte& carte) const
     return territoire;
 }
 
-std::vector<Aigle>::iterator Joueur::trouve_aigle(int aigle_id)
+Aigle* Joueur::trouve_aigle(int aigle_id)
 {
-    const auto aigle_correct = [aigle_id](Aigle aigle) {
+    const auto aigle_correct = [aigle_id](const Aigle &aigle) {
         return aigle.identifiant == aigle_id;
     };
-    const auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
-    return it;
+
+    auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
+    if (it == aigles.end()) {
+        return nullptr;
+    }
+    return &*it;
 }
 
-std::vector<Aigle>::const_iterator Joueur::trouve_aigle(int aigle_id) const
+const Aigle* Joueur::trouve_aigle(int aigle_id) const
 {
-    const auto aigle_correct = [aigle_id](Aigle aigle) {
+    const auto aigle_correct = [aigle_id](const Aigle &aigle) {
         return aigle.identifiant == aigle_id;
     };
 
-    const auto it = std::find_if(aigles.begin(), aigles.end(), aigle_correct);
-    return it;
+    const auto it = std::find_if(aigles.cbegin(), aigles.cend(), aigle_correct);
+    if (it == aigles.end()) {
+        return nullptr;
+    }
+    return &*it;
 }

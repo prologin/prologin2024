@@ -10,8 +10,8 @@ int ActionActiverAigle::check(const GameState& st) const
     if (!st.init)
         return HORS_TOUR;
     const auto& joueur = st.joueurs[player_id_];
-    const auto aiglantine = joueur.trouve_aigle(id_);
-    if (aiglantine == joueur.aigles.end())
+    const auto *const aiglantine = joueur.trouve_aigle(id_);
+    if (aiglantine == nullptr)
         return AIGLE_INVALIDE;
 
     if (aiglantine->effet != EFFET_METEORE &&

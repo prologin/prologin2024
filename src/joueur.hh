@@ -16,6 +16,6 @@ struct Joueur
     std::vector<position> villages;
 
     [[nodiscard]] std::vector<std::vector<bool>> territoire(const Carte& carte) const;
-    [[nodiscard]] std::vector<Aigle>::const_iterator trouve_aigle(int aigle_id) const;
-    std::vector<Aigle>::iterator trouve_aigle(int aigle_id);
+    [[nodiscard]] Aigle * trouve_aigle(int aigle_id);
+    [[nodiscard]] const Aigle * trouve_aigle(int aigle_id) const;
 };
