@@ -19,28 +19,30 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
     int tour_actuel = tour;
     auto const verifie_territoire = [&territoire, &territoire_adverse, tour_actuel](const Aigle& aigle)
     {
-        return territoire[aigle.pos.colonne][aigle.pos.ligne]
-        && !territoire_adverse[aigle.pos.colonne][aigle.pos.ligne] && aigle.tour_eclosion <= tour_actuel;
+        return territoire[aigle.pos.ligne][aigle.pos.colonne]
+        && !territoire_adverse[aigle.pos.ligne][aigle.pos.colonne] && aigle.tour_eclosion <= tour_actuel;
     };
     auto const verifie_deux_territoires = [largeur, hauteur, &territoire, &territoire_adverse](const auto& village)
     {
         bool dans_mon_territoire = false;
-        for (int x1 = 0; x1 >= -1; x1--)
+        for (int dx = 0; dx >= -1; dx--)
         {
-            for (int y1 = 0; y1 >= -1; y1--)
+            for (int dy = 0; dy >= -1; dy--)
             {
-                if (village.colonne + x1 >= 0 && village.colonne + x1 < hauteur - 1
-                    && village.ligne + y1 >= 0 && village.ligne + y1 < largeur - 1)
+                int rx = village.colonne + dx;
+                int ry = village.ligne + dy;
+                if (0 <= rx && rx < largeur - 1 && 0 <= ry && ry < hauteur - 1)
                 {
-                    if (territoire_adverse[village.colonne + x1][village.ligne + y1])
+                    if (territoire_adverse[ry][rx])
                         return false;
-                    else if (territoire[village.colonne + x1][village.ligne + y1])
+                    else if (territoire[ry][rx])
                         dans_mon_territoire = true;
                 }
             }
         }
         return dans_mon_territoire;
     };
+
     if (!aigles_sauvages.empty())
     {
         std::copy_if(
