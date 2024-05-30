@@ -16,6 +16,7 @@ onready var points_amount : TextEdit = $Selector/VBoxContainer/PointsAmount
 onready var selection_rect : Sprite = $Selector/VBoxContainer/ViewportContainer/Viewport/SelectionRect
 onready var validator_fail_dialog : AcceptDialog = $Popups/ValidatorFailDialog
 onready var validator_fail_text : Label = $Popups/ValidatorFailDialog/Container/Error
+onready var quit_dialog : ConfirmationDialog = $Popups/QuitDialog
 
 var bg_selection = null
 var points_selection = null
@@ -246,8 +247,7 @@ func _on_Randomizer_pressed():
 	viewer.update_all(new_map)
 
 func _on_Back_to_main_menu_pressed():
-	Context.map_path = ""
-	Scenes.open_scene(self, Scenes.menu_scene)
+	quit_dialog.popup_centered()
 
 func _on_ExportDialog_about_to_show():
 	set_dialog_open(true)
@@ -311,3 +311,16 @@ func _on_PointsAmount_gui_input(event):
 
 func _on_ValidatorFailDialog_confirmed():
 	_on_Export_pressed(true)
+
+
+func _on_QuitDialog_confirmed():
+	Context.map_path = ""
+	Scenes.open_scene(self, Scenes.menu_scene)
+
+
+func _on_QuitDialog_about_to_show():
+	set_dialog_open(true)
+
+
+func _on_QuitDialog_popup_hide():
+	set_dialog_open(false)

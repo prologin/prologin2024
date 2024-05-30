@@ -163,18 +163,20 @@ offset = Vector2( 48, 48 )
 [node name="Popups" type="Node" parent="."]
 
 [node name="ValidatorFailDialog" type="ConfirmationDialog" parent="Popups"]
-visible = true
 margin_right = 495.0
 margin_bottom = 238.0
+theme = ExtResource( 7 )
 window_title = "Veuillez confirmer…"
 
 [node name="Container" type="VBoxContainer" parent="Popups/ValidatorFailDialog"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 487.0
+margin_bottom = 197.0
 alignment = 1
 
 [node name="Label" type="Label" parent="Popups/ValidatorFailDialog/Container"]
-margin_right = 274.0
+margin_right = 479.0
 margin_bottom = 14.0
 grow_horizontal = 2
 text = "Voulez-vous vraiment enregistrer la carte ?"
@@ -183,8 +185,8 @@ align = 1
 [node name="Error" type="Label" parent="Popups/ValidatorFailDialog/Container"]
 modulate = Color( 1, 0, 0, 1 )
 margin_top = 18.0
-margin_right = 274.0
-margin_bottom = 40.0
+margin_right = 479.0
+margin_bottom = 194.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 7
@@ -252,14 +254,21 @@ margin_right = 64.0
 margin_bottom = 23.0
 theme = ExtResource( 7 )
 
+[node name="QuitDialog" type="ConfirmationDialog" parent="Popups"]
+margin_right = 200.0
+margin_bottom = 70.0
+theme = ExtResource( 7 )
+window_title = "Veuillez confirmer…"
+dialog_text = "Êtes-vous sûr de vouloir revenir au menu principal ?"
+
 [connection signal="bg_drag" from="Viewer" to="." method="_on_Viewer_bg_drag"]
 [connection signal="bg_left_click" from="Viewer" to="." method="_on_Viewer_bg_left_click"]
 [connection signal="bg_right_click" from="Viewer" to="." method="_on_Viewer_bg_right_click"]
 [connection signal="pressed" from="Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
-[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
+[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Randomizer" to="." method="_on_Randomizer_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
 [connection signal="focus_entered" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_entered"]
@@ -277,3 +286,6 @@ theme = ExtResource( 7 )
 [connection signal="about_to_show" from="Popups/AigleDialog" to="." method="_on_AigleDialog_about_to_show"]
 [connection signal="confirmed" from="Popups/AigleDialog" to="." method="_on_AigleDialog_confirmed"]
 [connection signal="popup_hide" from="Popups/AigleDialog" to="." method="_on_AigleDialog_popup_hide"]
+[connection signal="about_to_show" from="Popups/QuitDialog" to="." method="_on_QuitDialog_about_to_show"]
+[connection signal="confirmed" from="Popups/QuitDialog" to="." method="_on_QuitDialog_confirmed"]
+[connection signal="popup_hide" from="Popups/QuitDialog" to="." method="_on_QuitDialog_popup_hide"]

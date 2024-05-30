@@ -42,6 +42,7 @@ text = "Back to main menu"
 margin_right = 622.0
 margin_bottom = 338.0
 rect_min_size = Vector2( 400, 140 )
+theme = ExtResource( 3 )
 popup_exclusive = true
 window_title = "Ouvrir un fichier"
 mode = 0

@@ -186,7 +186,7 @@ value = 50.0
 tick_count = 5
 
 [node name="PointOpacity" type="HBoxContainer" parent="Selector/HBoxContainer"]
-margin_left = 220.0
+margin_left = 199.0
 margin_right = 422.0
 margin_bottom = 22.0
 
