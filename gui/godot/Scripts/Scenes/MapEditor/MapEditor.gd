@@ -138,12 +138,11 @@ func _on_click(pos, click_type):
 					aigle_dialog.popup_centered()
 			elif click_type == ClickType.RIGHT:
 				# Find eagle in this location
-				var i = 0
-				for aigle in viewer.map.aigles:
+				for i in range(len(viewer.map.aigles) - 1, -1, -1):
+					var aigle = viewer.map.aigles[i]
 					if aigle.pos == pos:
 						viewer.map.aigles.remove(i)
 						break
-					i += 1
 				viewer.update_all(viewer.map)
 
 
@@ -275,21 +274,13 @@ func _on_AigleDialog_confirmed():
 	var tour_eclosion = int(aigle_dialog_eclosion.text)
 	var puissance = int(aigle_dialog_puissance.text)
 
-	# Find eagle in this location
-	var selected_aigle = null
-	for aigle in viewer.map.aigles:
-		if aigle.pos == selected_aigle_data['pos']:
-			selected_aigle = aigle
-			break
-
-	if selected_aigle == null:
-		selected_aigle = Models.Aigle.new()
-		viewer.map.aigles.append(selected_aigle)
-
+	var selected_aigle = Models.Aigle.new()
+	viewer.map.aigles.append(selected_aigle)
 	selected_aigle.effet = selected_aigle_data['effet']
 	selected_aigle.pos = selected_aigle_data['pos']
 	selected_aigle.tour_eclosion = tour_eclosion
 	selected_aigle.puissance = puissance
+
 	viewer.update_all(viewer.map)
 
 
