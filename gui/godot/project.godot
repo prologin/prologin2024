@@ -116,6 +116,10 @@ cam_zoom_out={
  ]
 }
 
+[network]
+
+limits/debugger_stdout/max_chars_per_second=1048576
+
 [physics]
 
 common/enable_pause_aware_picking=true

@@ -207,8 +207,9 @@ class Map:
 
 		map.points = json["gains"]
 		map.territoire = json.get("territoire", null)
-		for aigle in json["aigles"]:
+		for aigle in json["aigles"] + json["joueur1"].get("aigles", []) + json["joueur2"].get("aigles", []):
 			var a = Aigle.new()
+			a.identifiant = aigle["id"]
 			a.effet = aigle["effet"]
 			a.puissance = aigle["puissance"]
 			a.tour_eclosion = aigle["tour_eclosion"]
