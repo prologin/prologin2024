@@ -218,8 +218,8 @@ func update_zoom():
 	if map.height == 0 or map.width == 0:
 		return
 
-	var target_height = container.get_rect().size[1]
-	var target_width = container.get_rect().size[0]
+	var target_height = original_res[1]
+	var target_width = original_res[0]
 	var h_target_tile_size = target_height / map.height
 	var h_target_scale = h_target_tile_size / Constants.TILE_SIZE
 	var w_target_tile_size = target_width / map.width
