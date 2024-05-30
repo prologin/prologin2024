@@ -296,6 +296,21 @@ class Map:
 
 		return false
 
+	# Get points with bonuses (fire eagle...)
+	func get_current_points(tour):
+		var points = []
+		for i in len(self.points):
+			var row = []
+			for j in len(self.points[i]):
+				row.append(self.points[i][j])
+			points.append(row)
+
+		for a in self.aigles:
+			if tour >= a.tour_eclosion && a.effet == 'FEU':
+				points[a.pos[1]][a.pos[0]] *= a.puissance
+
+		return points
+
 
 class Action:
 	var action_type

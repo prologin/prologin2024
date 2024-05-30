@@ -274,6 +274,7 @@ func update_cache():
 		if child.name != 'Sample':
 			points.remove_child(child)
 
+	# Add points
 	points_labels = []
 	for i in range(map.height - 1):
 		var row = []
@@ -284,7 +285,6 @@ func update_cache():
 			var x = (j + 0.5 + xoff) * Constants.TILE_SIZE
 			var y = (i + 0.5 + yoff) * Constants.TILE_SIZE
 			point.visible = true
-			point.text = str(map.points[i][j])
 			point.set_position(Vector2(x, y))
 			points.add_child(point)
 			row.append(point)
@@ -301,10 +301,11 @@ func update_grid():
 
 func update_points():
 	# Update points
+	var current_points = map.get_current_points(tour)
 	for i in range(map.height - 1):
 		for j in range(map.width - 1):
 			var point : Label = points_labels[i][j]
-			var new_text = str(map.points[i][j])
+			var new_text = str(current_points[i][j])
 			if point.text != new_text:
 				point.text = new_text
 
@@ -421,7 +422,7 @@ func update_foreground():
 		var transform = effet2oeuf if tour < aigle.tour_eclosion else effet2aigle
 		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
-	
+
 	if map.debug != null and len(map.debug) > 0:
 		for i in range(map.height):
 			for j in range(map.width):
@@ -465,6 +466,6 @@ func _on_InteractiveTileMap_click(pos, button):
 
 func _on_GridOpacitySlider_value_changed(value):
 	self.grid.modulate.a = value / 100
-	
+
 func _on_PointOpacitySlider_value_changed(value):
 	self.points.modulate.a = value / 100

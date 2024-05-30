@@ -120,7 +120,6 @@ func apply_action(action, map, debug):
 						if a.pos == aigle.pos:
 							map.aigles.remove(i)
 				'FEU':
-					# TODO : Update score multipliers within perimiter
 					pass
 				'GEL':
 					pass
