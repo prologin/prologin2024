@@ -98,20 +98,20 @@ alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorPopup/VBoxContainer"]
 margin_right = 263.0
-margin_bottom = 138.0
+margin_bottom = 104.0
 size_flags_vertical = 3
 custom_constants/separation = 20
 alignment = 1
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="EditorPopup/VBoxContainer/HBoxContainer"]
 margin_right = 97.0
-margin_bottom = 138.0
+margin_bottom = 104.0
 size_flags_horizontal = 3
 
 [node name="Largeur" type="LineEdit" parent="EditorPopup/VBoxContainer/HBoxContainer/AspectRatioContainer"]
-margin_top = 20.5
+margin_top = 3.5
 margin_right = 97.0
-margin_bottom = 117.5
+margin_bottom = 100.5
 rect_pivot_offset = Vector2( 22.9559, 18.6385 )
 align = 1
 placeholder_text = "L"
@@ -120,22 +120,22 @@ caret_blink = true
 
 [node name="Label" type="Label" parent="EditorPopup/VBoxContainer/HBoxContainer"]
 margin_left = 117.0
-margin_top = 41.0
+margin_top = 24.0
 margin_right = 145.0
-margin_bottom = 96.0
+margin_bottom = 79.0
 custom_fonts/font = SubResource( 1 )
 text = "×"
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="EditorPopup/VBoxContainer/HBoxContainer"]
 margin_left = 165.0
 margin_right = 263.0
-margin_bottom = 138.0
+margin_bottom = 104.0
 size_flags_horizontal = 3
 
 [node name="Hauteur" type="LineEdit" parent="EditorPopup/VBoxContainer/HBoxContainer/AspectRatioContainer2"]
-margin_top = 20.0
+margin_top = 3.0
 margin_right = 98.0
-margin_bottom = 118.0
+margin_bottom = 101.0
 rect_pivot_offset = Vector2( 22.9559, 18.6385 )
 align = 1
 placeholder_text = "H"
@@ -153,11 +153,27 @@ text = "Erreurs possibles :
 - La taille n'est pas entre 10 et 200"
 align = 1
 
+[node name="Import" type="Button" parent="EditorPopup/VBoxContainer"]
+margin_top = 108.0
+margin_right = 263.0
+margin_bottom = 133.0
+text = "Importer"
+
 [node name="Creer" type="Button" parent="EditorPopup/VBoxContainer"]
-margin_top = 142.0
+margin_top = 137.0
 margin_right = 263.0
 margin_bottom = 162.0
 text = "Créer"
+
+[node name="ImportMapPopup" type="FileDialog" parent="."]
+margin_right = 670.0
+margin_bottom = 402.0
+rect_min_size = Vector2( 400, 140 )
+theme = ExtResource( 5 )
+window_title = "Ouvrir un fichier"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.json" )
 
 [node name="ReplayPopup" type="FileDialog" parent="."]
 margin_right = 670.0
@@ -166,10 +182,13 @@ rect_min_size = Vector2( 400, 140 )
 theme = ExtResource( 5 )
 window_title = "Ouvrir un fichier"
 mode = 0
+access = 2
 filters = PoolStringArray( "*.json" )
 
 [connection signal="pressed" from="TextureRect/VBoxContainer/ButtonEditeurCarte" to="." method="_on_ButtonEditeurCarte_pressed"]
 [connection signal="pressed" from="TextureRect/VBoxContainer/ButtonVisualiseurCarte" to="." method="_on_ButtonVisualiseurCarte_pressed"]
 [connection signal="pressed" from="TextureRect/VBoxContainer/ButtonReplay" to="." method="_on_ButtonReplay_pressed"]
+[connection signal="pressed" from="EditorPopup/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="EditorPopup/VBoxContainer/Creer" to="." method="_on_Creer_pressed"]
+[connection signal="file_selected" from="ImportMapPopup" to="." method="_on_ImportMapPopup_file_selected"]
 [connection signal="file_selected" from="ReplayPopup" to="." method="_on_ReplayPopup_file_selected"]

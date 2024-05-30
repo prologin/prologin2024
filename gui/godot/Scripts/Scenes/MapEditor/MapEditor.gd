@@ -27,7 +27,10 @@ var points_amount_focused = false
 
 
 func _ready():
-	_on_ClearMap_pressed()
+	if Context.map_path.empty():
+		_on_ClearMap_pressed()
+	else:
+		_on_ImportDialog_file_selected(Context.map_path)
 	update_editor_mode()
 	update_selector()
 
@@ -243,6 +246,7 @@ func _on_Randomizer_pressed():
 	viewer.update_all(new_map)
 
 func _on_Back_to_main_menu_pressed():
+	Context.map_path = ""
 	Scenes.open_scene(self, Scenes.menu_scene)
 
 func _on_ExportDialog_about_to_show():

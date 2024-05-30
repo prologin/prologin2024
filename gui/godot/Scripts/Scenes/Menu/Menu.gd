@@ -9,6 +9,10 @@ func _on_ButtonEditeurCarte_pressed() -> void:
 	$EditorPopup.popup_centered()
 
 
+func _on_Import_pressed():
+	$ImportMapPopup.popup_centered()
+
+
 func _on_ButtonReplay_pressed() -> void:
 	$ReplayPopup.popup_centered()
 
@@ -61,3 +65,8 @@ func _launch_igui():
 		Scenes.open_scene(self, Scenes.replay_scene)
 	else:
 		print("Could not open client socket on port " + str(port))
+
+
+func _on_ImportMapPopup_file_selected(path:String):
+	Context.map_path = path
+	Scenes.open_scene(self, Scenes.editeur_scene)
