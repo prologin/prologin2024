@@ -49,7 +49,7 @@
 
           devShell = pkgs.mkShell {
             buildInputs =
-              [ pkgs.stechec2 pkgs.godot pkgs.nixgl.nixGLIntel ];
+              [ pkgs.stechec2 pkgs.godot3 pkgs.nixgl.nixGLIntel ];
           };
         });
 
