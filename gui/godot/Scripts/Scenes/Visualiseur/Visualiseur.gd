@@ -27,7 +27,7 @@ func _on_Import_pressed():
 func _on_ImportDialog_file_selected(path):
 	print('Importing ', path)
 	var json = Serialization.read_json(path)
-	var map = Serialization.json_to_map(viewer, json)
+	var map = Models.Map.from_json(viewer, json)
 	viewer.update_all(map)
 
 
