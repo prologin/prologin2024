@@ -86,8 +86,7 @@ std::vector<action_hist> Api::historique()
 {
     std::vector<action_hist> actions_valides;
     std::vector<ActionInterne> actions_et_debug =
-        game_state_->historiques[game_state_->joueur_actuel()];
-        // TODO: Pourquoi `1 - game_state_->joueur_actuel()` ? (#jeux/2023)
+        game_state_->historiques[game_state_->joueur_actuel() ^ 1];
 
     for (const ActionInterne &action : actions_et_debug) {
         if(!action.est_drakkar) {

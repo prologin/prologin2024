@@ -104,10 +104,13 @@ TEST_F(ApiTestColibri, TestApiScore)
 
 TEST_F(ApiTestColibri, TestApiHistorique)
 {
+    api->game_state().tour = 0;
     ASSERT_EQ(api->points_action(0), 2);
     position pos = {0, 0};
     ASSERT_EQ(api->tourner_case(pos), OK);
     ASSERT_EQ(api->info_case(pos).contenu, NORD_EST);
+    api->game_state().tour = 1;
+    ASSERT_EQ(api->historique().size(), 1);
     ASSERT_EQ(api->historique()[0].action_type, ACTION_TOURNER_CASE);
     ASSERT_EQ(api->historique()[0].debut.ligne, 0);
     ASSERT_EQ(api->historique()[0].debut.colonne, 0);

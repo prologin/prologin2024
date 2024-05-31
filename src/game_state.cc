@@ -231,10 +231,8 @@ int GameState::joueur_actuel() const
 
 void GameState::debute_tour(int joueur)
 {
-    historiques[0].clear();
-    historiques[1].clear();
+    historiques[joueur_actuel()].clear();
     joueurs[joueur].points_action = TOUR_POINTS_ACTION;
-    // FIXME
 }
 
 /* GESTIONNAIRE D'HISTORIQUE */
