@@ -11,7 +11,11 @@ Il est interdit de :
 - dépasser la ligne qui délimite les machines des organisateurs et, plus
   généralement, d'aller dans toutes les zones en rouge sur la carte qui se
   trouve en page 4 et toute zone délimitée par des barrières Vauban ou un ruban
-  de ce style : ![Ruban](img/ruban.png)
+  de ce style :
+
+.. image:: img/ruban.png
+    :align: center
+
 - manger et boire en salle machine ;
 - faire du bruit dans les dortoirs ;
 - copier le code d’un autre candidat. Vous êtes cependant autorisés (même

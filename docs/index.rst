@@ -10,8 +10,7 @@ Prologin 2024
     salles_machines.rst
     deroulement.rst
     finale.rst
-    editor.rst
-    replay.rst
     api.rst
+    antiseche/index
     front/index
     faq/index

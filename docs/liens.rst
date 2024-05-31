@@ -18,6 +18,13 @@ https://prologin.eu
 
 Un site qui te sera utile tout au long de la finale !
 
+Finale Documentation
+--------------------
+
+https://prologin.eu
+
+Un site qui te sera utile tout au long de la finale !
+
 Documentation
 -------------
 

@@ -1,0 +1,27 @@
+====
+ I3
+====
+
+.. tip::
+   :kbd:`Mod` correspond soit à la touche :kbd:`Windows`, soit :kbd:`Alt`
+
+Ouvrir un terminal
+    :kbd:`Mod` + :kbd:`Enter`
+
+Aller vers le workspace [1 - 10]
+    :kbd:`Mod` + :kbd:`<workspace>`
+
+Déplacer la fenêtre vers le workspace [1 - 10]
+    :kbd:`Mod` + :kbd:`Shift` :kbd:`<workspace>`
+
+Découpage horizontal
+    :kbd:`Mod` + :kbd:`h`
+
+Découpage vertical
+    :kbd:`Mod` + :kbd:`v`
+
+Naviguer entre les fenetres
+    :kbd:`Mod` + :kbd:`<fleches>`
+
+Verrouiller sa session
+    :kbd:`Mod` + :kbd:`d` + :kbd:`i3lock`

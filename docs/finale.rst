@@ -58,19 +58,30 @@ Ce fichier doit être rempli comme suit :
 .. code-block:: yaml
     :caption: config.yml
 
-    rules: libprologin2024.so
+    rules: /run/current-system/sw/lib/libprologin2024.so
     verbose: 3
+    map: ./path/to/map.json
     clients:
         - ./champion.so
         - /path/to/other/champion.so
     names:
         - Player 1
         - Player 2
+    dump: dump.json
 
 où :
 
+* ``map`` est une carte valide
 * ``clients`` est la liste des champions que tu veux voir jouer
 * ``names`` comporte les noms des deux joueurs
+* ``dump`` *(optionnel)* est le un fichier dans lequel stechec2 va écrire une
+  trace de la partie. Ce fichier peut être chargé dans l'interface graphique via
+  le bouton *Replay* (voir la section :ref:`replay`).
+
+.. tip::
+
+   Tu peux télécharger des cartes sur `le site de finale
+   <https://finale.prologin.eu/maps/all/>`_
 
 Pour lancer la partie, entre la commande suivante dans un terminal :
 
