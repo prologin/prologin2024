@@ -24,33 +24,37 @@ func current_map():
 	return current_state.map
 
 
-# add_last_state: If multiple actions, will add an empty state with the map obtained by playing the last action
-func add_state(game_state: Models.GameState, add_last_state = false):
-	if len(game_state.actions) == 0:
-		# Turn without action, create a state with no action
-		var state = ReplayState.new()
-		state.map = game_state.map.copy()
-		state.tour = game_state.tour
-		state.action = null
-		states.append(state)
-	else:
-		# Turn with multiple actions, split into multiple states
-		var tmp_map = game_state.map.copy()
-		for action in game_state.actions:
-			var state = ReplayState.new()
-			state.map = tmp_map.copy()
-			state.tour = game_state.tour
-			state.action = action
-			states.append(state)
-			# Play actions step by step
-			apply_action(action, tmp_map, false)
+# Adds a full game state (state + actions)
+func add_game_state(game_state):
+	for action in game_state.actions:
+		add_action(action)
+	add_state(game_state)
 
-		if add_last_state:
-			var state = ReplayState.new()
-			state.map = tmp_map.copy()
-			state.tour = game_state.tour
-			state.action = null
-			states.append(state)
+
+# Adds a state with an empty action
+func add_state(game_state: Models.GameState):
+	var state = ReplayState.new()
+	state.map = game_state.map.copy()
+	state.tour = game_state.tour
+	state.action = null
+	states.append(state)
+
+
+# Play an action from the last state
+# 1. Set the last state action to `action`
+# 2. Duplicate the last state and update apply the action on it
+func add_action(action):
+	# Set action for the last state
+	var last_state = states[-1]
+	last_state.action = action
+
+	# Copy last state
+	var state = ReplayState.new()
+	state.map = last_state.map.copy()
+	apply_action(action, state.map, false)
+	state.tour = last_state.tour
+	state.action = action
+	states.append(state)
 
 
 func set_state(i):
@@ -126,7 +130,6 @@ func apply_action(action, map, debug):
 				'METEORE':
 					tourner_cases(action, map, aigle)
 					map.remove_aigle(aigle.identifiant)
-		# TODO : Debug...
 
 
 # --- Utils ---

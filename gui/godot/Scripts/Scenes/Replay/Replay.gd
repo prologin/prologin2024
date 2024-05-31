@@ -68,7 +68,8 @@ func _ready():
 # Callback used for the socket
 func add_state(turn):
 	var game_state = Models.GameState.from_json(viewer, turn)
-	manager.add_state(game_state)
+
+	manager.add_game_state(game_state)
 
 	if not igui_started:
 		igui_started = true
@@ -79,7 +80,6 @@ func add_state(turn):
 # do_transition: Whether or not to play animations
 func update_all(do_transition: bool):
 	var tour = manager.current_state.tour
-	# TODO : Verify 0 or 1
 	is_j1_playing = tour.joueur_actuel == 0
 	update_info()
 	viewer.update_all(manager.current_map(), tour.id_tour)
