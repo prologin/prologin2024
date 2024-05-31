@@ -98,10 +98,10 @@ func _input(event):
 			rect_selection.handle_mouse_event(event)
 		elif event is InputEventMouseMotion:
 			rect_selection.handle_move_event(event)
-	
+
 	if event.is_action_pressed("ui_cancel"):
 		rect_selection.disable()
-	
+
 	if is_dialog_opened or points_amount_focused:
 		return
 
@@ -125,6 +125,13 @@ func _input(event):
 			# Edit map
 			if n < len(Viewer.tiles):
 				set_bg_selection(Viewer.tiles[n])
+
+	# Scroll points
+	if points_editor_mode == Constants.EditorMode.POINTS:
+		if event.is_action("scroll_up") and event.shift:
+			_on_PointsAmount_update_value(1)
+		elif event.is_action("scroll_down") and event.shift:
+			_on_PointsAmount_update_value(-1)
 
 
 func set_dialog_open(is_open):
@@ -239,17 +246,17 @@ func set_bg_selection(sel):
 					if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
 						remove_owned_villages(bg_selection)
 					viewer.map.carte[tile.y][tile.x] = bg_selection
-				
+
 				rect_selection.disable()
 				viewer.update_all(viewer.map)
-				
+
 				bg_selection = null
 				return
 
 			points_editor_mode = Constants.EditorMode.BACKGROUND
 		else:
 			points_editor_mode = Constants.EditorMode.FOREGROUND
-			
+
 		rect_selection.disable()
 		viewer.set_tiles_mode(points_editor_mode)
 
@@ -367,3 +374,11 @@ func _on_QuitDialog_about_to_show():
 
 func _on_QuitDialog_popup_hide():
 	set_dialog_open(false)
+
+
+func _on_PointsAmount_update_value(delta):
+	if points_selection == null:
+		points_selection = 0
+
+	points_amount.text = str(points_selection + delta)
+	_on_PointsAmount_text_changed()

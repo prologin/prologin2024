@@ -20,9 +20,9 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_released("cam_drag"): # lacher de molette
 		_drag = false
 
-	elif event.is_action("cam_zoom_in"): # molette vers le haut
+	elif event.is_action("scroll_up") and not event.shift: # molette vers le haut
 		_update_zoom(-ZOOM_INCREMENT, make_input_local(event).position)
-	elif event.is_action("cam_zoom_out"): # molette vers le bas
+	elif event.is_action("scroll_down") and not event.shift: # molette vers le bas
 		_update_zoom(ZOOM_INCREMENT, make_input_local(event).position)
 
 	elif event is InputEventMouseMotion && _drag: # si en cours de drag + la souris a bougé
