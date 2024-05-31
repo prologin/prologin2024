@@ -182,3 +182,16 @@ func _on_TickTimer_timeout():
 
 func _on_Back_to_main_menu_pressed():
 	Scenes.open_scene(self, Scenes.menu_scene)
+
+func _input(event):
+	if event.is_action_pressed("ui_left"):
+		_on_Prev_pressed()
+	if event.is_action_pressed("ui_right"):
+		_on_Next_pressed()
+	if event.is_action_pressed("ui_up"):
+		_on_End_pressed()
+	if event.is_action_pressed("ui_down"):
+		_on_Start_pressed()
+	if event.is_action_pressed("ui_space"):
+		_on_PlayPause_pressed()
+
