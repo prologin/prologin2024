@@ -23,6 +23,7 @@ var bg_selection = null
 var points_selection = null
 
 var points_editor_mode = Constants.EditorMode.BACKGROUND
+var last_classic_editor_mode = Constants.EditorMode.BACKGROUND
 var selected_aigle_data = null
 var is_dialog_opened = false
 var points_amount_focused = false
@@ -215,7 +216,7 @@ func _on_ClearMap_pressed():
 
 func _on_EditorModeToggle_pressed():
 	if points_editor_mode == Constants.EditorMode.POINTS:
-		points_editor_mode = Constants.EditorMode.BACKGROUND
+		points_editor_mode = last_classic_editor_mode
 	else:
 		points_editor_mode = Constants.EditorMode.POINTS
 	viewer.set_tiles_mode(points_editor_mode)
@@ -257,8 +258,9 @@ func set_bg_selection(sel):
 		else:
 			points_editor_mode = Constants.EditorMode.FOREGROUND
 
-		rect_selection.disable()
+		last_classic_editor_mode = points_editor_mode
 		viewer.set_tiles_mode(points_editor_mode)
+		rect_selection.disable()
 
 
 func _on_Export_pressed(force=false):
