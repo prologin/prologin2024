@@ -30,6 +30,20 @@ func _input(event: InputEvent) -> void:
 		set_offset(_get_restricted_offset(current_offset))
 		emit_signal("moved")
 
+func _physics_process(delta):
+	var offset = Vector2.ZERO
+	if Input.is_physical_key_pressed(KEY_A):
+		offset += Vector2.LEFT
+	if Input.is_physical_key_pressed(KEY_D):
+		offset += Vector2.RIGHT
+	if Input.is_physical_key_pressed(KEY_W):
+		offset += Vector2.UP
+	if Input.is_physical_key_pressed(KEY_S):
+		offset += Vector2.DOWN
+	if offset != Vector2.ZERO:
+		set_offset(_get_restricted_offset(get_offset() + offset*_current_zoom_level*5))
+		emit_signal("moved")
+
 
 # limite le mouvement à une certaine plage
 func _get_restricted_offset(current_offset: Vector2) -> Vector2:
