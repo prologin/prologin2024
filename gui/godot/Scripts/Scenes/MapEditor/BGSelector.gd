@@ -49,10 +49,12 @@ func add_collision_body(node2D: Node2D, pos: Vector2, size: Vector2, label: Stri
 	add_child(rect)
 
 func set_selection_rect(tilepos):
+	var editor = get_tree().current_scene
+	
 	var pos : Vector2 = to_global(map_to_world(Vector2(tilepos[0], tilepos[1])))
 	select_rect.position.x = pos.x - 3
 	select_rect.position.y = pos.y - 3
-	select_rect.visible = true
+	select_rect.visible = editor.is_selection_enabled()
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
@@ -60,6 +62,6 @@ func _input(event):
 		var tilepos = self.world_to_map(pos)
 		var tile = self.get_cell(tilepos[0], tilepos[1])
 		if tile != -1:
+			emit_signal("on_selection", tile)
 			if select_rect.self_modulate.a != 0:
 				set_selection_rect(tilepos)
-			emit_signal("on_selection", tile)

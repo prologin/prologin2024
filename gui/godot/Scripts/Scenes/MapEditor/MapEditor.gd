@@ -1,6 +1,7 @@
-extends Node2D
+class_name MapEditor extends Node2D
 
 onready var viewer : Viewer = $Viewer
+onready var rect_selection: RectSelection = $RectSelection
 onready var editor_mode_toggle : Button = $Selector/VBoxContainer/EditorModeToggle
 onready var tiles_selector = $Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/BGSelector
 onready var points_selector = $Selector/VBoxContainer/ViewportContainer/Viewport/CenterContainer/PointsSelector
@@ -35,6 +36,12 @@ func _ready():
 	update_editor_mode()
 	update_selector()
 
+func is_selection_enabled():
+	match points_editor_mode:
+		Constants.EditorMode.POINTS:
+			return points_selection != null
+		_:
+			return bg_selection != null
 
 # --- UI ---
 func update_editor_mode():
@@ -55,12 +62,23 @@ func update_editor_mode():
 
 func on_point_selected(i):
 	# TODO : Highlight selected if exists
+	var new_selection = null
 	if points_selection in [i, -i]:
-		points_selection = -points_selection
+		new_selection = -points_selection
 	else:
-		points_selection = i
-	points_amount.text = str(points_selection)
-	print('points_selection: ', points_selection)
+		new_selection = i
+	points_selection = new_selection if points_selection != new_selection else null
+	if rect_selection.enabled:
+		for tile in rect_selection.get_selected_tiles(true):
+			if viewer.map.points[tile.y][tile.x] == points_selection:
+				continue
+			viewer.map.points[tile.y][tile.x] = points_selection
+		viewer.update_all(viewer.map)
+		points_selection = null
+		rect_selection.disable()
+	else:
+		points_amount.text = str(points_selection) if points_selection != null else ""
+		print('points_selection: ', points_selection)
 
 
 func update_selector():
@@ -75,6 +93,15 @@ func update_selector():
 
 # --- Keyboard ---
 func _input(event):
+	if !is_selection_enabled():
+		if event is InputEventMouseButton:
+			rect_selection.handle_mouse_event(event)
+		elif event is InputEventMouseMotion:
+			rect_selection.handle_move_event(event)
+	
+	if event.is_action_pressed("ui_cancel"):
+		rect_selection.disable()
+	
 	if is_dialog_opened or points_amount_focused:
 		return
 
@@ -129,7 +156,7 @@ func _on_click(pos, click_type):
 			# Point click
 			viewer.map.points[y][x] = points_selection
 			viewer.update_all(viewer.map)
-		elif points_editor_mode == Constants.EditorMode.FOREGROUND:
+		elif points_editor_mode == Constants.EditorMode.FOREGROUND and bg_selection != null:
 			# Foreground click
 			if click_type == ClickType.LEFT:
 				selected_aigle_data = {
@@ -185,7 +212,6 @@ func _on_EditorModeToggle_pressed():
 	else:
 		points_editor_mode = Constants.EditorMode.POINTS
 	viewer.set_tiles_mode(points_editor_mode)
-	print('points_edition_mode: ', points_editor_mode)
 	update_editor_mode()
 
 
@@ -195,8 +221,8 @@ func _on_BGSelector_on_selection(tile):
 
 func set_bg_selection(sel):
 	if points_editor_mode != Constants.EditorMode.POINTS:
-		bg_selection = sel
-		if bg_selection in [
+		bg_selection = sel if sel != bg_selection else null
+		if bg_selection == null or bg_selection in [
 			Constants.TypeCase.VILLAGE,
 			Constants.TypeCase.VILLAGE_J1,
 			Constants.TypeCase.VILLAGE_J2,
@@ -205,9 +231,26 @@ func set_bg_selection(sel):
 			Constants.TypeCase.SUD_OUEST,
 			Constants.TypeCase.SUD_EST,
 		]:
+			if bg_selection != null and rect_selection.enabled:
+				var tiles = rect_selection.get_selected_tiles()
+				for tile in tiles:
+					if viewer.map.carte[tile.y][tile.x] == bg_selection:
+						continue
+					if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
+						remove_owned_villages(bg_selection)
+					viewer.map.carte[tile.y][tile.x] = bg_selection
+				
+				rect_selection.disable()
+				viewer.update_all(viewer.map)
+				
+				bg_selection = null
+				return
+
 			points_editor_mode = Constants.EditorMode.BACKGROUND
 		else:
 			points_editor_mode = Constants.EditorMode.FOREGROUND
+			
+		rect_selection.disable()
 		viewer.set_tiles_mode(points_editor_mode)
 
 
@@ -306,7 +349,7 @@ func _on_PointsAmount_focus_exited():
 func _on_PointsAmount_gui_input(event):
 	if event is InputEventKey and event.pressed and event.scancode == KEY_ENTER:
 		points_amount.release_focus()
-		points_amount.text = str(points_selection)
+		points_amount.text = str(points_selection) if points_selection != null else ""
 
 
 func _on_ValidatorFailDialog_confirmed():
