@@ -30,7 +30,7 @@ func handle_mouse_event(event):
 		border_start_pos = event.position
 		border_end_pos = event.position
 		dragging = true
-	else:
+	elif dragging:
 		var pos = translate_positions()
 		var size = Vector2(pos[1].x - pos[0].x, pos[1].y - pos[0].y)
 		var threshold = Constants.TILE_SIZE
