@@ -11,6 +11,9 @@ Vue
 La vue peut être controlée avec la souris, le zoom se contrôle via la molette et
 le mouvement se fait en cliquant avec la molette de la souris.
 
+Il est également possible au clavier d'utiliser `W`, `A`, `S`, `D` et
+`numpad +`, `numpad -` pour se déplacer / zoomer.
+
 Sélection
 ---------
 

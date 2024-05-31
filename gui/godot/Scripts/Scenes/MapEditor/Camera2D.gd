@@ -29,6 +29,10 @@ func _input(event: InputEvent) -> void:
 		var current_offset = get_offset() - event.relative*_current_zoom_level # calcul du nouveau mouvement
 		set_offset(_get_restricted_offset(current_offset))
 		emit_signal("moved")
+	elif event.is_action("kbd_zoom_in"):
+		_update_zoom(-ZOOM_INCREMENT, offset)
+	elif event.is_action("kbd_zoom_out"):
+		_update_zoom(ZOOM_INCREMENT, offset)
 
 func _physics_process(delta):
 	var offset = Vector2.ZERO
