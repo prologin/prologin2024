@@ -118,14 +118,17 @@ func _input(event):
 		KEY_8: 8,
 		KEY_9: 9
 	}
-	if event is InputEventKey and event.pressed and event.scancode in matching:
-		var n = matching[event.scancode]
-		if points_editor_mode == Constants.EditorMode.POINTS:
-			on_point_selected(n)
-		else:
-			# Edit map
-			if n < len(Viewer.tiles):
-				set_bg_selection(Viewer.tiles[n])
+	if event is InputEventKey:
+		if event.pressed and event.scancode in matching:
+			var n = matching[event.scancode]
+			if points_editor_mode == Constants.EditorMode.POINTS:
+				on_point_selected(n)
+			else:
+				# Edit map
+				if n < len(Viewer.tiles):
+					set_bg_selection(Viewer.tiles[n])
+		if not event.pressed and event.scancode == KEY_TAB:
+			_on_EditorModeToggle_pressed()
 
 	# Scroll points
 	if points_editor_mode == Constants.EditorMode.POINTS:

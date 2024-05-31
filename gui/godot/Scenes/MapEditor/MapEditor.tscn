@@ -87,6 +87,7 @@ text = "Tout Effacer"
 margin_top = 87.0
 margin_right = 208.0
 margin_bottom = 112.0
+hint_tooltip = "Changer de mode (TAB)"
 theme = ExtResource( 7 )
 text = "Editor Mode"
 
