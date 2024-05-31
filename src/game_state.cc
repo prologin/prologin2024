@@ -508,14 +508,12 @@ json GameState::dump() const
 
     // TODO: dump que le dernier tour?
     json jactions = json::array();
-    for (int joueur = 0; joueur <= 1; joueur++)
+    int joueur = joueur_actuel();
+    for (const ActionInterne& action_interne : historiques[joueur])
     {
-        for (const ActionInterne& action_interne : historiques[joueur])
-        {
-            if (action_interne.est_drakkar)
-                continue;
-            jactions.push_back(dump_action(action_interne));
-        }
+        if (action_interne.est_drakkar)
+            continue;
+        jactions.push_back(dump_action(action_interne));
     }
     jetat["actions"] = jactions;
 
