@@ -137,4 +137,6 @@ void Rules::end_of_player_turn(unsigned int player_key)
 void Rules::start_of_round()
 {}
 void Rules::end_of_round()
-{}
+{
+    api_->game_state().sync_score();
+}

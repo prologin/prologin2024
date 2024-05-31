@@ -544,5 +544,7 @@ void GameState::sync_score()
 {
     int score = joueurs[joueur_actuel()].score;
     players_[joueur_actuel()]->score = score;
+    score = joueurs[joueur_actuel() ^ 1].score;
+    players_[joueur_actuel() ^ 1]->score = score;
 }
 
