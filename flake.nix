@@ -26,25 +26,38 @@
 
           prologin2024-gui-linux = final.callPackage ./gui/linux.nix { };
 
-          html-export-templates = final.callPackage ./gui/html-templates.nix {};
+          html-export-templates = final.callPackage ./gui/html-templates.nix { };
 
-          prologin2024-gui-html = final.callPackage ./gui/html.nix { html-export-templates =  final.html-export-templates; };
+          prologin2024-gui-html = final.callPackage ./gui/html.nix { html-export-templates = final.html-export-templates; };
 
-          prologin2024-api-rst = final.stdenv.mkDerivation {
-            name = "prologin2024-api-rst";
-
+          prologin2024-yml-docs = final.stdenvNoCC.mkDerivation {
+            name = "prologin2024-yml-docs";
             src = ./.;
-
-            buildInputs = [ final.stechec2 ];
-
-            configurePhase = ''
-              ${final.stechec2}/bin/stechec2-generator sphinxdoc $src/prologin2024.yml .
-            '';
-
             installPhase = ''
-              mkdir -p $out/
-              mv api.rst $out/api.rst
+              mkdir $out
+              cp -r $src/docs/** $out
+              cp $src/prologin2024.yml $out
             '';
+          };
+
+          prologin2024-docs = final.stdenv.mkDerivation {
+            name = "prologin2024-docs";
+
+            src = prologin2024-yml-docs;
+
+            buildInputs = [
+              final.python3Packages.sphinx
+              final.stechec2
+              final.python3Packages.sphinx-book-theme
+            ];
+            configurePhase = ''
+            '';
+            buildPhase = ''
+              ${final.stechec2}/bin/stechec2-generator sphinxdoc $src/prologin2024.yml .
+              cp -r $src/ .
+              sphinx-build . $out
+            '';
+
           };
         };
 
@@ -59,7 +72,7 @@
 
         in
         rec {
-          packages = { inherit (pkgs) prologin2024 prologin2024-gui-linux prologin2024-gui-html prologin2024-api-rst; };
+          packages = { inherit (pkgs) prologin2024 prologin2024-gui-linux prologin2024-gui-html prologin2024-docs; };
 
           defaultPackage = self.packages.${system}.prologin2024;
 
