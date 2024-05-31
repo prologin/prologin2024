@@ -95,8 +95,10 @@ func update_info():
 
 	print('Replay.update_info, ', info)
 	stateinfo.text = info
-	scorej1.text = "J1: " + str(manager.current_state.map.joueurs[0].score)
-	scorej2.text = "J2: " + str(manager.current_state.map.joueurs[1].score)
+	var j1 = manager.current_state.map.joueurs[0]
+	var j2 = manager.current_state.map.joueurs[1]
+	scorej1.text = "J1: " + str(j1.score) + ' (' + str(j1.score_tour) + ')'
+	scorej2.text = "J2: " + str(j2.score) + ' (' + str(j2.score_tour) + ')'
 
 
 # --- UI ---

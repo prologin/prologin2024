@@ -7,12 +7,16 @@ extends Node
 
 class Player:
 	var identifiant : int = 0
+	# Total score from turn 0 to this current turn
 	var score : int = 0
+	# Score obtained at this turn
+	var score_tour : int = 0
 
 	func copy():
 		var p = Player.new()
 		p.identifiant = self.identifiant
 		p.score = self.score
+		p.score_tour = self.score_tour
 
 		return p
 
@@ -245,9 +249,11 @@ class Map:
 					map.debug[i].append(drakkar)
 
 		var j1 = Player.new()
-		j1.score = json["joueur1"].get("score", 0)
+		j1.score = json["joueur1"].get("score_total", 0)
+		j1.score_tour = json["joueur1"].get("score", 0)
 		var j2 = Player.new()
-		j2.score = json["joueur2"].get("score", 0)
+		j2.score = json["joueur2"].get("score_total", 0)
+		j2.score_tour = json["joueur2"].get("score", 0)
 		map.joueurs = [j1, j2]
 
 		return map
