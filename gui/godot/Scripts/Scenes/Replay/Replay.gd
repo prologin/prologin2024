@@ -5,7 +5,7 @@ extends Node2D
 
 onready var viewer : Viewer = $Viewer
 onready var import_dialog : FileDialog = $Popups/ImportDialog
-onready var container_interactive = $HBoxContainer
+onready var container_interactive = $Menu/VBoxContainer/Controls
 onready var viewer_viewport = $Viewer/ViewportContainer/Viewport
 onready var playpause = $Menu/VBoxContainer/Controls/PlayPause
 onready var next_button = $Menu/VBoxContainer/Controls/Next
@@ -32,12 +32,29 @@ var play_button = load('res:///Assets/PlayButton.tres')
 var pause_button = load('res:///Assets/PauseButton.tres')
 
 
+
 func _ready():
 	ticktimer.wait_time = TICK_DURATION_MS / 1000.0
 	ticktimer.start()
-	
+
 	manager = ReplayManager.new()
 	manager.init(viewer)
+
+	if OS.has_feature('JavaScript'):
+		var text = JavaScript.eval("dump_value", true)
+		print('Reading dump text ' + str(text))
+		var content = text.strip_edges().split('\n')
+
+		var json = []
+		for ln in content:
+			json.append(JSON.parse(ln).result)
+
+		for turn in json:
+			add_state(turn)
+
+		# Load
+		_on_Start_pressed()
+
 
 	if Context.replay_path != "":
 		_on_ImportDialog_file_selected(Context.replay_path)
@@ -52,7 +69,7 @@ func _ready():
 func add_state(turn):
 	var game_state = Models.GameState.from_json(viewer, turn)
 	manager.add_state(game_state)
-	
+
 	if not igui_started:
 		igui_started = true
 		_on_Start_pressed()
@@ -73,9 +90,9 @@ func update_info():
 	var info = "Tour: " + str(manager.current_state.tour.id_tour)
 	if Context.socket == null:
 		info += "/" + n_turns
-		
+
 	info +=  " (J" + str(1 if is_j1_playing else 2) + "), Action: " + str(manager.icurrent_state + 1)
-	
+
 	print('Replay.update_info, ', info)
 	stateinfo.text = info
 	scorej1.text = "J1: " + str(manager.current_state.map.joueurs[0].score)
@@ -137,15 +154,15 @@ func _on_Next_pressed(is_autoplay = false):
 	ticktimer.set_paused(true)
 	next_button.disabled = true
 	end_button.disabled = true
-	
+
 	if Context.socket != null:
 		SocketManager.step(funcref(self, "add_state"))
-		
+
 	manager.next()
 	if not is_autoplay or manager.icurrent_state + 1 == len(manager.states):
 		set_playing(false)
 	update_all(true)
-	
+
 	end_button.disabled = false
 	next_button.disabled = false
 	ticktimer.set_paused(false)

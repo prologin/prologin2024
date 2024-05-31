@@ -27,7 +27,7 @@ pkgs.stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs scripts
+    patchShebangs Scripts
   '';
 
   buildPhase = ''
@@ -42,4 +42,3 @@ pkgs.stdenv.mkDerivation rec {
 
   dontInstall = true;
 }
-
