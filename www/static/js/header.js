@@ -20,11 +20,12 @@ $(function () {
   if (localStorage.theme == "light") {
     setThemeLight();
   }
-  $(".navbar-nav")
-    .append("<li><a>Change theme</a></li>")
-    .click(function () {
-      changeTheme();
-    });
+  button = $("<li><a>Change theme</a></li>");
+  button.click(function () {
+    changeTheme();
+  });
+
+  $(".navbar-nav").append(button);
   $("[role=complementary] h1")
     .text("")
     .html('<img src="/static/img/Prologin2024.png" style="width:100%;" />');
