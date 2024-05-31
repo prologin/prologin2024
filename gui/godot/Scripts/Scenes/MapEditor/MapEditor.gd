@@ -53,12 +53,12 @@ func update_editor_mode():
 	points_amount.visible = points_editor_mode == Constants.EditorMode.POINTS
 	if points_editor_mode == Constants.EditorMode.POINTS:
 		editor_mode_toggle.text = 'EDITION CARTE'
-		selection_rect.self_modulate.a = 0
+		selection_rect.visible = false
 		viewer.set_alpha(alpha_disabled, 1)
 	else:
 		editor_mode_toggle.text = 'EDITION POINTS'
 		if bg_selection != null:
-			selection_rect.self_modulate.a = 1
+			selection_rect.visible = true
 		viewer.set_alpha(1, alpha_disabled)
 
 
