@@ -3,7 +3,7 @@ extends Node2D
 
 onready var viewer : Viewer = $Viewer
 onready var import_dialog : FileDialog = $Popups/ImportDialog
-onready var container_interactive = $HBoxContainer
+onready var container_interactive = $Menu/VBoxContainer/Controls
 onready var viewer_viewport = $Viewer/ViewportContainer/Viewport
 
 var is_dialog_opened = false
@@ -11,7 +11,14 @@ var is_dialog_opened = false
 
 func _ready():
 	var map = Models.Map.new()
-	map.init(0, 0)
+	if OS.has_feature('JavaScript'):
+		var text = JavaScript.eval("map_content", true)
+		print('Reading dump text ' + str(text))
+		var content = text.strip_edges()
+		var json = JSON.parse(content).result
+		map = Models.Map.from_json(viewer, json)
+	else:
+		map.init(0, 0)
 	viewer.update_all(map)
 
 
