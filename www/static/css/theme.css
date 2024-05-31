@@ -1,14 +1,4 @@
 body {
-  --background-color: #faedcd;
-  --background-color-bis: #d4a373;
-  --background-color-hover: #d4a373;
-  --background-color-active: #e4b383;
-  --text-color: #003049;
-  --text-color-bis: #b3bab8;
-  --text-color-third: #003049;
-}
-
-body.light {
   --background-color: #1d2331;
   --background-color-bis: #e4422e;
   --background-color-hover: #803931;
@@ -16,6 +6,16 @@ body.light {
   --text-color: #ff5428;
   --text-color-bis: #b3bab8;
   --text-color-third: #eee;
+}
+
+body.light {
+  --background-color: #faedcd;
+  --background-color-bis: #d4a373;
+  --background-color-hover: #d4a373;
+  --background-color-active: #e4b383;
+  --text-color: #003049;
+  --text-color-bis: #b3bab8;
+  --text-color-third: #003049;
 }
 
 body {
