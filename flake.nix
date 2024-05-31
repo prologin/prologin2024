@@ -30,6 +30,26 @@
 
           prologin2024-gui-html = final.callPackage ./gui/html.nix { html-export-templates = final.html-export-templates; };
 
+          prologin2024-gui-spectator = final.stdenv.mkDerivation {
+            name = "prologin2024-gui-spectator";
+            src = ./gui/igui;
+            buildInputs = [
+              final.stechec2
+              final.python3
+            ];
+
+            buildPhase = ''
+              mkdir -p $out/lib/
+              ${final.stechec2}/bin/stechec2-generator player ${prologin2024-yml-docs}/prologin2024.yml spectator
+              cp $src/spectator.py spectator/python/Champion.py
+              make -C spectator/python/
+              mv spectator/python/champion.so spectator/python/gui.so
+            '';
+            installPhase = ''
+              cp -R spectator/python $out/lib/prologin2024-gui
+            '';
+          };
+
           prologin2024-yml-docs = final.stdenvNoCC.mkDerivation {
             name = "prologin2024-yml-docs";
             src = ./.;
@@ -72,7 +92,7 @@
 
         in
         rec {
-          packages = { inherit (pkgs) prologin2024 prologin2024-gui-linux prologin2024-gui-html prologin2024-docs; };
+          packages = { inherit (pkgs) prologin2024 prologin2024-gui-linux prologin2024-gui-html prologin2024-docs prologin2024-gui-spectator; };
 
           defaultPackage = self.packages.${system}.prologin2024;
 
