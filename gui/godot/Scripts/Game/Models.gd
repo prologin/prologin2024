@@ -207,14 +207,17 @@ class Map:
 
 		map.points = json["gains"]
 		map.territoire = json.get("territoire", null)
-		for aigle in json["aigles"] + json["joueur1"].get("aigles", []) + json["joueur2"].get("aigles", []):
+		var all_aigles = json["aigles"] + json["joueur1"].get("aigles", []) + json["joueur2"].get("aigles", [])
+		var id_aigle = len(all_aigles) + 1
+		for aigle in all_aigles:
 			var a = Aigle.new()
-			a.identifiant = aigle["id"]
+			a.identifiant = aigle.get("id", id_aigle)
 			a.effet = aigle["effet"]
 			a.puissance = aigle["puissance"]
 			a.tour_eclosion = aigle["tour_eclosion"]
 			a.pos = Vector2(aigle["pos"]["x"], aigle["pos"]["y"])
 			map.aigles.append(a)
+			id_aigle += 1
 
 		# Players
 		if from_dump:
@@ -271,8 +274,10 @@ class Map:
 		json["carte"] = carte
 
 		var aigles = []
-		for aigle in self.aigles:
+		for i in len(self.aigles):
+			var aigle = self.aigles[i]
 			aigles.append({
+				"id": i,
 				"pos": {"x": aigle.pos.x, "y": aigle.pos.y},
 				"effet": aigle.effet,
 				"puissance": aigle.puissance,
