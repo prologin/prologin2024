@@ -120,6 +120,9 @@ func _on_Import_pressed():
 func _on_ImportDialog_file_selected(path):
 	print('Importing ', path)
 	var json = Serialization.read_multiline_json(path)
+	# Reset the replay managz
+	manager = ReplayManager.new()
+	manager.init(viewer)
 
 	for turn in json:
 		add_state(turn)
