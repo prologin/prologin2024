@@ -48,6 +48,15 @@ class Aigle:
 		var y_min = pos.y - self.puissance
 		var y_max = pos.y + self.puissance + 1
 		return x >= x_min && x <= x_max && y >= y_min && y <= y_max
+		
+	func to_string_2(tour):
+		var infos = "Aigle de " + effet 
+		if (tour < tour_eclosion):
+			infos += " éclot dans " + str(tour_eclosion - tour) + " tour"
+		infos += " possède une puissance de " + str(puissance)
+		if joueur:
+			infos += " et appartient au joueur " + str(joueur.identifiant)
+		return infos
 
 
 class Map:

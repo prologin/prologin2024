@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Scenes/Viewer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Assets/Font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Scripts/Scenes/MapEditor/Camera2D.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Theme/popup_theme.tres" type="Theme" id=7]
+[ext_resource path="res://Assets/roboto.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Scenes/Viewer/ToolTipLabel.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Theme/new_theme.tres" type="Theme" id=10]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -33,6 +36,28 @@ region = Rect2( 408, 888, 48, 48 )
 flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 504, 888, 48, 48 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 8 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.92549, 0.490196, 0.156863, 0.623529 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = ExtResource( 8 )
+
+[sub_resource type="Theme" id=5]
+TooltipLabel/fonts/font = SubResource( 4 )
 
 [node name="Viewer" type="Node2D"]
 script = ExtResource( 1 )
@@ -109,8 +134,6 @@ cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 cell_y_sort = true
 format = 1
 
-[node name="Aigles" type="Node2D" parent="ViewportContainer/Viewport"]
-
 [node name="ForegroundTileMap" type="TileMap" parent="ViewportContainer/Viewport"]
 position = Vector2( 48, 48 )
 tile_set = ExtResource( 2 )
@@ -148,6 +171,24 @@ cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 4, 0, 65536, 4, 0, 65537, 2, 0, 65538, 4, 0 )
 
+[node name="Aigles" type="Node2D" parent="ViewportContainer/Viewport"]
+
+[node name="ToolTip" type="ColorRect" parent="ViewportContainer/Viewport/Aigles"]
+self_modulate = Color( 0, 0, 0, 0 )
+margin_left = 48.0
+margin_top = 48.0
+margin_right = 144.0
+margin_bottom = 144.0
+
+[node name="ToolTipLabel" type="Label" parent="ViewportContainer/Viewport/Aigles/ToolTip"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 14.0
+theme = ExtResource( 10 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+script = ExtResource( 9 )
+
 [node name="Camera2D" type="Camera2D" parent="ViewportContainer/Viewport"]
 current = true
 script = ExtResource( 6 )
@@ -155,6 +196,7 @@ script = ExtResource( 6 )
 [node name="Selector" type="ColorRect" parent="."]
 margin_right = 800.0
 margin_bottom = 30.0
+theme = SubResource( 5 )
 color = Color( 0.796078, 0.415686, 0.266667, 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Selector"]
@@ -208,5 +250,7 @@ tick_count = 5
 
 [connection signal="click" from="ViewportContainer/Viewport/InteractiveTileMap" to="." method="_on_InteractiveTileMap_click"]
 [connection signal="drag" from="ViewportContainer/Viewport/InteractiveTileMap" to="." method="_on_InteractiveTileMap_drag"]
+[connection signal="mouse_entered" from="ViewportContainer/Viewport/Aigles/ToolTip" to="ViewportContainer/Viewport/Aigles/ToolTip/ToolTipLabel" method="_on_ToolTip_mouse_entered"]
+[connection signal="mouse_exited" from="ViewportContainer/Viewport/Aigles/ToolTip" to="ViewportContainer/Viewport/Aigles/ToolTip/ToolTipLabel" method="_on_ToolTip_mouse_exited"]
 [connection signal="value_changed" from="Selector/HBoxContainer/GridOpacity/GridOpacitySlider" to="." method="_on_GridOpacitySlider_value_changed"]
 [connection signal="value_changed" from="Selector/HBoxContainer/PointOpacity/PointOpacitySlider" to="." method="_on_PointOpacitySlider_value_changed"]

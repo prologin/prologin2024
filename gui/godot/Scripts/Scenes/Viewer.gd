@@ -21,10 +21,16 @@ onready var container : ViewportContainer = $ViewportContainer
 onready var points : Node2D = $ViewportContainer/Viewport/Points
 onready var points_sample : Label = $ViewportContainer/Viewport/Points/Sample
 onready var camera : Camera2D = $ViewportContainer/Viewport/Camera2D
+onready var aigles : Node2D = $ViewportContainer/Viewport/Aigles
+onready var selector : ColorRect = $Selector
+onready var tool_tip : ColorRect = $ViewportContainer/Viewport/Aigles/ToolTip
+onready var tool_tip_label : Label = $ViewportContainer/Viewport/Aigles/ToolTip/ToolTipLabel
 
 var map : Models.Map
 var tour : int = 0
 var original_res: Vector2 = Vector2.ZERO
+
+var pos2tooltip : Dictionary = {}
 
 # Tiles in order of the tileset
 const tiles = [
@@ -184,6 +190,31 @@ func _ready():
 
 	original_res = container.rect_size
 
+
+func update_eagle_tooltip():
+	var nbs_aigle = {}
+	for tooltip in pos2tooltip.keys():
+		pos2tooltip[tooltip].text = ""
+	for aigle in map.aigles:
+		if !pos2tooltip.has(aigle.pos):
+			var rect : ColorRect = tool_tip.duplicate()
+			rect.rect_size = Vector2(Constants.TILE_SIZE, Constants.TILE_SIZE)
+			rect.rect_position = Vector2(Constants.TILE_SIZE * aigle.pos.x + Constants.HALF_TILE_SIZE, Constants.TILE_SIZE * aigle.pos.y + Constants.HALF_TILE_SIZE)
+			rect.color = Color(0,0,0,0)
+			rect.visible = true
+			var label : ToolTipLabel = rect.get_children()[0]
+			label.rect_global_position.x += Constants.TILE_SIZE
+			aigles.add_child(rect)
+			pos2tooltip[aigle.pos] = label
+		if !nbs_aigle.has(aigle.pos):
+			nbs_aigle[aigle.pos] = 1
+		pos2tooltip[aigle.pos].text = str(nbs_aigle[aigle.pos]) + " " + aigle.to_string_2(tour) + "\n" + pos2tooltip[aigle.pos].text
+		
+		var max_width = map.width * Constants.TILE_SIZE
+		var max_height = map.height * Constants.TILE_SIZE
+		pos2tooltip[aigle.pos].set_properties(max_width, max_height, aigle.pos)
+		nbs_aigle[aigle.pos] += 1
+
 func set_alpha(alpha_carte, alpha_points):
 	iles.modulate.a = alpha_carte
 	ponts.modulate.a = alpha_carte
@@ -218,6 +249,7 @@ func update_all(new_map, new_tour = 0):
 	update_ponts()
 	update_foreground()
 	update_territory()
+	update_eagle_tooltip()
 
 
 func update_zoom():
@@ -475,3 +507,4 @@ func _on_GridOpacitySlider_value_changed(value):
 
 func _on_PointOpacitySlider_value_changed(value):
 	self.points.modulate.a = value / 100
+

@@ -36,6 +36,7 @@ func _ready():
 		_on_ImportDialog_file_selected(Context.map_path)
 	update_editor_mode()
 	update_selector()
+	viewer.update_eagle_tooltip()
 
 func is_selection_enabled():
 	match points_editor_mode:

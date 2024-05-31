@@ -180,15 +180,15 @@ offset = Vector2( 48, 48 )
 [node name="ValidatorFailDialog" type="ConfirmationDialog" parent="Popups"]
 margin_right = 495.0
 margin_bottom = 238.0
-theme = ExtResource( 7 )
 rect_min_size = Vector2( 400, 140 )
+theme = ExtResource( 7 )
 window_title = "Veuillez confirmer…"
 
 [node name="Container" type="VBoxContainer" parent="Popups/ValidatorFailDialog"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 487.0
-margin_bottom = 202.0
+margin_bottom = 197.0
 alignment = 1
 
 [node name="Label" type="Label" parent="Popups/ValidatorFailDialog/Container"]
