@@ -118,14 +118,6 @@ cell_size = Vector2( 96, 96 )
 cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 format = 1
 
-[node name="DebugTileMap" type="TileMap" parent="ViewportContainer/Viewport"]
-position = Vector2( 48, 48 )
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 96, 96 )
-cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
-format = 1
-tile_data = PoolIntArray( 983058, 0, 0 )
-
 [node name="Points" type="Node2D" parent="ViewportContainer/Viewport"]
 
 [node name="Sample" type="Label" parent="ViewportContainer/Viewport/Points"]
@@ -148,6 +140,13 @@ cell_size = Vector2( 48, 48 )
 cell_custom_transform = Transform2D( 48, 0, 0, 48, 0, 0 )
 format = 1
 script = ExtResource( 3 )
+
+[node name="DebugTileMap" type="TileMap" parent="ViewportContainer/Viewport"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 96, 96 )
+cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 4, 0, 65536, 4, 0, 65537, 2, 0, 65538, 4, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="ViewportContainer/Viewport"]
 current = true

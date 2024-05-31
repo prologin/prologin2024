@@ -195,3 +195,6 @@ func _input(event):
 	if event.is_action_pressed("ui_space"):
 		_on_PlayPause_pressed()
 
+func _on_DrakkarButton_toggled(button_pressed):
+	print("button pressed: " + str(button_pressed))
+	viewer.toggle_drakkars(button_pressed)

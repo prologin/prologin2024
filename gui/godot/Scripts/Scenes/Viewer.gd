@@ -159,6 +159,8 @@ var ilots_map = null
 # connections[i][j] = true if there is an island in the lower right of the (i, j) tile
 var connections = null
 
+var drakkars_enabled = true
+
 var territory2tile = {
 	1: Constants.TypeCase.TERRITOIRE_1,
 	2: Constants.TypeCase.TERRITOIRE_2,
@@ -192,6 +194,10 @@ func set_alpha(alpha_carte, alpha_points):
 
 func set_tiles_mode(points_editor_mode):
 	interactive_tile_map.set_tiles_mode(points_editor_mode)
+
+func toggle_drakkars(enabled: bool):
+	drakkars_enabled = enabled
+	update_foreground()
 
 
 # --- Update ---
@@ -422,8 +428,8 @@ func update_foreground():
 		var transform = effet2oeuf if tour < aigle.tour_eclosion else effet2aigle
 		var tile = case2tile[transform[aigle.effet]]
 		foreground.set_cell(aigle.pos[0], aigle.pos[1], tile)
-
-	if map.debug != null and len(map.debug) > 0:
+	
+	if drakkars_enabled and map.debug != null and len(map.debug) > 0:
 		for i in range(map.height):
 			for j in range(map.width):
 				var drakkar = map.debug[i][j]

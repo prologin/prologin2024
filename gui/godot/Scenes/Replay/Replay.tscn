@@ -115,32 +115,21 @@ theme = ExtResource( 5 )
 custom_colors/font_color = Color( 0.643137, 0.0509804, 0.0470588, 1 )
 text = "J2: 31442"
 
-[node name="Back to main menu" type="Button" parent="Menu/VBoxContainer"]
+[node name="CheckButton" type="CheckButton" parent="Menu/VBoxContainer"]
 margin_top = 128.0
 margin_right = 216.0
-margin_bottom = 153.0
+margin_bottom = 168.0
+theme = ExtResource( 5 )
+pressed = true
+text = "Drakkars"
+flat = true
+
+[node name="Back to main menu" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 172.0
+margin_right = 216.0
+margin_bottom = 197.0
 theme = ExtResource( 5 )
 text = "Back to main menu"
-
-[node name="GridOpacity" type="HBoxContainer" parent="Menu/VBoxContainer"]
-margin_top = 157.0
-margin_right = 216.0
-margin_bottom = 174.0
-
-[node name="Label" type="Label" parent="Menu/VBoxContainer/GridOpacity"]
-margin_right = 91.0
-margin_bottom = 17.0
-theme = ExtResource( 5 )
-text = "Opacité grille"
-
-[node name="GridOpacitySlider" type="HSlider" parent="Menu/VBoxContainer/GridOpacity"]
-margin_left = 95.0
-margin_right = 216.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-theme = ExtResource( 5 )
-value = 50.0
-tick_count = 5
 
 [node name="Popups" type="Node" parent="."]
 
@@ -166,6 +155,7 @@ filters = PoolStringArray( "*.json" )
 [connection signal="pressed" from="Menu/VBoxContainer/Controls/PlayPause" to="." method="_on_PlayPause_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/Controls/Next" to="." method="_on_Next_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/Controls/End" to="." method="_on_End_pressed"]
+[connection signal="toggled" from="Menu/VBoxContainer/CheckButton" to="." method="_on_DrakkarButton_toggled"]
 [connection signal="pressed" from="Menu/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
 [connection signal="about_to_show" from="Popups/ImportDialog" to="." method="_on_ImportDialog_about_to_show"]
 [connection signal="file_selected" from="Popups/ImportDialog" to="." method="_on_ImportDialog_file_selected"]
