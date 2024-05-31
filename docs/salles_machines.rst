@@ -15,4 +15,6 @@ Des organisateurs seront à proximité pour résoudre des problèmes techniques,
 .. danger::
   **Attention, il y a seulement 4Gib de stockage dans le PC. Cela devrait être entièrement suffisant pour la finale.**
 
-  **De plus, merci de faire attention à bien verrouiller ta session !**
+  **De plus, seulement le dossier `afs/` est sauvegardé, pensez à mettre votre code dedans !**
+
+  **Et enfin, merci de faire attention à bien verrouiller ta session !**

@@ -9,6 +9,7 @@ Prologin 2024
     reglement.rst
     salles_machines.rst
     deroulement.rst
+    extensions.rst
     finale.rst
     api.rst
     antiseche/index
