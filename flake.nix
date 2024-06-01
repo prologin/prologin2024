@@ -46,7 +46,7 @@
               mv spectator/python/champion.so spectator/python/gui.so
             '';
             installPhase = ''
-              cp -R spectator/python $out/lib/prologin2024-gui
+              cp -R spectator/python $out/lib
             '';
           };
 
