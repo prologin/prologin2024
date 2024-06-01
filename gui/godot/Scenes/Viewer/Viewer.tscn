@@ -1,15 +1,22 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://Scripts/Scenes/Viewer.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Scenes/Viewer/Viewer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Scripts/Scenes/MapEditor/InteractiveTileMap.gd" type="Script" id=3]
 [ext_resource path="res://Assets/tilemap.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Font.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Scripts/Scenes/MapEditor/Camera2D.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Scenes/Viewer/Camera2D.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Theme/popup_theme.tres" type="Theme" id=7]
-[ext_resource path="res://Assets/roboto.ttf" type="DynamicFontData" id=8]
-[ext_resource path="res://Scenes/Viewer/ToolTipLabel.gd" type="Script" id=9]
-[ext_resource path="res://Assets/Theme/new_theme.tres" type="Theme" id=10]
+[ext_resource path="res://new_buttongroup.tres" type="ButtonGroup" id=8]
+[ext_resource path="res://Assets/Theme/icon.tres" type="Theme" id=9]
+[ext_resource path="res://Assets/arrow-pointer-solid.svg" type="Texture" id=10]
+[ext_resource path="res://Assets/paintbrush-solid.svg" type="Texture" id=11]
+[ext_resource path="res://Assets/up-down-left-right-solid.svg" type="Texture" id=12]
+[ext_resource path="res://Assets/magnifying-glass-solid.svg" type="Texture" id=13]
+[ext_resource path="res://Assets/trash-solid.svg" type="Texture" id=14]
+[ext_resource path="res://Scripts/Scenes/Viewer/Toolbar.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/Viewer/ToolTipLabel.gd" type="Script" id=17]
+[ext_resource path="res://Assets/Theme/new_theme.tres" type="Theme" id=18]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -39,7 +46,6 @@ region = Rect2( 504, 888, 48, 48 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 24
-font_data = ExtResource( 8 )
 
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.92549, 0.490196, 0.156863, 0.623529 )
@@ -54,7 +60,6 @@ expand_margin_bottom = 5.0
 
 [sub_resource type="DynamicFont" id=4]
 size = 20
-font_data = ExtResource( 8 )
 
 [sub_resource type="Theme" id=5]
 TooltipLabel/fonts/font = SubResource( 4 )
@@ -184,10 +189,10 @@ margin_bottom = 144.0
 self_modulate = Color( 1, 1, 1, 0 )
 margin_right = 40.0
 margin_bottom = 14.0
-theme = ExtResource( 10 )
+theme = ExtResource( 18 )
 custom_fonts/font = SubResource( 6 )
 custom_styles/normal = SubResource( 7 )
-script = ExtResource( 9 )
+script = ExtResource( 17 )
 
 [node name="Camera2D" type="Camera2D" parent="ViewportContainer/Viewport"]
 current = true
@@ -204,6 +209,8 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 796.0
 margin_bottom = 26.0
+mouse_filter = 0
+script = ExtResource( 15 )
 
 [node name="GridOpacity" type="HBoxContainer" parent="Selector/HBoxContainer"]
 margin_right = 195.0
@@ -248,9 +255,87 @@ theme = ExtResource( 7 )
 value = 50.0
 tick_count = 5
 
+[node name="EmptyFlexibleSpace" type="Control" parent="Selector/HBoxContainer"]
+margin_left = 426.0
+margin_right = 705.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="SelectionButton" type="ToolButton" parent="Selector/HBoxContainer"]
+margin_left = 709.0
+margin_right = 734.0
+margin_bottom = 22.0
+hint_tooltip = "Sélectionner une case"
+theme = ExtResource( 9 )
+toggle_mode = true
+pressed = true
+group = ExtResource( 8 )
+icon = ExtResource( 10 )
+flat = false
+expand_icon = true
+
+[node name="PlaceButton" type="ToolButton" parent="Selector/HBoxContainer"]
+visible = false
+margin_left = 709.0
+margin_right = 734.0
+margin_bottom = 22.0
+hint_tooltip = "Placer un élément"
+theme = ExtResource( 9 )
+toggle_mode = true
+group = ExtResource( 8 )
+icon = ExtResource( 11 )
+flat = false
+expand_icon = true
+
+[node name="MoveButton" type="ToolButton" parent="Selector/HBoxContainer"]
+margin_left = 738.0
+margin_right = 763.0
+margin_bottom = 22.0
+hint_tooltip = "Déplacer la caméra"
+theme = ExtResource( 9 )
+toggle_mode = true
+group = ExtResource( 8 )
+icon = ExtResource( 12 )
+flat = false
+expand_icon = true
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="DeleteButton" type="ToolButton" parent="Selector/HBoxContainer"]
+visible = false
+margin_left = 738.0
+margin_right = 763.0
+margin_bottom = 22.0
+hint_tooltip = "Supprimer des éléments"
+theme = ExtResource( 9 )
+toggle_mode = true
+group = ExtResource( 8 )
+icon = ExtResource( 14 )
+flat = false
+expand_icon = true
+
+[node name="ResetZoom" type="ToolButton" parent="Selector/HBoxContainer"]
+margin_left = 767.0
+margin_right = 792.0
+margin_bottom = 22.0
+hint_tooltip = "Réinitialiser le zoom"
+theme = ExtResource( 9 )
+group = ExtResource( 8 )
+icon = ExtResource( 13 )
+flat = false
+expand_icon = true
+
+[connection signal="mouse_entered" from="ViewportContainer" to="ViewportContainer/Viewport/InteractiveTileMap" method="_on_ViewportContainer_mouse_entered"]
+[connection signal="mouse_exited" from="ViewportContainer" to="ViewportContainer/Viewport/InteractiveTileMap" method="_on_ViewportContainer_mouse_exited"]
 [connection signal="click" from="ViewportContainer/Viewport/InteractiveTileMap" to="." method="_on_InteractiveTileMap_click"]
 [connection signal="drag" from="ViewportContainer/Viewport/InteractiveTileMap" to="." method="_on_InteractiveTileMap_drag"]
 [connection signal="mouse_entered" from="ViewportContainer/Viewport/Aigles/ToolTip" to="ViewportContainer/Viewport/Aigles/ToolTip/ToolTipLabel" method="_on_ToolTip_mouse_entered"]
 [connection signal="mouse_exited" from="ViewportContainer/Viewport/Aigles/ToolTip" to="ViewportContainer/Viewport/Aigles/ToolTip/ToolTipLabel" method="_on_ToolTip_mouse_exited"]
 [connection signal="value_changed" from="Selector/HBoxContainer/GridOpacity/GridOpacitySlider" to="." method="_on_GridOpacitySlider_value_changed"]
 [connection signal="value_changed" from="Selector/HBoxContainer/PointOpacity/PointOpacitySlider" to="." method="_on_PointOpacitySlider_value_changed"]
+[connection signal="toggled" from="Selector/HBoxContainer/SelectionButton" to="Selector/HBoxContainer" method="_on_SelectionButton_toggled"]
+[connection signal="toggled" from="Selector/HBoxContainer/PlaceButton" to="Selector/HBoxContainer" method="_on_PlaceButton_toggled"]
+[connection signal="toggled" from="Selector/HBoxContainer/MoveButton" to="Selector/HBoxContainer" method="_on_MoveButton_toggled"]
+[connection signal="toggled" from="Selector/HBoxContainer/DeleteButton" to="Selector/HBoxContainer" method="_on_DeleteButton_toggled"]
+[connection signal="pressed" from="Selector/HBoxContainer/ResetZoom" to="Selector/HBoxContainer" method="_on_ResetZoom_pressed"]

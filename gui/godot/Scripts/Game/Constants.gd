@@ -152,8 +152,9 @@ enum EffetAigle {
 	BLOQUEUR,
 }
 
-enum EditorMode {
-	BACKGROUND,
-	FOREGROUND,
-	POINTS,
+enum EditorTool {
+	SELECT,
+	PLACE,
+	MOVE,
+	DELETE,
 }

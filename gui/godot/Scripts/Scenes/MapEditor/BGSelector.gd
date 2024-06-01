@@ -57,7 +57,7 @@ func set_selection_rect(tilepos):
 	select_rect.visible = editor.is_selection_enabled()
 
 func _input(event):
-	var editor = get_tree().current_scene
+	var editor: MapEditor = get_tree().current_scene
 	
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
 		var pos = self.transform.affine_inverse().xform(event.position)
@@ -65,5 +65,5 @@ func _input(event):
 		var tile = self.get_cell(tilepos[0], tilepos[1])
 		if tile != -1:
 			emit_signal("on_selection", tile)
-			if editor.points_selection != Constants.EditorMode.POINTS:
+			if not editor.points_editor_mode:
 				set_selection_rect(tilepos)

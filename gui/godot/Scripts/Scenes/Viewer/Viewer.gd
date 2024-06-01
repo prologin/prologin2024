@@ -2,8 +2,7 @@ class_name Viewer
 
 extends Node2D
 
-signal bg_left_click(pos)
-signal bg_right_click(pos)
+signal bg_click(pos)
 signal bg_drag(pos)
 
 onready var interactive_tile_map : InteractiveTileMap = $ViewportContainer/Viewport/InteractiveTileMap
@@ -25,6 +24,7 @@ onready var aigles : Node2D = $ViewportContainer/Viewport/Aigles
 onready var selector : ColorRect = $Selector
 onready var tool_tip : ColorRect = $ViewportContainer/Viewport/Aigles/ToolTip
 onready var tool_tip_label : Label = $ViewportContainer/Viewport/Aigles/ToolTip/ToolTipLabel
+onready var toolbar : Node = $Selector/HBoxContainer
 
 var map : Models.Map
 var tour : int = 0
@@ -222,9 +222,6 @@ func set_alpha(alpha_carte, alpha_points):
 	foreground.modulate.a = alpha_carte
 	points.modulate.a = alpha_points
 
-
-func set_tiles_mode(points_editor_mode):
-	interactive_tile_map.set_tiles_mode(points_editor_mode)
 
 func toggle_drakkars(enabled: bool):
 	drakkars_enabled = enabled
@@ -486,20 +483,11 @@ func update_territory():
 
 # --- Signals ---
 func _on_InteractiveTileMap_drag(pos):
-	var j = pos[0]
-	var i = pos[1]
-	if map != null and j >= 0 and j < map.width and i >= 0 and i < map.height:
-		emit_signal("bg_drag", pos)
+	emit_signal("bg_drag", pos)
 
 
 func _on_InteractiveTileMap_click(pos, button):
-	var j = pos[0]
-	var i = pos[1]
-	if map != null and j >= 0 and j < map.width and i >= 0 and i < map.height:
-		if button == BUTTON_LEFT:
-			emit_signal("bg_left_click", pos)
-		elif button == BUTTON_RIGHT:
-			emit_signal("bg_right_click", pos)
+	emit_signal("bg_click", pos)
 
 
 func _on_GridOpacitySlider_value_changed(value):

@@ -18,12 +18,12 @@ onready var selection_rect : Sprite = $Selector/VBoxContainer/ViewportContainer/
 onready var validator_fail_dialog : AcceptDialog = $Popups/ValidatorFailDialog
 onready var validator_fail_text : Label = $Popups/ValidatorFailDialog/Container/Error
 onready var quit_dialog : ConfirmationDialog = $Popups/QuitDialog
+onready var toolbar : Node = $Viewer/Selector/HBoxContainer
 
 var bg_selection = null
 var points_selection = null
 
-var points_editor_mode = Constants.EditorMode.BACKGROUND
-var last_classic_editor_mode = Constants.EditorMode.BACKGROUND
+var points_editor_mode = false
 var selected_aigle_data = null
 var is_dialog_opened = false
 var points_amount_focused = false
@@ -37,29 +37,51 @@ func _ready():
 	update_editor_mode()
 	update_selector()
 	viewer.update_eagle_tooltip()
+	toolbar.show_editor_controls()
+
+	if not toolbar.connect("tool_changed", self, "_on_Toolbar_tool_changed"):
+		push_warning("Could not connect to toolbar signal")
 
 func is_selection_enabled():
-	match points_editor_mode:
-		Constants.EditorMode.POINTS:
-			return points_selection != null
-		_:
-			return bg_selection != null
+	return (points_selection if points_editor_mode else bg_selection) != null
+
+func is_background(tile: int):
+	return tile in [
+		Constants.TypeCase.VILLAGE,
+		Constants.TypeCase.VILLAGE_J1,
+		Constants.TypeCase.VILLAGE_J2,
+		Constants.TypeCase.NORD_OUEST,
+		Constants.TypeCase.NORD_EST,
+		Constants.TypeCase.SUD_OUEST,
+		Constants.TypeCase.SUD_EST,
+	]
+
+
+func get_tile_pos(pos: Vector2, offset: bool):
+	if offset:
+		var emplacement_pos = Vector2(int(pos.x - 1) / 2, int(pos.y - 1) / 2)
+		return emplacement_pos
+	else:
+		var case_pos = Vector2(int(pos.x) / 2, int(pos.y) / 2)
+		return case_pos
 
 # --- UI ---
 func update_editor_mode():
 	var alpha_disabled = .25
-	tiles_selector.visible = points_editor_mode != Constants.EditorMode.POINTS
-	points_selector.visible = points_editor_mode == Constants.EditorMode.POINTS
-	points_amount.visible = points_editor_mode == Constants.EditorMode.POINTS
-	if points_editor_mode == Constants.EditorMode.POINTS:
+	tiles_selector.visible = not points_editor_mode
+	points_selector.visible = points_editor_mode
+	points_amount.visible = points_editor_mode
+	if points_editor_mode:
 		editor_mode_toggle.text = 'EDITION CARTE'
 		selection_rect.visible = false
 		viewer.set_alpha(alpha_disabled, 1)
+		toolbar.trash_button.disabled = true
 	else:
 		editor_mode_toggle.text = 'EDITION POINTS'
 		if bg_selection != null:
 			selection_rect.visible = true
 		viewer.set_alpha(1, alpha_disabled)
+		toolbar.trash_button.disabled = false
 
 
 func on_point_selected(i):
@@ -95,7 +117,7 @@ func update_selector():
 
 # --- Keyboard ---
 func _input(event):
-	if !is_selection_enabled():
+	if toolbar.edition_mode == Constants.EditorTool.SELECT:
 		if event is InputEventMouseButton:
 			rect_selection.handle_mouse_event(event)
 		elif event is InputEventMouseMotion:
@@ -122,7 +144,7 @@ func _input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode in matching:
 			var n = matching[event.scancode]
-			if points_editor_mode == Constants.EditorMode.POINTS:
+			if points_editor_mode:
 				on_point_selected(n)
 			else:
 				# Edit map
@@ -132,7 +154,7 @@ func _input(event):
 			_on_EditorModeToggle_pressed()
 
 	# Scroll points
-	if points_editor_mode == Constants.EditorMode.POINTS:
+	if points_editor_mode:
 		if event.is_action("scroll_up") and event.shift:
 			_on_PointsAmount_update_value(1)
 		elif event.is_action("scroll_down") and event.shift:
@@ -144,49 +166,82 @@ func set_dialog_open(is_open):
 	viewer_viewport.gui_disable_input = is_open
 	selector_viewport.gui_disable_input = is_open
 
+func _on_click(pos: Vector2, drag: bool = false):
+	var editor_tool = toolbar.edition_mode
 
-# --- Click ---
-enum ClickType {
-	DRAG,
-	LEFT,
-	RIGHT,
-}
+	var tile_pos = get_tile_pos(pos, false)
+	var x = tile_pos.x
+	var y = tile_pos.y
+	var offset_pos = get_tile_pos(pos, true)
+	var ox = offset_pos.x
+	var oy = offset_pos.y
 
-func _on_click(pos, click_type):
-	var x = pos[0]
-	var y = pos[1]
+	if viewer.map == null:
+		return
+	if x < 0 or x >= viewer.map.width or y < 0 or y >= viewer.map.height:
+		return
 
-	# Edit map
-	if points_editor_mode == Constants.EditorMode.BACKGROUND and bg_selection != null and viewer.map.carte[y][x] != bg_selection:
-		if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
-			remove_owned_villages(bg_selection)
-		# Background click
-		viewer.map.carte[y][x] = bg_selection
-		viewer.update_all(viewer.map)
-	elif points_editor_mode != Constants.EditorMode.BACKGROUND and y < viewer.map.height - 1 and x < viewer.map.width - 1:
-		if points_editor_mode == Constants.EditorMode.POINTS and points_selection != null and viewer.map.points[y][x] != points_selection:
-			# Point click
-			viewer.map.points[y][x] = points_selection
+	if points_editor_mode:
+		if (editor_tool != Constants.EditorTool.PLACE or ox < 0 or ox >= viewer.map.width - 1
+			or oy < 0 or oy >= viewer.map.height):
+			return
+		# if currently editing gains
+		if (points_selection != null and viewer.map.points[oy][ox] != points_selection
+			and oy < viewer.map.height - 1 and ox < viewer.map.width - 1):
+			# checking if selection is not null
+			viewer.map.points[oy][ox] = points_selection
 			viewer.update_all(viewer.map)
-		elif points_editor_mode == Constants.EditorMode.FOREGROUND and bg_selection != null:
-			# Foreground click
-			if click_type == ClickType.LEFT:
-				selected_aigle_data = {
-					'pos': pos,
-					'effet': viewer.aigle2effet[bg_selection]
-				}
-				if Input.is_key_pressed(KEY_SHIFT):
-					_on_AigleDialog_confirmed()
-				else:
-					aigle_dialog.popup_centered()
-			elif click_type == ClickType.RIGHT:
-				# Find eagle in this location
-				for i in range(len(viewer.map.aigles) - 1, -1, -1):
-					var aigle = viewer.map.aigles[i]
-					if aigle.pos == pos:
-						viewer.map.aigles.remove(i)
-						break
-				viewer.update_all(viewer.map)
+		return
+	
+	if editor_tool == Constants.EditorTool.DELETE:
+		# deleting the selected tile
+
+		# first, find if there is an eagle in this location
+		var eagle_found = false
+		for i in range(len(viewer.map.aigles) - 1, -1, -1):
+			var aigle = viewer.map.aigles[i]
+			if aigle.pos == offset_pos:
+				viewer.map.aigles.remove(i)
+				eagle_found = true
+				break
+		if eagle_found:
+			viewer.update_all(viewer.map)
+			return
+		
+		# otherwise, delete the background tile (set it to default NW tile)
+		viewer.map.carte[y][x] = Constants.TypeCase.NORD_OUEST
+
+	elif editor_tool == Constants.EditorTool.PLACE:
+		# currently editing tiles or eagles
+
+		# if nothing is selected, ignore (and let the rectangle selection handle this)
+		if bg_selection == null:
+			return
+		
+		if is_background(bg_selection):
+			# background tile (isles rotation or village)
+			if viewer.map.carte[y][x] == bg_selection:
+				return
+			if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
+				remove_owned_villages(bg_selection)
+			viewer.map.carte[y][x] = bg_selection
+
+		elif oy >= 0 and oy < viewer.map.height - 1 and ox >= 0 and ox < viewer.map.width - 1 and not drag:
+			# foreground click (eagle selected), disallow drag and check dimensions
+			selected_aigle_data = {
+				'pos': offset_pos,
+				'effet': viewer.aigle2effet[bg_selection]
+			}
+			if Input.is_key_pressed(KEY_SHIFT):
+				_on_AigleDialog_confirmed()
+			else:
+				aigle_dialog.popup_centered()
+	
+	else:
+		# another unhandled tool was selected, return to avoid useless map refresh
+		return
+
+	viewer.update_all(viewer.map)
 
 
 func remove_owned_villages(tile):
@@ -200,15 +255,11 @@ func remove_owned_villages(tile):
 
 
 func _on_Viewer_bg_drag(pos):
-	_on_click(pos, ClickType.DRAG)
+	_on_click(pos, true)
 
 
-func _on_Viewer_bg_left_click(pos):
-	_on_click(pos, ClickType.LEFT)
-
-
-func _on_Viewer_bg_right_click(pos):
-	_on_click(pos, ClickType.RIGHT)
+func _on_Viewer_bg_click(pos):
+	_on_click(pos)
 
 
 # --- Signals ---
@@ -219,11 +270,11 @@ func _on_ClearMap_pressed():
 
 
 func _on_EditorModeToggle_pressed():
-	if points_editor_mode == Constants.EditorMode.POINTS:
-		points_editor_mode = last_classic_editor_mode
+	points_editor_mode = not points_editor_mode
+	if points_editor_mode:
+		toolbar.set_tool(Constants.EditorTool.PLACE)
 	else:
-		points_editor_mode = Constants.EditorMode.POINTS
-	viewer.set_tiles_mode(points_editor_mode)
+		toolbar.set_tool(Constants.EditorTool.SELECT)
 	update_editor_mode()
 
 
@@ -232,9 +283,16 @@ func _on_BGSelector_on_selection(tile):
 
 
 func set_bg_selection(sel):
-	if points_editor_mode != Constants.EditorMode.POINTS:
-		bg_selection = sel if sel != bg_selection else null
-		if bg_selection == null or bg_selection in [
+	if points_editor_mode:
+		return
+
+	if sel == bg_selection:
+		bg_selection = null
+		toolbar.set_tool(Constants.EditorTool.SELECT)
+		rect_selection.disable()
+	else:
+		bg_selection = sel
+		if bg_selection in [
 			Constants.TypeCase.VILLAGE,
 			Constants.TypeCase.VILLAGE_J1,
 			Constants.TypeCase.VILLAGE_J2,
@@ -242,29 +300,21 @@ func set_bg_selection(sel):
 			Constants.TypeCase.NORD_EST,
 			Constants.TypeCase.SUD_OUEST,
 			Constants.TypeCase.SUD_EST,
-		]:
-			if bg_selection != null and rect_selection.enabled:
-				var tiles = rect_selection.get_selected_tiles()
-				for tile in tiles:
-					if viewer.map.carte[tile.y][tile.x] == bg_selection:
-						continue
-					if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
-						remove_owned_villages(bg_selection)
-					viewer.map.carte[tile.y][tile.x] = bg_selection
+		] and rect_selection.enabled:
+			var tiles = rect_selection.get_selected_tiles()
+			for tile in tiles:
+				if viewer.map.carte[tile.y][tile.x] == bg_selection:
+					continue
+				if bg_selection in [Constants.TypeCase.VILLAGE_J1, Constants.TypeCase.VILLAGE_J2]:
+					remove_owned_villages(bg_selection)
+				viewer.map.carte[tile.y][tile.x] = bg_selection
 
-				rect_selection.disable()
-				viewer.update_all(viewer.map)
+			rect_selection.disable()
+			viewer.update_all(viewer.map)
 
-				bg_selection = null
-				return
-
-			points_editor_mode = Constants.EditorMode.BACKGROUND
+			bg_selection = null
 		else:
-			points_editor_mode = Constants.EditorMode.FOREGROUND
-
-		last_classic_editor_mode = points_editor_mode
-		viewer.set_tiles_mode(points_editor_mode)
-		rect_selection.disable()
+			toolbar.set_tool(Constants.EditorTool.PLACE)
 
 
 func _on_Export_pressed(force=false):
@@ -388,3 +438,9 @@ func _on_PointsAmount_update_value(delta):
 
 	points_amount.text = str(points_selection + delta)
 	_on_PointsAmount_text_changed()
+
+
+func _on_Toolbar_tool_changed(new_tool):
+	if new_tool != Constants.EditorTool.PLACE:
+		bg_selection = null
+		selection_rect.visible = false

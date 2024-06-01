@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Viewer",
 "language": "GDScript",
-"path": "res://Scripts/Scenes/Viewer.gd"
+"path": "res://Scripts/Scenes/Viewer/Viewer.gd"
 } ]
 _global_script_class_icons={
 "Constants": "",

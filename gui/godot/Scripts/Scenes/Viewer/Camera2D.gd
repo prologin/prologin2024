@@ -12,13 +12,20 @@ var _drag = false
 
 onready var viewer : Viewer = $"../../../../Viewer"
 onready var viewport : ViewportContainer = $"../../../ViewportContainer"
+onready var toolbar : Node = $"../../../Selector/HBoxContainer"
+onready var tilemap : InteractiveTileMap = $"../InteractiveTileMap"
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("cam_drag"): # click molette
-		_drag = true
-	elif event.is_action_released("cam_drag"): # lacher de molette
-		_drag = false
+	if not tilemap.mouse_inside:
+		return
+	if (event.is_action("cam_drag") or
+		(event is InputEventMouseButton and event.button_index == BUTTON_LEFT
+		and toolbar.edition_mode == Constants.EditorTool.MOVE)):
+		if event.is_pressed():
+			_drag = true
+		else:
+			_drag = false
 
 	elif event.is_action("scroll_up") and not event.shift: # molette vers le haut
 		_update_zoom(-ZOOM_INCREMENT, make_input_local(event).position)

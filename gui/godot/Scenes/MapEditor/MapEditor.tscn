@@ -277,14 +277,13 @@ theme = ExtResource( 7 )
 window_title = "Veuillez confirmer…"
 dialog_text = "Êtes-vous sûr de vouloir revenir au menu principal ?"
 
+[connection signal="bg_click" from="Viewer" to="." method="_on_Viewer_bg_click"]
 [connection signal="bg_drag" from="Viewer" to="." method="_on_Viewer_bg_drag"]
-[connection signal="bg_left_click" from="Viewer" to="." method="_on_Viewer_bg_left_click"]
-[connection signal="bg_right_click" from="Viewer" to="." method="_on_Viewer_bg_right_click"]
 [connection signal="pressed" from="Selector/VBoxContainer/Export" to="." method="_on_Export_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/ClearMap" to="." method="_on_ClearMap_pressed"]
-[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_SampleMap_pressed"]
+[connection signal="pressed" from="Selector/VBoxContainer/EditorModeToggle" to="." method="_on_EditorModeToggle_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Randomizer" to="." method="_on_Randomizer_pressed"]
 [connection signal="pressed" from="Selector/VBoxContainer/Back to main menu" to="." method="_on_Back_to_main_menu_pressed"]
 [connection signal="focus_entered" from="Selector/VBoxContainer/PointsAmount" to="." method="_on_PointsAmount_focus_entered"]
