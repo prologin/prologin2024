@@ -3,6 +3,7 @@
 
 #include "game_state.hh"
 #include "api.hh"
+#include "constant.hh"
 #include "rules.hh"
 
 GameState::GameState(const rules::Players& players)
@@ -321,6 +322,23 @@ json dump_gains(const Carte& carte)
     return jgains;
 }
 
+[[nodiscard]] static int drakkar_to_int(drakkar_debug drakkar)
+{
+    // Here we cannot use the actual enum values since the front has different
+    // assumptions
+    switch (drakkar)
+    {
+    case DRAKKAR_ROUGE:
+        return 1;
+    case DRAKKAR_JAUNE:
+        return 2;
+    case DRAKKAR_BLEU:
+        return 3;
+    default:
+        return 0
+    }
+}
+
 json dump_debug(const Carte& carte,
                 const std::vector<std::vector<ActionInterne>>& historiques)
 {
@@ -336,23 +354,8 @@ json dump_debug(const Carte& carte,
             if (action_interne.est_drakkar)
             {
                 position pos = action_interne.action.fin;
-                switch (action_interne.couleur)
-                {
-                case PAS_DE_DRAKKAR:
-                    carte_debug[pos.ligne][pos.colonne] = 0;
-                    break;
-                case DRAKKAR_ROUGE:
-                    carte_debug[pos.ligne][pos.colonne] = 1;
-                    break;
-                case DRAKKAR_JAUNE:
-                    carte_debug[pos.ligne][pos.colonne] = 2;
-                    break;
-                case DRAKKAR_BLEU:
-                    carte_debug[pos.ligne][pos.colonne] = 3;
-                    break;
-                default:
-                    break;
-                }
+                carte_debug[pos.ligne][pos.colonne] =
+                    drakkar_to_int(action_interne.couleur);
             }
         }
     }
@@ -426,7 +429,7 @@ json dump_action(const ActionInterne& action_interne)
     if (action_interne.est_drakkar)
     {
         jaction["type"] = "action_debug_poser_drakkar";
-        jaction["id"] = action_interne.couleur;
+        jaction["id"] = drakkar_debug(action_interne.couleur);
     }
     else
     {
