@@ -28,8 +28,11 @@ func current_map():
 func add_game_state(game_state):
 	for action in game_state.actions:
 		add_action(action, game_state.tour)
+		
 	if len(game_state.actions) == 0:
 		add_state(game_state)
+	else:
+		states[-1].map = game_state.map.copy()
 
 
 # Adds a state with an empty action
