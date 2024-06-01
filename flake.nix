@@ -39,7 +39,7 @@
             ];
 
             buildPhase = ''
-              mkdir -p $out/lib/
+              mkdir -p $out/
               ${final.stechec2}/bin/stechec2-generator player ${prologin2024-yml-docs}/prologin2024.yml spectator
               cp $src/spectator.py spectator/python/Champion.py
               make -C spectator/python/
