@@ -168,7 +168,7 @@ GameState* GameState::copy() const
 
 bool GameState::est_termine() const
 {
-    return tour >= NB_TOURS;
+    return tour > NB_TOURS;
 }
 
 int calcul_multiplicatif(const std::vector<Aigle>& aigles, int x, int y)
@@ -223,6 +223,7 @@ void GameState::tour_suivant()
 
 int GameState::joueur_actuel() const
 {
+    int tour = this->tour < 0 ? 0 : this->tour;
     return tour % (int)joueurs.size();
 }
 
@@ -500,7 +501,7 @@ json GameState::dump() const
 
     json jtour;
     jtour["joueur_actuel"] = joueur_actuel();
-    jtour["id_tour"] = tour;
+    jtour["id_tour"] = tour < 0 ? 0 : tour;
     jtour["fin"] = est_termine();
     jetat["tour"] = jtour;
 
