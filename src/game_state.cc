@@ -429,7 +429,7 @@ json dump_action(const ActionInterne& action_interne)
     if (action_interne.est_drakkar)
     {
         jaction["type"] = "action_debug_poser_drakkar";
-        jaction["id"] = drakkar_debug(action_interne.couleur);
+        jaction["id"] = drakkar_to_int(action_interne.couleur);
     }
     else
     {
