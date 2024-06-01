@@ -11,18 +11,24 @@ GameState::GameState(const rules::Players& players)
     std::cout << "CQLE" << std::endl;
     // should not come here
 }
-void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::vector<std::vector<bool>>& territoire)
+void GameState::capture(int largeur, int hauteur, int j_actuel_id,
+                        const std::vector<std::vector<bool>>& territoire)
 {
     Joueur& j_adverse = joueurs[(j_actuel_id + 1) % 2];
     Joueur& j_actuel = joueurs[j_actuel_id];
-    const std::vector<std::vector<bool>>& territoire_adverse = j_adverse.territoire(carte);
+    const std::vector<std::vector<bool>>& territoire_adverse =
+        j_adverse.territoire(carte);
     int tour_actuel = tour;
-    auto const verifie_territoire = [&territoire, &territoire_adverse, tour_actuel](const Aigle& aigle)
+    auto const verifie_territoire =
+        [&territoire, &territoire_adverse, tour_actuel](const Aigle& aigle)
     {
-        return territoire[aigle.pos.ligne][aigle.pos.colonne]
-        && !territoire_adverse[aigle.pos.ligne][aigle.pos.colonne] && aigle.tour_eclosion <= tour_actuel;
+        return territoire[aigle.pos.ligne][aigle.pos.colonne] &&
+               !territoire_adverse[aigle.pos.ligne][aigle.pos.colonne] &&
+               aigle.tour_eclosion <= tour_actuel;
     };
-    auto const verifie_deux_territoires = [largeur, hauteur, &territoire, &territoire_adverse](const auto& village)
+    auto const verifie_deux_territoires =
+        [largeur, hauteur, &territoire,
+         &territoire_adverse](const auto& village)
     {
         bool dans_mon_territoire = false;
         for (int dx = 0; dx >= -1; dx--)
@@ -45,40 +51,29 @@ void GameState::capture(int largeur, int hauteur, int j_actuel_id, const std::ve
 
     if (!aigles_sauvages.empty())
     {
-        std::copy_if(
-            aigles_sauvages.begin(),
-            aigles_sauvages.end(),
-            std::back_inserter(j_actuel.aigles),
-            verifie_territoire
-        );
-        aigles_sauvages.erase(std::remove_if(
-            aigles_sauvages.begin(),
-            aigles_sauvages.end(),
-            verifie_territoire
-        ), aigles_sauvages.end());
+        std::copy_if(aigles_sauvages.begin(), aigles_sauvages.end(),
+                     std::back_inserter(j_actuel.aigles), verifie_territoire);
+        aigles_sauvages.erase(std::remove_if(aigles_sauvages.begin(),
+                                             aigles_sauvages.end(),
+                                             verifie_territoire),
+                              aigles_sauvages.end());
     }
 
     if (villages_libres.size() > 0)
     {
-        std::copy_if(
-            villages_libres.begin(),
-            villages_libres.end(),
-            std::back_inserter(j_actuel.villages),
-            verifie_deux_territoires
-        );
-        villages_libres.erase(std::remove_if(
-            villages_libres.begin(),
-            villages_libres.end(),
-            verifie_deux_territoires
-        ), villages_libres.end());
+        std::copy_if(villages_libres.begin(), villages_libres.end(),
+                     std::back_inserter(j_actuel.villages),
+                     verifie_deux_territoires);
+        villages_libres.erase(std::remove_if(villages_libres.begin(),
+                                             villages_libres.end(),
+                                             verifie_deux_territoires),
+                              villages_libres.end());
     }
 }
 
 GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     : rules::GameState(players)
 {
-    tour = 0;
-
     json donnees;
     json_file >> donnees;
 
@@ -129,7 +124,7 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     }
 
     std::vector<std::string> carte_texte;
-    for (const auto &ligne : donnees["carte"])
+    for (const auto& ligne : donnees["carte"])
         carte_texte.push_back(ligne);
 
     carte = Carte(carte_texte, gains);
@@ -153,7 +148,8 @@ GameState::GameState(const rules::Players& players, std::ifstream& json_file)
     historiques.emplace_back();
     for (int i = 0; i <= 1; i++)
     {
-        std::vector<std::vector<bool>> territoire = joueurs[i].territoire(carte);
+        std::vector<std::vector<bool>> territoire =
+            joueurs[i].territoire(carte);
         capture(largeur, hauteur, i, territoire);
     }
 
@@ -204,7 +200,8 @@ void GameState::tour_suivant()
     Joueur& j_actuel = joueurs[joueur_actuel()];
     j_actuel.score_tour = 0;
 
-    const std::vector<std::vector<bool>>& territoire = j_actuel.territoire(carte);
+    const std::vector<std::vector<bool>>& territoire =
+        j_actuel.territoire(carte);
     for (int y = 0; y < hauteur - 1; y++)
     {
         for (int x = 0; x < largeur - 1; x++)
@@ -212,7 +209,8 @@ void GameState::tour_suivant()
             if (territoire[y][x])
             {
                 if (tour >= NB_TOURS - 2)
-                    j_actuel.score_tour += calcul_score(x, y) * MULTIPLICATEUR_DERNIER_TOUR;
+                    j_actuel.score_tour +=
+                        calcul_score(x, y) * MULTIPLICATEUR_DERNIER_TOUR;
                 else
                     j_actuel.score_tour += calcul_score(x, y);
             }
@@ -221,7 +219,6 @@ void GameState::tour_suivant()
     capture(largeur, hauteur, joueur_actuel(), territoire);
 
     j_actuel.score += j_actuel.score_tour;
-    tour++;
 }
 
 int GameState::joueur_actuel() const
@@ -231,6 +228,7 @@ int GameState::joueur_actuel() const
 
 void GameState::debute_tour(int joueur)
 {
+    tour++;
     historiques[joueur_actuel()].clear();
     joueurs[joueur].points_action = TOUR_POINTS_ACTION;
 }
@@ -452,8 +450,7 @@ json dump_territoire(const GameState& st)
     int largeur, hauteur;
     std::tie(largeur, hauteur) = st.carte.get_dimension();
 
-    std::vector<std::vector<int>> vec_terr(hauteur,
-                                              std::vector<int>(largeur));
+    std::vector<std::vector<int>> vec_terr(hauteur, std::vector<int>(largeur));
     // TODO : verif
     for (int y = 0; y < hauteur - 1; y++)
     {
@@ -462,7 +459,8 @@ json dump_territoire(const GameState& st)
             if (territoire_j2[y][x] != 0 && territoire_j1[y][x] != 0)
                 vec_terr[y][x] = 3;
             else
-                vec_terr[y][x] = (territoire_j2[y][x] != 0) ? 2 : territoire_j1[y][x];
+                vec_terr[y][x] =
+                    (territoire_j2[y][x] != 0) ? 2 : territoire_j1[y][x];
         }
     }
 
@@ -543,4 +541,3 @@ void GameState::sync_score()
     score = joueurs[joueur_actuel() ^ 1].score;
     players_[joueur_actuel() ^ 1]->score = score;
 }
-
