@@ -335,7 +335,7 @@ json dump_gains(const Carte& carte)
     case DRAKKAR_BLEU:
         return 3;
     default:
-        return 0
+        return 0;
     }
 }
 
