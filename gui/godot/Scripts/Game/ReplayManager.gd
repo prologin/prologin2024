@@ -61,7 +61,7 @@ func add_action(action, tour):
 func set_state(i):
 	# TODO : Update
 	icurrent_state = i
-	update_states_actions()
+	return update_states_actions()
 
 
 # Next step, a step is an action and can switch state if last action of current state
@@ -69,25 +69,14 @@ func next(play_anim = false):
 	if icurrent_state == len(states) - 1:
 		return false
 
-	icurrent_state += 1
-	update_states_actions()
-	
-	# TODO : Play animation if current_state.action
-
-	return true
+	return set_state(icurrent_state + 1)
 
 
 func prev(play_anim = false):
 	if icurrent_state == 0:
 		return false
 
-	# TODO : Play animation if current_state.action
-
-	icurrent_state -= 1
-
-	update_states_actions()
-
-	return true
+	return set_state(icurrent_state - 1)
 
 
 func update_states_actions():
@@ -97,6 +86,7 @@ func update_states_actions():
 	if current_state.action:
 		act_debug = '(' + current_state.action.debug() + ')'
 	print('ReplayManager: current_state=', icurrent_state, ' current_action=', act_debug)
+	return current_state.action != null and current_state.action.action_type == 'action_debug_poser_drakkar'
 
 
 func apply_action(action, map, debug):
@@ -131,6 +121,19 @@ func apply_action(action, map, debug):
 				'METEORE':
 					tourner_cases(action, map, aigle)
 					map.remove_aigle(aigle.identifiant)
+		'action_debug_poser_drakkar':
+			var drakkar = null
+			match action.id:
+				0.0:
+					drakkar = Constants.DrakkarDebug.PAS_DE_DRAKKAR
+				1.0:
+					drakkar = Constants.DrakkarDebug.ROUGE
+				2.0:
+					drakkar = Constants.DrakkarDebug.JAUNE
+				3.0:
+					drakkar = Constants.DrakkarDebug.BLEU
+			var pos = action.position
+			map.debug[pos.y][pos.x] = drakkar
 
 
 # --- Utils ---
