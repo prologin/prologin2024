@@ -27,8 +27,9 @@ func current_map():
 # Adds a full game state (state + actions)
 func add_game_state(game_state):
 	for action in game_state.actions:
-		add_action(action)
-	add_state(game_state)
+		add_action(action, game_state.tour)
+	if len(game_state.actions) == 0:
+		add_state(game_state)
 
 
 # Adds a state with an empty action
@@ -43,7 +44,7 @@ func add_state(game_state: Models.GameState):
 # Play an action from the last state
 # 1. Set the last state action to `action`
 # 2. Duplicate the last state and update apply the action on it
-func add_action(action):
+func add_action(action, tour):
 	# Set action for the last state
 	var last_state = states[-1]
 	last_state.action = action
@@ -52,7 +53,7 @@ func add_action(action):
 	var state = ReplayState.new()
 	state.map = last_state.map.copy()
 	apply_action(action, state.map, false)
-	state.tour = last_state.tour
+	state.tour = tour
 	state.action = action
 	states.append(state)
 

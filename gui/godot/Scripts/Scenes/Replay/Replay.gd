@@ -91,7 +91,10 @@ func update_info():
 	if Context.socket == null:
 		info += "/" + n_turns
 
-	info +=  " (J" + str(1 if is_j1_playing else 2) + "), Action: " + str(manager.icurrent_state + 1)
+	if manager.icurrent_state != 0:
+		info += " (J" + str(1 if is_j1_playing else 2) + "),"
+
+	info += " Action: " + str(manager.icurrent_state + 1)
 
 	print('Replay.update_info, ', info)
 	stateinfo.text = info
