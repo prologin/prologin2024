@@ -44,6 +44,5 @@ Pour t'identifier et changer ton mot de passe !
 Tickets
 -------
 
-https://bugs.prologin.eu/
-
-Pour toutes tes questions/rapports de bug/problèmes techniques !
+- `Signaler un bug/problème sur le jeux <https://bugs.prologin.eu/prologin/serveur/issues>`_
+- `Signaler un bug/problème sur la machine/plateforme <https://bugs.prologin.eu/prologin/infra/issues>`_
