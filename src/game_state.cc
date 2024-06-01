@@ -423,19 +423,27 @@ json dump_action(const ActionInterne& action_interne)
     // assert(!action_interne.est_drakkar)
     json jaction;
     action_hist action = action_interne.action;
-    switch (action.action_type)
+    if (action_interne.est_drakkar)
     {
-    case ACTION_TOURNER_CASE:
-        jaction["type"] = "action_tourner_case";
-        break;
-    case ACTION_ACTIVER_AIGLE:
-        jaction["type"] = "action_activer_aigle";
-        jaction["id"] = action.identifiant_aigle;
-        break;
-    case ACTION_DEPLACER_AIGLE:
-        jaction["type"] = "action_deplacer_aigle";
-        jaction["id"] = action.identifiant_aigle;
-        break;
+        jaction["type"] = "action_debug_poser_drakkar";
+        jaction["id"] = action_interne.couleur;
+    }
+    else
+    {
+        switch (action.action_type)
+        {
+        case ACTION_TOURNER_CASE:
+            jaction["type"] = "action_tourner_case";
+            break;
+        case ACTION_ACTIVER_AIGLE:
+            jaction["type"] = "action_activer_aigle";
+            jaction["id"] = action.identifiant_aigle;
+            break;
+        case ACTION_DEPLACER_AIGLE:
+            jaction["type"] = "action_deplacer_aigle";
+            jaction["id"] = action.identifiant_aigle;
+            break;
+        }
     }
     jaction["position"] = dump_position(action.fin);
     return jaction;
