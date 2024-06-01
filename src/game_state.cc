@@ -510,8 +510,6 @@ json GameState::dump() const
     int joueur = joueur_actuel();
     for (const ActionInterne& action_interne : historiques[joueur])
     {
-        if (action_interne.est_drakkar)
-            continue;
         jactions.push_back(dump_action(action_interne));
     }
     jetat["actions"] = jactions;
