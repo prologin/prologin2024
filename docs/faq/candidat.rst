@@ -33,6 +33,7 @@ Erreurs fréquentes
       le serveur (donc pour les tournois).
 - Si vous faites des fichiers annexes, n'oubliez pas de les mettre en plus dans
   le Makefile après ``champion.*`` dans ``CHAMPIONS_FILES``
+- Effectuer plus de 4096 actions en un tour résulte en un *timeout*
 
 Plantage avec stechec
 ---------------------
