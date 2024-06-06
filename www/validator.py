@@ -142,6 +142,11 @@ def lire_gains(gains_json, hauteur, largeur):
     return gains
 
 def lire_joueur(joueur_json, carte):
+    allowed_keys = ("x", "y")
+    for key in joueur_json:
+        if key not in allowed_keys:
+            raise ValueError(f"La clé {key} n'est pas reconnue")
+
     x = extraire_propriete(joueur_json, "x")
     y = extraire_propriete(joueur_json, "y")
 
@@ -158,6 +163,10 @@ def lire_joueur(joueur_json, carte):
 def lire_aigles(aigles_json, hauteur, largeur):
     aigles = []
     for aigle_json in aigles_json:
+        allowed_keys = ("pos", "effet", "puissance", "tour_eclosion")
+        for key in aigle_json:
+            if key not in allowed_keys:
+                raise ValueError(f"La clé {key} n'est pas reconnue")
         pos_json = extraire_propriete(aigle_json, "pos")
         x = extraire_propriete(pos_json, "x")
         y = extraire_propriete(pos_json, "y")
@@ -183,6 +192,11 @@ def lire_aigles(aigles_json, hauteur, largeur):
 
 
 def valide_carte(json):
+    allowed_keys = ("largeur", "hauteur", "carte", "gains", "joueur1", "joueur2", "aigles")
+    for key in json:
+        if key not in allowed_keys:
+            raise ValueError(f"La clé {key} n'est pas reconnue")
+
     largeur = extraire_propriete(json, "largeur")
     if not LARGEUR_MIN <= largeur <= LARGEUR_MAX:
         raise ValueError(f"Largeur incorrecte: {largeur} n'est pas dans "

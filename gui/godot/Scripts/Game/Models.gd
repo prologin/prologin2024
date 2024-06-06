@@ -273,9 +273,6 @@ class Map:
 		json["hauteur"] = self.height
 		json["gains"] = self.points
 
-		if self.territoire != null:
-			json["territoire"] = self.territoire
-
 		var carte = []
 		for row in self.carte:
 			carte.append("")
