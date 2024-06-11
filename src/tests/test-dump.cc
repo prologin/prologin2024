@@ -92,16 +92,43 @@ TEST_F(ApiTestColibri, TestDrakkar) {
   auto &state = api->game_state();
   EXPECT_EQ(api->debug_poser_drakkar(position{2, 3}, DRAKKAR_JAUNE), OK);
 
-  EXPECT_EQ(api->debug_poser_drakkar(position{2, 4}, DRAKKAR_BLEU), POSITION_INVALIDE);
+  EXPECT_EQ(api->debug_poser_drakkar(position{2, 4}, DRAKKAR_BLEU),
+            POSITION_INVALIDE);
   EXPECT_EQ(api->debug_poser_drakkar(position{2, 1}, DRAKKAR_BLEU), OK);
 
-  EXPECT_EQ(api->debug_poser_drakkar(position{4, 4}, DRAKKAR_ROUGE), POSITION_INVALIDE);
+  EXPECT_EQ(api->debug_poser_drakkar(position{4, 4}, DRAKKAR_ROUGE),
+            POSITION_INVALIDE);
   EXPECT_EQ(api->debug_poser_drakkar(position{3, 2}, DRAKKAR_ROUGE), OK);
 
   const auto json = state.dump();
   const auto json_expected = R"(
     {
-      "actions": [],
+      "actions": [
+        {
+            "id": 2,
+            "position": {
+                "x": 2,
+                "y": 3
+            },
+            "type": "action_debug_poser_drakkar"
+        },
+        {
+            "id": 3,
+            "position": {
+                "x": 2,
+                "y": 1
+            },
+            "type": "action_debug_poser_drakkar"
+        },
+        {
+            "id": 1,
+            "position": {
+                "x": 3,
+                "y": 2
+            },
+            "type": "action_debug_poser_drakkar"
+        }
+      ],
       "jeu": {
         "aigles": [
           {

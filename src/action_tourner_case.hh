@@ -9,31 +9,26 @@
 #include "constant.hh"
 #include "game_state.hh"
 
-class ActionTournerCase : public rules::Action<GameState>
-{
-public:
-    ActionTournerCase(position pos, int player_id)
-        : pos_(pos)
-        , player_id_(player_id)
-    {
-    }
-    ActionTournerCase() = default; // for register_action()
+class ActionTournerCase : public rules::Action<GameState> {
+ public:
+  ActionTournerCase(position pos, int player_id)
+      : pos_(pos), player_id_(player_id) {}
+  ActionTournerCase() = default;  // for register_action()
 
-    [[nodiscard]] int check(const GameState& st) const override;
-    void apply_on(GameState* st) const override;
+  [[nodiscard]] int check(const GameState& st) const override;
+  void apply_on(GameState* st) const override;
 
-    void handle_buffer(utils::Buffer& buf) override
-    {
-        buf.handle(pos_);
-        buf.handle(player_id_);
-    }
+  void handle_buffer(utils::Buffer& buf) override {
+    buf.handle(pos_);
+    buf.handle(player_id_);
+  }
 
-    [[nodiscard]] uint32_t player_id() const override { return player_id_; };
-    [[nodiscard]] uint32_t id() const override { return ID_ACTION_TOURNER_CASE; }
+  [[nodiscard]] uint32_t player_id() const override { return player_id_; };
+  [[nodiscard]] uint32_t id() const override { return ID_ACTION_TOURNER_CASE; }
 
-private:
-    position pos_;
-    int player_id_;
+ private:
+  position pos_;
+  int player_id_;
 };
 
 enum type_case rotation_case(enum type_case actuel);
