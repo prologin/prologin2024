@@ -1,9 +1,8 @@
 # Prologin 2024 - Des Iles et des Aigles
 
-<p align="center">
+<div align="center">
 <img src="./www/static/img/Prologin2024.png" alt="logo prologin 2024" height="380">
-<img/>
-</p>
+</div>
 
 This is the final game (2024 edition) of the French national computing contest
 [Prologin](https://prologin.org/). Candidates are asked to create an AI in 36
